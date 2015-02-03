@@ -75,6 +75,10 @@ ___________________________________________
 <li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
+
+	'right-commentdelete' => 'Can delete article comments',
+	'right-commentedit' => 'Can edit article comments',
+	'right-commentmove' => 'Can move article comments',
 );
 
 /** Message documentation (Message documentation)
@@ -138,6 +142,9 @@ This is shown in small pop up message in red.',
 This is shown in small pop up message in red.',
 	'enotif_body_article_comment' => '{{doc-singularthey}}
 This is an email sent to inform a user that a page they are following has a new comment posted.',
+	'right-commentdelete' => '{{Doc-right|commentdelete}}',
+	'right-commentedit' => '{{Doc-right|commentedit}}',
+	'right-commentmove' => '{{Doc-right|commentmove}}',
 );
 
 /** Afrikaans (Afrikaans)

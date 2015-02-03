@@ -94,6 +94,9 @@ $messages['en'] = array(
 
     //rights/groups
     'right-chatmoderator' => 'Can kick/ban users from [[Help:Chat|Chat]]',
+	'right-chat' => 'Chat with other users, via [[Help:Chat|Chat]]',
+	'right-chatadmin' => 'User has chat admin rights on [[Help:Chat|Chat]]',
+	'right-chatstaff' => 'User has Wikia Staff rights on [[Help:Chat|Chat]]',
     'group-chatmoderator' => 'Chat moderators',
     'group-chatmoderator-member' => 'Chat moderator',
     'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
@@ -184,6 +187,9 @@ Refers to {{msg-w|Chat-live2}} rail module.',
 	'chat-user-menu-give-chat-mod' => 'ChatMod = chat moderator',
 	'chat-user-menu-ban' => 'Click here to ban a user (from the user dropdown menu).',
 	'right-chatmoderator' => '{{doc-right|chatmoderator}}',
+	'right-chat' => '{{doc-right|chat}}',
+	'right-chatadmin' => '{{doc-right|chatadmin}}',
+	'right-chatstaff' => '{{doc-right|chatstaff}}',
 	'grouppage-chatmoderator' => '{{Optional}}',
 	'grouppage-bannedfromchat' => '{{Optional}}',
 	'chat-ban-option-list' => "{{doc-important|Be careful: '''1 translation:1 english''', so the first part is the translation and the second part should stay in English.}}

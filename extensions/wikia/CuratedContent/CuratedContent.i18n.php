@@ -28,6 +28,9 @@ $messages['en'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'This type is not supported',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'You can put only category here',
 	'wikiacuratedcontent-featured-section-name' => 'Featured Content',
+	'right-curatedcontent' => 'Allows access to Special:CuratedContent',
+	'right-curatedcontent-switchforadmins' => 'Allows access to Special:CuratedContent',
+	'right-curatedcontentpreview' => 'Allows users to see how their CuratedContent would look in the app',
 );
 
 $messages['qqq'] = array(
@@ -57,6 +60,9 @@ $messages['qqq'] = array(
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Message shown to a user when he tries to save a item that have not supported type',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'Message shown to a user when he tries to save an item in simple tag that is not of type category',
 	'wikiacuratedcontent-featured-section-name' => 'Featured content section title',
+	'right-curatedcontent' => '{{doc-right|curatedcontent}}',
+	'right-curatedcontentpreview' => '{{doc-right|curatedcontentpreview}}',
+	'right-curatedcontent-switchforadmins' => '{{doc-right|curatedcontent-switchforadmins}}',
 );
 
 $messages['ach'] = array(

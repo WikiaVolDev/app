@@ -48,6 +48,7 @@ $messages['en'] = array(
 
 	'abtesting-ranges-info' => '(0-99)',
 	'action-abtestpanel' => 'configure A/B tests',
+	'right-abtestpanel' => 'Allows access to Special:AbTesting',
 );
 
 
@@ -79,4 +80,6 @@ $messages['qqq'] = array(
 
 	'abtesting-edit-button' => 'Edit button',
 	'abtesting-save-button' => 'Save button',
+	
+	'right-abtestpanel' => '{{Doc-right|abtestpanel}}',
 );

@@ -3,7 +3,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'custom-reports-desc' => 'Allows priveleged users to see various custom reports.',
+	'custom-reports-desc' => 'Allows privileged users to see various custom reports.',
+	'right-customreports' => 'View custom reports',
 	'report-no-data' => 'No data.',
 
 	'report-xaxis' => 'Date',
@@ -44,4 +45,9 @@ $messages['en'] = array(
 	'report-yaxis-temp_users' => 'Temp Users',
 	'report-name-facebook_users' => 'Facebook Users by day',
 	'report-yaxis-facebook_users' => 'Facebook Users',
+);
+
+$messages['qqq'] = array(
+	'custom-reports-desc' => '{{desc}}',
+	'right-customreports' => '{{doc-right|customreports}}',
 );

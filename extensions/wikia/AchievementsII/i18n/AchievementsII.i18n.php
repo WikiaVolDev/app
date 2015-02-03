@@ -21,6 +21,8 @@ Please try another one!',
 	//rights
 	'right-platinum' => 'Create and edit Platinum badges',
 	'right-sponsored-achievements' => 'Manage Sponsored achievements',
+	'right-achievements-exempt' => 'User is ineligible to earn achievement points',
+	'right-achievements-explicit' => 'User is eligible to earn achievement points (Overrides exempt)',
 	'action-platinum' => 'create and edit Platinum badges',
 
 	/*
@@ -603,6 +605,8 @@ $4 is any of:
 *$2 is the number of badges the user has earned",
 	'achievements-userprofile-ranked' => '*$1 is the ranking of the user.',
 	'action-platinum' => '{{doc-action|platinum}}',
+	'right-achievements-exempt' => '{{doc-right|achievements-exempt}}',
+	'right-achievements-explicit' => '{{doc-right|achievements-explicit}}',
 );
 
 /** Afrikaans (Afrikaans)

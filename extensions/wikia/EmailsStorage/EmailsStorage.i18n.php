@@ -8,4 +8,5 @@ $messages['en'] = array(
 	'emailsstorage-button-export' => 'Export to CSV',
 	'emailsstorage-source-scavenger-hunt' => 'Scavenger Hunt',
 	'emailsstorage-source-quiz' => 'Quiz',
+	'right-emailsstorage' => 'Have email storage',
 );

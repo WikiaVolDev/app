@@ -63,6 +63,9 @@ $messages['en'] = array(
 
 // Chrome
 	'admindashboard-back-to-dashboard' => 'Back to Dashboard',
+	
+// Rights
+	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
 );
 
 /** Message documentation (Message documentation) */
@@ -113,6 +116,7 @@ $messages['qqq'] = array(
 	'admindashboard-control-special-css-tooltip' => 'Tooltip/hover describing Special:CSS',
 	'admindashboard-control-lvs-label' => 'Label for link to Special:LicensedVideoSwap',
 	'admindashboard-control-lvs-tooltip' => 'Toolsip/hover describing the Special:LicensedVideoSwap page',
+	'right-admindashboard' => '{{doc-right|admindashboard}}',
 );
 
 /** Magyar (magázó) (Magyar (magázó))

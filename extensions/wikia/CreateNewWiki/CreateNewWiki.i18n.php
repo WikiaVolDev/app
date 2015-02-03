@@ -84,6 +84,9 @@ $messages['en'] = array(
 	'cnw-error-bot-header' => 'You have been detected as a bot',
 	'cnw-error-unconfirmed-email-header' => 'Your e-mail has not been confirmed',
 	'cnw-error-unconfirmed-email' => 'Your e-mail should be confirmed to create a Wiki.',
+	// rights
+	'right-createnewwiki' => 'Allows the user to create a new Wiki',
+	'right-createwikilimitsexempt' => 'User is exempt from wiki creation limits',
 );
 
 /** Message documentation (Message documentation)
@@ -169,6 +172,8 @@ Be careful to keep it short as there are 2 successive balloon tips to display in
 	'cnw-error-bot-header' => 'Message header for modal box',
 	'cnw-error-unconfirmed-email-header' => 'Message header for modal box',
 	'cnw-error-unconfirmed-email' => 'Message describing your e-mail has not been confirmed yet therefore you cannot process with Wiki creation',
+	'right-createnewwiki' => '{{doc-right|createnewwiki}}',
+	'right-createwikilimitsexempt' => '{{doc-right|createwikilimitsexempt}}',
 );
 
 /** Afrikaans (Afrikaans)
