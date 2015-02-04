@@ -114,6 +114,10 @@ $messages['en'] = array(
 	'wikifeatures-log-header' => 'Below is a list of Wiki Features settings changes.',
 
 	'action-wikifeaturesview' => 'view Wiki Features',
+	
+	// Rights
+	'right-wikifeatures' => 'Can toggle extensions available in Special:WikiFeatures',
+	'right-wikifeaturesview' => 'Can view Special:WikiFeatures',
 );
 
 /** Message documentation (Message documentation)
@@ -129,6 +133,9 @@ $messages['qqq'] = array(
 	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Description text for enabling the Media Gallery feature',
 
 	'action-wikifeaturesview' => '{{doc-action|wikifeaturesview}}',
+	
+	'right-wikifeatures' => '{{doc-right|wikifeatures}}',
+	'right-wikifeaturesview' => '{{doc-right|wikifeaturesview}}',
 );
 
 /** Arabic (العربية)

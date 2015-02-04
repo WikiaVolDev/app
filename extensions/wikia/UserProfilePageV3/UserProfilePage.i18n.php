@@ -129,6 +129,12 @@ $messages['en'] = array(
 	'user-identity-avatars-maintenance' => 'Upload and deletion of avatars temporarily disabled during maintenance!',
 
 	'userprofilepage-edit-modal-error' => 'Unexpected error occurred',
+	
+	//Rights messages for rights associated with groups
+	'right-council' => 'Can access the Community Council Wiki',
+	'right-voldev' => 'Flags user as "Volunteer Developer" on user profile',
+	'right-authenticated' => 'An account which has been vetted by Wikia, as being a legitimate industry source (for example, a celebrity or a game developer)',
+	'right-displaywikiastarslabel' => 'Flags the user as "Wikia Star" on user profile',
 );
 
 /** Message documentation (Message documentation)
@@ -164,6 +170,10 @@ $messages['qqq'] = array(
 	'user-identity-remove-confirmation' => 'appears when user is trying to remove avatar',
 	'user-identity-remove-fail' => 'appears in alert box when there ware some when removing the avatar',
 	'userprofilepage-edit-modal-error' => 'Appears in user profile page edit modal when an unexpected error appears',
+	'right-council' => '{{doc-right|council}}',
+	'right-voldev' => '{{doc-right|voldev}}',
+	'right-authenticated' => '{{doc-right|authenticated}}',
+	'right-displaywikiastarslabel' => '{{doc-right|displaywikiastarslabel}}',
 );
 
 /** Arabic (العربية)

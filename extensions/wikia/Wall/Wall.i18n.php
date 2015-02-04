@@ -382,6 +382,16 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'group-threadmoderator' => 'Moderators',
 	'group-threadmoderator-member' => 'Moderator',
 	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
+	
+	'right-walledit' => 'Can edit wall posts',
+	'right-wallarchive' => 'Can archive wall posts',
+	'right-wallremove' => 'Can remove wall threads',
+	'right-wallshowwikiaemblem' => 'Flags user as "Wikia Staff" on wall posts',
+	'right-wallfastadmindelete' => 'Can delete wall messages with 1 click',
+	'right-walladmindelete' => 'Can delete message wall messages',
+	'right-wallmessagemove' => 'Can move wall messages',
+	'right-notifyeveryone' => 'Can notify everyone about a Forum thread',
+	'right-editwallarchivedpages' => 'Can edit archived talk pages',
 );
 
 /** Message documentation (Message documentation)
@@ -847,6 +857,15 @@ checkbox on Special:Block',
 	'group-threadmoderator' => '{{doc-group|threadmoderator}}',
 	'group-threadmoderator-member' => '{{doc-group|threadmoderator|member}}',
 	'grouppage-threadmoderator' => '{{doc-group|threadmoderator|page}}',
+	'right-walledit' => '{{doc-right|walledit}}',
+	'right-wallarchive' => '{{doc-right|wallarchive}}',
+	'right-wallremove' => '{{doc-right|wallremove}}',
+	'right-wallshowwikiaemblem' => '{{doc-right|wallshowwikiaemblem}}',
+	'right-wallfastadmindelete' => '{{doc-right|wallfastadmindelete}}',
+	'right-walladmindelete' => '{{doc-right|walladmindelete}}',
+	'right-wallmessagemove' => '{{doc-right|wallmessagemove}}',
+	'right-notifyeveryone' => '{{doc-right|notifyeveryone}}',
+	'right-editwallarchivedpages' => '{{doc-right|editwallarchivedpages}}',
 );
 
 /** Old English (Ænglisc)

@@ -119,6 +119,11 @@ $messages['en'] = array(
 	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wikis}} found',
 	'multiwikifinder-redirect' => 'redirect',
 	'action-multiwikifinder' => 'search for a specific title across Wikia',
+	
+	//Rights
+	'right-multidelete' => 'Delete many pages at one Wikia, or one page on many Wikia',
+	'right-multiwikifinder' => 'Find pages on many Wikia',
+	'right-multiwikiedit' => 'Edit a page on many wikis at once',
 );
 
 /** Message documentation (Message documentation)
@@ -160,6 +165,9 @@ Parameters:
 * $1 is a number (example: 7 or 12).',
 	'multiwikifinder-redirect' => '{{Identical|Redirect}}',
 	'action-multiwikifinder' => '{{doc-action|multiwikifinder}}',
+	'right-multidelete' => '{{doc-right|multidelete}}',
+	'right-multiwikifinder' => '{{doc-right|multiwikifinder}}',
+	'right-multiwikiedit' => '{{doc-right|multiwikiedit}}',
 );
 
 /** Afrikaans (Afrikaans)

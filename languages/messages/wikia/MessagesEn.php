@@ -1042,4 +1042,7 @@ hu',
 
 'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
 
+// Labels for rights not added via extension
+'right-editmyoptions' => 'Can edit your own preferences',
+
 ));

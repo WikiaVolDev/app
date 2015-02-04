@@ -9,6 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'imageserving-desc' => 'Selects images from a specified array of pages based on visual requirements',
+	'right-imageservingtest' => 'Allows access to Special:ImageServingTest',
 );
 
 /** Message documentation (Message documentation)
@@ -16,6 +17,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'imageserving-desc' => '{{desc}}',
+	'right-imageservingtest' => '{{doc-right|imageservingtest}}',
 );
 
 /** Arabic (العربية)

@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'cacheepoch-not-updated' => 'Failed to update wgCacheEpoch.',
 	'cacheepoch-wf-reason' => 'Value updated via Special:CacheEpoch',
 	'cacheepoch-no-wf' => 'WikiFactory is not enabled on this wiki. Unable to alter wgCacheEpoch.',
+	'right-cacheepoch' => 'Can change wgCacheEpoch per wiki',
 );
 
 /** Message documentation (Message documentation)
@@ -19,6 +20,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'cacheepoch-desc' => '{{desc}}',
 	'cacheepoch-wf-reason' => 'Log message for administrators only. Do not change "Special:CacheEpoch"',
+	'right-cacheepoch' => '{{doc-right|cacheepoch}}',
 );
 
 /** Arabic (العربية)

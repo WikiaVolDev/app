@@ -19,5 +19,8 @@ $messages = array_merge( $messages, array(
 'vertical-music' => 'Music vertical name',
 'vertical-movies' => 'Movies vertical name',
 
+# rights
+'right-editmyoptions' => '{{doc-right|editmyoptions}}',
+
 ) );
 

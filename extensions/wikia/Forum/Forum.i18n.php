@@ -231,6 +231,10 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 
 	'forum-related-discussion-see-more' => 'See more discussions',
 	'forum-confirmation-board-deleted' => '"$1" has been deleted.',
+	
+	// rights
+	'right-forumadmin' => 'Has admin access to the forums',
+	'right-forumoldedit' => 'Can edit the old, archived forums',
 );
 
 /** Message documentation (Message documentation)
@@ -459,6 +463,8 @@ Parameters:
 	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
 	'forum-related-discussion-see-more' => 'See More link to topic page',
 	'forum-confirmation-board-deleted' => 'Board delete confirmation message. $1 is board name',
+	'right-forumadmin' => '{{doc-right|forumadmin}}',
+	'right-forumoldedit' => '{{doc-right|forumoldedit}}',
 );
 
 /** Old English (Ænglisc)

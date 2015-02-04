@@ -66,6 +66,7 @@ $messages['en'] = array(
 	'lvs-no-monobook-support' => "This page is not supported in Monobook. To access it in the Wikia layout, $1. This will not change your layout preference",
 	'lvs-click-here' => 'click here',
 	'lvs-new-flag' => 'New',
+	'right-licensedvideoswap' => 'Allows access to Special:LicensedVideoSwap',
 );
 
 /** Message documentation (Message documentation)
@@ -157,6 +158,7 @@ Parameters:
 	'lvs-click-here' => 'Used as <code>$1</code> in {{msg-wikia|Lvs-no-monobook-support}}.',
 	'lvs-new-flag' => 'This message is shown in the new flag when the video has new suggestions.
 {{Identical|New}}',
+	'right-licensedvideoswap' => '{{doc-right|licensedvideoswap}}',
 );
 
 /** Arabic (العربية)

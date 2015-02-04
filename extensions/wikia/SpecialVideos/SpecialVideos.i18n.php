@@ -34,6 +34,8 @@ $messages['en'] = array(
 	'specialvideos-btn-load-more' => 'Load More',
 	'specialvideos-posted-in-label' => 'Posted in',
 	'related-videos-tooltip-add' => 'Add a video to this wiki',
+	'right-specialvideosdelete' => 'Can delete videos',
+	'right-videoupload' => 'Can upload videos',
 );
 
 $messages['qqq'] = array(
@@ -63,6 +65,8 @@ $messages['qqq'] = array(
 	'specialvideos-filter-entertainment' => 'Label that appears in sort/filter pulldown to show only trending entertainment videos',
 	'specialvideos-btn-load-more' => 'Label for button that loads more videos when clicked',
 	'specialvideos-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted. Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly. Think of it as a label or a heading followed by bullet points. ex: "Posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
+	'right-specialvideosdelete' => '{{doc-right|specialvideosdelete}}',
+	'right-videoupload' => '{{doc-right|videoupload}}',
 );
 
 $messages['de'] = array(

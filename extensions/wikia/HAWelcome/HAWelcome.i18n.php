@@ -63,6 +63,7 @@ Welcome to {{SITENAME}} and thank you for your edit to the [[:$1]] page. We enco
 
 If you need help, check out our [[Help:Contents|help pages]] first and then visit [[w:c:community|Community Central]] to learn more. Happy editing!",
 	'welcome-description' => 'Sends a welcome message to users after their first edits',
+	'right-welcomeexempt' => 'Flags user as exempt from welcome tool messages',
 );
 
 /** Message documentation (Message documentation)
@@ -88,6 +89,7 @@ $3 is the name of the last admin who edited in the wiki.',
 
 Please translate the link texts but leave the link addresses untranslated. Wikia administrators will localise the link addresses when the localized hubs of the wikis are available.',
 	'welcome-description' => 'The description of the extension displayed on the Special:Version page.',
+	'right-welcomeexempt' => '{{doc-right|welcomeexempt}}',
 );
 
 /** Arabic (العربية)

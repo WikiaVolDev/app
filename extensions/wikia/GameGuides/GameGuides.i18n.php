@@ -48,7 +48,13 @@ $messages['en'] = array(
 	'wikiagameguides-sponsored-orphaned-video' => 'Video has to have a language',
 	'wikiagameguides-sponsored-delete-videos-are-you-sure' => 'Are you sure you want to erase everything?',
 	'wikiagameguides-sponsored-video-does-not-exist' => 'This video does not exist',
-	'wikiagameguides-sponsored-video-is-not-ooyala' => 'This video is not provided by Ooyala'
+	'wikiagameguides-sponsored-video-is-not-ooyala' => 'This video is not provided by Ooyala',
+	
+	//Rights
+	'right-gameguidescontent' => 'Allows access to Special:GameGuidesContent',
+	'right-gameguidescontent-switchforadmins' => 'Allows access to Special:GameGuidesContent',
+	'right-gameguidespreview' => 'Preview how a wiki mainpage looks in the Game Guides app',
+	'right-gameguidessponsored' => 'Update Sponsored Videos in the Game Guides app',
 );
 
 /** Message documentation (Message documentation)
@@ -99,7 +105,13 @@ $messages['qqq'] = array(
 	'wikiagameguides-sponsored-orphaned-video' => 'Popup message next to a row of a video that is not assigned to any language',
 	'wikiagameguides-sponsored-delete-videos-are-you-sure' => 'Popup message that asks if user is sure to delete all data',
 	'wikiagameguides-sponsored-video-does-not-exist' => 'Popup message next to an input with a video that do not exist',
-	'wikiagameguides-sponsored-video-is-not-ooyala' => 'Popup message next to an input with a video that is not provided by ooyala video provider'
+	'wikiagameguides-sponsored-video-is-not-ooyala' => 'Popup message next to an input with a video that is not provided by ooyala video provider',
+	
+	//Rights
+	'right-gameguidescontent' => '{{doc-right|gameguidescontent}}',
+	'right-gameguidescontent-switchforadmins' => '{{doc-right|gameguidescontent-switchforadmins}}',
+	'right-gameguidespreview' => '{{doc-right|gameguidespreview}}',
+	'right-gameguidessponsored' => '{{doc-right|gameguidessponsored}}',
 );
 
 /** Asturian (asturianu)

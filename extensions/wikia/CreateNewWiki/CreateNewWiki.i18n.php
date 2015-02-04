@@ -87,6 +87,7 @@ $messages['en'] = array(
 	// rights
 	'right-createnewwiki' => 'Allows the user to create a new Wiki',
 	'right-createwikilimitsexempt' => 'User is exempt from wiki creation limits',
+	'right-finishcreate' => 'Can finish the wiki creation process',
 );
 
 /** Message documentation (Message documentation)
@@ -174,6 +175,7 @@ Be careful to keep it short as there are 2 successive balloon tips to display in
 	'cnw-error-unconfirmed-email' => 'Message describing your e-mail has not been confirmed yet therefore you cannot process with Wiki creation',
 	'right-createnewwiki' => '{{doc-right|createnewwiki}}',
 	'right-createwikilimitsexempt' => '{{doc-right|createwikilimitsexempt}}',
+	'right-finishcreate' => '{{doc-right|finishcreate}}',
 );
 
 /** Afrikaans (Afrikaans)
