@@ -33,6 +33,7 @@ $messages['en'] = array(
 	'whereisextension-search-type' => 'Type:',
 	'whereisextension-search-type-bool' => "Boolean",
 	'whereisextension-search-type-full' => "Like",
+	'right-WhereIsExtension' => 'Allows access to Special:WhereIsExtension',
 );
 
 /** Message documentation (Message documentation)
@@ -45,6 +46,7 @@ $messages['qqq'] = array(
 	'whereisextension-filter' => 'Used as some kind of fieldset description.
 {{Identical|Filter}}',
 	'whereisextension-search-type' => '{{Identical|Type}}',
+	'right-WhereIsExtension' => '{{doc-right|WhereIsExtension}}',
 );
 
 /** Afrikaans (Afrikaans)

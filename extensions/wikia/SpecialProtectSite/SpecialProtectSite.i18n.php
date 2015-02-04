@@ -41,6 +41,7 @@ $messages['en'] = array(
 	'protectsite-upload-0' => 'Registered users and sysops',
 	'protectsite-upload-1' => 'Sysops only',
 	'action-protectsite' => 'temporarily block various site modifications',
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
 );
 
 /** Message documentation (Message documentation)
@@ -55,6 +56,7 @@ $messages['qqq'] = array(
 	'protectsite-log-suppressed' => 'If the protecting user chooses to hide the amount of time in the log entry, then the log entry will say indicate the protection length was hidden',
 	'protectsite-unprotect' => '{{Identical|Unprotect}}',
 	'action-protectsite' => '{{doc-action|protectsite}}',
+	'right-protectsite' => '{{doc-right|protectsite}}',
 );
 
 /** Afrikaans (Afrikaans)

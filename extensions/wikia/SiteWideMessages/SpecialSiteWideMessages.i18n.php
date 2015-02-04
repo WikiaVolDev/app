@@ -121,6 +121,8 @@ $messages['en'] = array(
 	'swm-mode-wikis-created-between' => 'Between',
 	'swm-label-mode-wikis-created-hint' => '<i>Dates must be in the form 2012-04-01 00:00:00</i>',
 	'swm-error-created-tobeforefrom' => 'Wiki creation end date is before start date.',
+	
+	'right-messagetool' => 'Send messages to all the wikis',
 );
 
 /** Message documentation (Message documentation)
@@ -216,6 +218,7 @@ Referred to in:
 {{Identical|Between}}',
 	'swm-label-mode-wikis-created-hint' => 'Message that lets the user know that dates must be in the form 2012-04-01 00:00:00.',
 	'swm-error-created-tobeforefrom' => 'Error message when given wiki creation end date is before start date.',
+	'right-messagetool' => '{{doc-right|messagetool}}',
 );
 
 /** Afrikaans (Afrikaans)

@@ -1043,6 +1043,9 @@ hu',
 'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
 
 // Labels for rights not added via extension
-'right-editmyoptions' => 'Can edit your own preferences',
+'right-editmyoptions' => 'Can edit your own preferences', # Used with includes/api/ApiOptions.php
+'right-loggedin' => 'Flags user as being logged in to an account',  # Protection option on CC
+'right-mcachepurge' => 'Control memcached behaviour via request parameters', # includes/wikia/Wikia.php
+'right-emailconfirmed' => 'User has been email confirmed', # Used on CC
 
 ));

@@ -21,6 +21,9 @@ $messages = array_merge( $messages, array(
 
 # rights
 'right-editmyoptions' => '{{doc-right|editmyoptions}}',
+'right-loggedin' => '{{doc-right|loggedin}}',
+'right-mcachepurge' => '{{doc-right|mcachepurge}}',
+'right-emailconfirmed' => '{{doc-right|emailconfirmed}}',
 
 ) );
 

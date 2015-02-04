@@ -13,7 +13,8 @@ $messages = array();
  */
 $messages['en'] = array(
 	'staffpowers-desc' => 'Gives Staff various superpowers like unblockable.',
-	'staffpowers-ipblock-abort' => 'Blocking Wikia Staff, Wikia Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.'
+	'staffpowers-ipblock-abort' => 'Blocking Wikia Staff, Wikia Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.',
+	'right-unblockable' => 'Cannot be blocked',
 );
 
 /** Message documentation (Message documentation)
@@ -22,6 +23,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'staffpowers-desc' => '{{desc}}',
 	'staffpowers-ipblock-abort' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
+	'right-unblockable' => '{{doc-right|unblockable}}',
 );
 
 /** Arabic (العربية)

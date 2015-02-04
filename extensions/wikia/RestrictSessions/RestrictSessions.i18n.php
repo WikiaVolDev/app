@@ -14,6 +14,7 @@ $messages = array();
  */
 $messages['en'] = array(
 	'restrictsessions-desc' => 'Enforce more secure sessions for staff members.',
+	'right-restrictsession' => 'Have enforced secure sessions',
 );
 
 /**
@@ -21,4 +22,5 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'restrictsessions-desc' => '{{desc}}',
+	'right-restrictsession' => '{{doc-right|restrictsession}}',
 );

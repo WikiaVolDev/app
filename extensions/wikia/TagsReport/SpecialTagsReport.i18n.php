@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|page|pages}})',
 	'tagsreportpagesfound' => 'Found <strong>$1</strong> {{PLURAL:$1|page|pages}}, which contain special tag (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Generated on $1 at $2',
-	'tagsreportpageremoved' => 'Page #$1 has been removed'
+	'tagsreportpageremoved' => 'Page #$1 has been removed',
 	'right-tagsreport' => '[[{{NS:SPECIAL}}:TagsReport|View]] report of used special tags',
 );
 

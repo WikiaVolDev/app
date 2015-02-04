@@ -54,6 +54,10 @@ $messages['en'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
+	
+	// Rights
+	'right-quicktools' => 'Quickly revert and delete spam and vandalism, via special tools',
+	'right-quickadopt' => 'Quickly grant rights when approving adoption requests, via Special:Contributions.',
 );
 
 /**
@@ -97,4 +101,6 @@ $messages['qqq'] = array(
 	'quicktools-adopt-confirm-ok' => 'Message for the OK button in the confirm dialog',
 	'quicktools-adopt-confirm-cancel' => 'Message for the cancel button in the confirm dialog',
 	'quicktools-adopt-confirm-title' => 'Title of confirm dialog',
+	'right-quicktools' => '{{doc-right|quicktools}}',
+	'right-quickadopt' => '{{doc-right|quickadopt}}',
 );

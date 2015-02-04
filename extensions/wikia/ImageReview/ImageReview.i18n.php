@@ -37,6 +37,11 @@ $messages['en'] = array(
 	'right-questionableimagereview' => 'Allows access to Special:ImageReview/questionable',
 	'right-rejectedimagereview' => 'Allows access to Special:ImageReview/rejected',
 	'right-imagereviewcontrols' => 'Allows access to image review controls',
+	'right-promoteimagereview' => 'Allows access to Special:PromoteImageReview',
+	'right-promoteimagereviewquestionableimagereview' => 'Allows access to Special:PromoteImageReview/questionable',
+	'right-promoteimagereviewrejectedimagereview' => 'Allows access to Special:PromoteImageReview/rejected',
+	'right-promoteimagereviewstats' => 'Allows access to Special:PromoteImageReview/stats',
+	'right-promoteimagereviewcontrols' => 'View controls on images uploaded through Special:Promote',
 );
 
 $messages['qqq'] = array(
@@ -54,6 +59,11 @@ $messages['qqq'] = array(
 	'right-questionableimagereview' => '{{doc-right|questionableimagereview}}',
 	'right-rejectedimagereview' => '{{doc-right|rejectedimagereview}}',
 	'right-imagereviewcontrols' => '{{doc-right|imagereviewcontrols}}',
+	'right-promoteimagereview' => '{{doc-right|promoteimagereview}}',
+	'right-promoteimagereviewstats' => '{{doc-right|promoteimagereviewstats}}',
+	'right-promoteimagereviewquestionableimagereview' => '{{doc-right|promoteimagereviewquestionableimagereview}}',
+	'right-promoteimagereviewrejectedimagereview' => '{{doc-right|promoteimagereviewrejectedimagereview}}',
+	'right-promoteimagereviewcontrols' => '{{doc-right|promoteimagereviewcontrols}}',
 );
 
 $messages['pl'] = array(

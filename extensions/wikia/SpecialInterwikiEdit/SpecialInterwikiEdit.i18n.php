@@ -24,6 +24,7 @@ $messages['en'] = array(
 	'iwedit-success'                => 'Link creation successful.',
 	'iwedit-local'                  => 'Local-only interwiki? (i.e. not global)',
 	'iwedit-trans'                  => 'Enable scary transclusion',
+	'right-InterwikiEdit'           => 'Allows access to Special:InterwikiEdit',
 );
 
 /** Message documentation (Message documentation)
@@ -34,6 +35,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'interwikiedit-desc' => '{{desc}}',
 	'iwedit-update' => '{{Identical|Update}}',
+	'right-InterwikiEdit' => '{{doc-right|InterwikiEdit}}',
 );
 
 /** Afrikaans (Afrikaans)

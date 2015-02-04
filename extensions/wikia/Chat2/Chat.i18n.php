@@ -97,6 +97,7 @@ $messages['en'] = array(
 	'right-chat' => 'Chat with other users, via [[Help:Chat|Chat]]',
 	'right-chatadmin' => 'User has chat admin rights on [[Help:Chat|Chat]]',
 	'right-chatstaff' => 'User has Wikia Staff rights on [[Help:Chat|Chat]]',
+	'right-chatfailover' => 'Can access Special:Chatfailover',
     'group-chatmoderator' => 'Chat moderators',
     'group-chatmoderator-member' => 'Chat moderator',
     'grouppage-chatmoderator' => 'w:c:community:Help:Chat',

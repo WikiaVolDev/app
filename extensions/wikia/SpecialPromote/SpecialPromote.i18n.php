@@ -78,7 +78,9 @@ $messages['en'] = array(
 	'promote-upload-image-uploads-disabled' => 'File uploads are currently disabled on your wiki. Please try again later.',
 
 	'promote-extension-under-rework-header' => 'Special:Promote disabled',
-	'promote-extension-under-rework' => 'The Special:Promote module has been disabled. A new feature is currently in progress and will be announced soon. If there are questions, please don\'t hesitate to reach us through [[Special:Contact]].'
+	'promote-extension-under-rework' => 'The Special:Promote module has been disabled. A new feature is currently in progress and will be announced soon. If there are questions, please don\'t hesitate to reach us through [[Special:Contact]].',
+	
+	'right-restricted_promote' => 'Can use the restricted Promote tool',
 );
 
 $messages['de'] = array(
@@ -440,5 +442,7 @@ $messages['qqq'] = array(
 	'promote-upload-image-uploads-disabled' => 'Information to the user that file uploading is temporarily disabled',
 
 	'promote-extension-under-rework-header' => 'Page title stating that Special:Promote is disabled',
-	'promote-extension-under-rework' => 'Information displayed to sysops and bureaucrats that the Special:Promote page has been disabled for maintenance, new feature to replace it is being worked on and will be announced soon. Includes call to action to use [[Special:Contact]] in case of questions.'
+	'promote-extension-under-rework' => 'Information displayed to sysops and bureaucrats that the Special:Promote page has been disabled for maintenance, new feature to replace it is being worked on and will be announced soon. Includes call to action to use [[Special:Contact]] in case of questions.',
+	
+	'right-restricted_promote' => '{{doc-right|restricted_promote}}',
 );

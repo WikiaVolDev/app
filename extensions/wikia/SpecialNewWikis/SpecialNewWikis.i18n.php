@@ -11,6 +11,7 @@ $messages['en'] = array(
 	"newwikis-desc" => "Get list of the newest Wikis",
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display wikis starting at:",
+	"right-newwikislist" => "Allows access to Special:Newwikis",
 );
 $messages['af'] = array(
 	'newwikis' => "Nuwe wiki's",

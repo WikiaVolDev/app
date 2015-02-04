@@ -17,6 +17,7 @@ Check your spelling.',
 	'action-piggyback' => 'log on as another user',
 	'log-name-piggyback' => 'Piggyback log',
 	'log-description-piggyback' => 'This log is a record of account piggybacks.',
+	'right-piggyback' => 'Allows access to Special:Piggyback',
 );
 
 /** Message documentation (Message documentation)
@@ -26,6 +27,7 @@ $messages['qqq'] = array(
 	'action-piggyback' => '{{doc-action|piggyback}}',
 	'log-name-piggyback' => '{{doc-logpage}}',
 	'log-description-piggyback' => 'Appears on top of Special:Log/piggyback.',
+	'right-piggyback' => '{{doc-right|piggyback}}',
 );
 
 /** Afrikaans (Afrikaans)

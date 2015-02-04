@@ -182,6 +182,8 @@ $messages['en'] = array(
 	'scavengerhunt-editor-tip-facebook-description' => 'Text that will be displayed in sharing message',
 	'scavengerhunt-facebook-image' => 'Facebook sharing image',
 	'scavengerhunt-facebook-description' => 'Facebook sharing text',
+	
+	'right-scavengerhunt' => 'Allows access to Special:ScavengerHunt',
 );
 
 /** Message documentation (Message documentation)
@@ -201,6 +203,7 @@ $messages['qqq'] = array(
 	'scavengerhunt-label-clue-size' => '{{Identical|Font size}}',
 	'scavengerhunt-editor-tip-entry-form-email' => '{{doc-singularthey}}',
 	'scavengerhunt-editor-tip-entry-form-username' => '{{doc-singularthey}}',
+	'right-scavengerhunt' => '{{doc-right|scavengerhunt}}',
 );
 
 /** Afrikaans (Afrikaans)

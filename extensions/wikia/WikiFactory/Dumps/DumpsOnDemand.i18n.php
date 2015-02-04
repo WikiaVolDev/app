@@ -20,7 +20,8 @@ $messages['en'] = array(
 	'dump-database-request-already-submitted' => 'Dump has been requested recently (less than 7 days ago)',
 	'dump-database-request-requested' => 'Request for database dump sent',
 	'dump-database-info-more' => 'Please <a href="http://community.wikia.com/wiki/Help:Database_download">see</a> for more info',
-	'dump-database-last-unknown' => 'Unknown'
+	'dump-database-last-unknown' => 'Unknown',
+	'right-dumpsondemand' => 'User can request database dumps on demand, via Special:Statistics',
 );
 
 /** Message documentation (Message documentation)
@@ -30,6 +31,7 @@ $messages['qqq'] = array(
 	'dump-database' => '{{Identical|Database dump}}',
 	'dump-database-last-unknown' => 'Used when the time of the last database dump request is not known, or if there have been no requests.
 {{Identical|Unknown}}',
+	'right-dumpsondemand' => '{{doc-right|dumpsondemand}}',
 );
 
 /** Afrikaans (Afrikaans)

@@ -9,6 +9,7 @@ $messages['en'] = array(
 	'minieditor-message-edit' => 'This is an existing message',
 	'minieditor-reply' => 'Reply',
 	'minieditor-placeholder-reply' => 'Reply to the message here',
+	'right-minieditor-specialpage' => 'Allows access to Special:MiniEditorDemo',
 );
 
 /** Message documentation (Message documentation)
@@ -22,6 +23,7 @@ $messages['qqq'] = array(
 	'minieditor-reply' => 'Button text for replying to a message.
 {{Identical|Reply}}',
 	'minieditor-placeholder-reply' => 'Placeholder text, showin in an input field, disappears when clicked',
+	'right-minieditor-specialpage' => '{{doc-right|minieditor-specialpage}}',
 );
 
 /** Arabic (العربية)

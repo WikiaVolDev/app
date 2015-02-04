@@ -63,6 +63,7 @@ $messages['en'] = array(
 	'wikifactory-button-save' => 'Save changes',
 	'wikifactory-public-status-change-default-reason' => 'Status changed from the Domains tab.',
 // metrics
+	'right-wikifactorymetrics' => 'Allows access to Special:WikiFactory/metrics',
 	"awc-metrics-language-top-list" => "de,en,es,fr,it,ja,pl,pt,pt-br,zh",
 	"awc-metrics-wikis" => "Display Wikis",
 	"awc-metrics-select" => "Show Wikis:",
@@ -220,6 +221,7 @@ The fact that these are maximum values is explained by [[Wikia:Awc-metrics-fewer
 	'closed-reason' => '{{Identical|Reason}}',
 	'newwikisgraph' => 'Title of a special page',
 	'newwikisgraph-param-all' => '{{Identical|All}}',
+	'right-wikifactorymetrics' => '{{doc-right|wikifactorymetrics}}',
 );
 
 /** Afrikaans (Afrikaans)
