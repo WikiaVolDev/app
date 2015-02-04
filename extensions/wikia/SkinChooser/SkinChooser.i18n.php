@@ -10,6 +10,7 @@ $messages['en'] = array(
 	'skinchooser-desc' => 'Allows users to choose skins in their preferences',
 	'new-look' => 'Wikia',
 	'site-layout' => 'Site Layouts',
+	'right-setadminskin' => 'Set the wiki\'s default skin',
 );
 
 /** Arabic (العربية)

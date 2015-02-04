@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Tool]] to search for a specific page title across wikis',
 	'scribeevents' => 'Recent events',
 	'scribeeventsrecords' => 'Records',
+	'right-scribeevents' => 'Allows access to Special:ScribeEvents',
 );
 
 /** Message documentation (Message documentation)
@@ -21,6 +22,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'scribe-desc' => '{{desc}}',
 	'scribeeventsrecords' => '{{Identical|Record}}',
+	'right-scribeevents' => '{{doc-right|scribeevents}}',
 );
 
 /** Arabic (العربية)

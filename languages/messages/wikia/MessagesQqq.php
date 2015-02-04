@@ -24,6 +24,7 @@ $messages = array_merge( $messages, array(
 'right-loggedin' => '{{doc-right|loggedin}}',
 'right-mcachepurge' => '{{doc-right|mcachepurge}}',
 'right-emailconfirmed' => '{{doc-right|emailconfirmed}}',
+'right-runjob' => '{{doc-right|runjob}}',
 
 ) );
 

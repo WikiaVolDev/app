@@ -14,12 +14,15 @@ $messages['en'] = array(
 	'userdata-not-updated' => 'Failed to update wgUserData.',
 	'userdata-wf-reason' => 'Value updated via [[Special:UserData|UserData]]',
 	'userdata-no-wf' => 'WikiFactory is not enabled on this wiki. Unable to alter wgUserData.',
+	
+	'right-userdata' => 'Change wgUserData per wiki via Special:UserData',
 );
 
 /** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'userdata-wf-reason' => 'Log message for administrators only. Do not change "Special:UserData."',
+	'right-userdata' => '{{doc-right|userdata}}',
 );
 
 /** Arabic (العربية)

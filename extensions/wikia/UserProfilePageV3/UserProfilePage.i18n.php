@@ -135,6 +135,7 @@ $messages['en'] = array(
 	'right-voldev' => 'Flags user as "Volunteer Developer" on user profile',
 	'right-authenticated' => 'An account which has been vetted by Wikia, as being a legitimate industry source (for example, a celebrity or a game developer)',
 	'right-displaywikiastarslabel' => 'Flags the user as "Wikia Star" on user profile',
+	'right-removeavatar' => 'Remove a user\'s avatar icon',
 );
 
 /** Message documentation (Message documentation)
@@ -174,6 +175,7 @@ $messages['qqq'] = array(
 	'right-voldev' => '{{doc-right|voldev}}',
 	'right-authenticated' => '{{doc-right|authenticated}}',
 	'right-displaywikiastarslabel' => '{{doc-right|displaywikiastarslabel}}',
+	'right-removeavatar' => '{{doc-right|removeavatar}}',
 );
 
 /** Arabic (العربية)

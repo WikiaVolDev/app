@@ -15,6 +15,7 @@ $messages['qqq'] = array(
     'slowpagesblacklist-title' => 'The title of the error page.',
     'slowpagesblacklist-content' => 'The content of the error page.',
     'slowpagesblacklist-preview-unavailable' => 'The message diplayed instead of page preview.',
+	'right-forceview' => '{{doc-right|forceview}}',
 );
 
 /**
@@ -25,5 +26,6 @@ $messages['en'] = array(
     'slowpagesblacklist-title' => 'Page not available',
     'slowpagesblacklist-content' => 'Due to high server load, this page is currently unavailable. Feel free to check back shortly. Sorry for the trouble and thanks for your patience!',
     'slowpagesblacklist-preview-unavailable' => 'Due to high server load, preview of this page is currently unavailable. Feel free to check back shortly. Sorry for the trouble and thanks for your patience!',
+	'right-forceview' => 'Force blacklisted slow pages to parse',
 );
 

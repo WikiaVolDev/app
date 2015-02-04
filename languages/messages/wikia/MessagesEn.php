@@ -1047,5 +1047,6 @@ hu',
 'right-loggedin' => 'Flags user as being logged in to an account',  # Protection option on CC
 'right-mcachepurge' => 'Control memcached behaviour via request parameters', # includes/wikia/Wikia.php
 'right-emailconfirmed' => 'User has been email confirmed', # Used on CC
+'right-runjob' => 'Run job from the job queue via API', # extensions/wikia/WikiaApi/ApiRunJob.php 
 
 ));
