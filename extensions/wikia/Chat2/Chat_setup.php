@@ -39,9 +39,9 @@ $wgGroupPermissions['vstf']['chatvstf'] = true;
 $wgAvailableRights[] = 'chat';
 $wgGroupPermissions['*']['chat'] = false;
 $wgGroupPermissions['staff']['chat'] = true;
-//if ( $wgWikiaEnvironment == WIKIA_ENV_PROD ) {
+if ( $wgWikiaEnvironment == WIKIA_ENV_PROD ) {
 	$wgGroupPermissions['user']['chat'] = true;
-//}
+}
 
 $wgGroupPermissions['util']['chatfailover'] = true;
 
