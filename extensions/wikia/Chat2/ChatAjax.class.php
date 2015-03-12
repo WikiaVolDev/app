@@ -51,6 +51,7 @@ class ChatAjax {
 			'isChatMod' => $user->isAllowed( 'chatmoderator' ),
 			'isCanGiveChatMod' => $isCanGiveChatMod,
 			'isStaff' => $user->isAllowed( 'chatstaff' ),
+            'isVSTF' => $user->isAllowed( 'chatvstf' ),
 			'username' => $user->getName(),
 			'username_encoded' => rawurlencode($user->getName()),
 			'avatarSrc' => AvatarService::getAvatarUrl($user->getName(), self::CHAT_AVATAR_DIMENSION),

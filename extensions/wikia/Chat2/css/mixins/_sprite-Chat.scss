@@ -1,3 +1,12 @@
+// Generated automatically by Sprite Generator.
+//
+// Do not edit anything between @autopsrite directives manually
+// or your changes will be lost next time someone regenerates the file!
+//
+// Use maintenance/wikia/generateSprites.php to update sprite mixins and/or images.
+// Config file is config/wikia/sprites.php
+//
+
 
 // @autosprite-start
 @mixin sprite-Chat-base() {
@@ -5,159 +14,172 @@
 	background-image: url('/extensions/wikia/Chat2/images/sprite-Chat.png'); /* wgCdnStylePath */
 	background-repeat: no-repeat;
 }
-@mixin sprite-Chat($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
+
+@mixin sprite-Chat-base-embed() {
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+@mixin sprite-Chat($image-name, $width: 0, $height: 0, $offset-x: 0, $offset-y: 0) {
 	$image-x: -1;
 	$image-y: -1;
 	$image-width: -1;
 	$image-height: -1;
-	// @autosprite-image-details: icon-chat_bubble.png@72,0,44edb7af5e5327fde3eb141b6ac9b920
-	@if $imageName == 'icon-chat_bubble' {
+	// @autosprite-image-details: icon-chat_bubble.png@72,0,fdd19bb2c91ef59326b522f2420dcaea
+	@if $image-name == 'icon-chat_bubble' {
 		$image-x: 72px;
-		$image-y: 0px;
+		$image-y: 0;
 		$image-width: 17px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: icon-chat_mod.png@101,0,846e7c899ccaab166e49fe15c9d2359f
-	@if $imageName == 'icon-chat_mod' {
+	// @autosprite-image-details: icon-chat_mod.png@101,0,ed3484ab8420522238e1f3bff1c7c5a6
+	@if $image-name == 'icon-chat_mod' {
 		$image-x: 101px;
-		$image-y: 0px;
+		$image-y: 0;
 		$image-width: 15px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: icon-staff-dark.png@128,0,973195876279cb22992622cb1f106294
-	@if $imageName == 'icon-staff-dark' {
+	// @autosprite-image-details: icon-staff-dark.png@128,0,1a884d4bf6a62560922a24ee7c1c0b26
+	@if $image-name == 'icon-staff-dark' {
 		$image-x: 128px;
-		$image-y: 0px;
+		$image-y: 0;
 		$image-width: 14px;
 		$image-height: 14px;
 	}
-	// @autosprite-image-details: icon-staff-light.png@154,0,811dd6088e9848c6c2e1f13180cd51fb
-	@if $imageName == 'icon-staff-light' {
+	// @autosprite-image-details: icon-staff-light.png@154,0,603e33577efbb81e078cad58ca641304
+	@if $image-name == 'icon-staff-light' {
 		$image-x: 154px;
-		$image-y: 0px;
+		$image-y: 0;
 		$image-width: 14px;
 		$image-height: 14px;
 	}
-	// @autosprite-image-details: menu-allow-dark.png@180,0,964716a6240bf5866e21426f3d3faac4
-	@if $imageName == 'menu-allow-dark' {
+	// @autosprite-image-details: icon-vstf.png@180,0,be296588c1642103486e5ffef682b56e
+	@if $image-name == 'icon-vstf' {
 		$image-x: 180px;
-		$image-y: 0px;
+		$image-y: 0;
+		$image-width: 15px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: menu-allow-dark.png@207,0,73a8006d13d6669aa5823c3359e53986
+	@if $image-name == 'menu-allow-dark' {
+		$image-x: 207px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: menu-allow-light.png@211,0,a48c0dcf10563fd193767544fb3a8060
-	@if $imageName == 'menu-allow-light' {
-		$image-x: 211px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-allow-light.png@238,0,e32f69154fb6299174c200b4402fda09
+	@if $image-name == 'menu-allow-light' {
+		$image-x: 238px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: menu-ban-dark.png@242,0,4b0ed7a1b6bda335fd8336cc99b0148e
-	@if $imageName == 'menu-ban-dark' {
-		$image-x: 242px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-ban-dark.png@269,0,e8fe929f8793e44ef76f45bc904eefac
+	@if $image-name == 'menu-ban-dark' {
+		$image-x: 269px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: menu-ban-light.png@273,0,56a4a9197aea0d72c726bbeddaaa7e7a
-	@if $imageName == 'menu-ban-light' {
-		$image-x: 273px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-ban-light.png@300,0,3564b8a48ea0c4c5a7038dbacdaf67d7
+	@if $image-name == 'menu-ban-light' {
+		$image-x: 300px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: menu-chat_mod-dark.png@304,0,acbab603bf3b3bdd17006ef64dd3443a
-	@if $imageName == 'menu-chat_mod-dark' {
-		$image-x: 304px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-chat_mod-dark.png@331,0,ecf0eeb388046b8b58027b2334bff6e4
+	@if $image-name == 'menu-chat_mod-dark' {
+		$image-x: 331px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: menu-chat_mod-light.png@335,0,3693b0a1bd6bc006a063b2832da4514c
-	@if $imageName == 'menu-chat_mod-light' {
-		$image-x: 335px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-chat_mod-light.png@362,0,f955822beee2a480c3db7f4d87aa1121
+	@if $image-name == 'menu-chat_mod-light' {
+		$image-x: 362px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: menu-contributions-dark.png@366,0,444105d21ec22b2417f35030bc789969
-	@if $imageName == 'menu-contributions-dark' {
-		$image-x: 366px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-contributions-dark.png@393,0,308cdb04e89a274f2ae9211f48b262b1
+	@if $image-name == 'menu-contributions-dark' {
+		$image-x: 393px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: menu-contributions-light.png@397,0,21e26857ffc55aabf061d1efd0bf9403
-	@if $imageName == 'menu-contributions-light' {
-		$image-x: 397px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-contributions-light.png@424,0,539f8c8b49b0946d773d485705fdd04b
+	@if $image-name == 'menu-contributions-light' {
+		$image-x: 424px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: menu-kick-dark.png@428,0,08688633eccef69a7791b861c09a7e16
-	@if $imageName == 'menu-kick-dark' {
-		$image-x: 428px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-kick-dark.png@455,0,5ba6ee5f19ca6749e9af9ecc044815fa
+	@if $image-name == 'menu-kick-dark' {
+		$image-x: 455px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: menu-kick-light.png@459,0,3c438874c328ad695f13828e1bf04ea4
-	@if $imageName == 'menu-kick-light' {
-		$image-x: 459px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-kick-light.png@486,0,b9d3c34463b7d8639df846b70ca37efe
+	@if $image-name == 'menu-kick-light' {
+		$image-x: 486px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: menu-message_wall-dark.png@490,0,2efa835a2716775812132890de3ac503
-	@if $imageName == 'menu-message_wall-dark' {
-		$image-x: 490px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-message_wall-dark.png@517,0,c18d77697d594c6757ac61345484df4c
+	@if $image-name == 'menu-message_wall-dark' {
+		$image-x: 517px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 17px;
 	}
-	// @autosprite-image-details: menu-message_wall-light.png@521,0,ea313a4fd3b8b9d11861673c91054093
-	@if $imageName == 'menu-message_wall-light' {
-		$image-x: 521px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-message_wall-light.png@548,0,8cfdd9e7ae8858544d1ef4cd192e4aff
+	@if $image-name == 'menu-message_wall-light' {
+		$image-x: 548px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 17px;
 	}
-	// @autosprite-image-details: menu-private_message-dark.png@552,0,1584461e1e346ae4c1855f0410bd232f
-	@if $imageName == 'menu-private_message-dark' {
-		$image-x: 552px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-private_message-dark.png@579,0,cc42a3a81e291749c306b4b52fe4868d
+	@if $image-name == 'menu-private_message-dark' {
+		$image-x: 579px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 16px;
 	}
-	// @autosprite-image-details: menu-private_message-light.png@583,0,ee382fe97cf254c985e3794829d02dbc
-	@if $imageName == 'menu-private_message-light' {
-		$image-x: 583px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-private_message-light.png@610,0,c639cbbb3a6e49cf70d625b36117ca97
+	@if $image-name == 'menu-private_message-light' {
+		$image-x: 610px;
+		$image-y: 0;
 		$image-width: 19px;
 		$image-height: 16px;
 	}
-	// @autosprite-image-details: menu-private_message_block-dark.png@614,0,c29ef7c8880272ab227424efd6b6f9d1
-	@if $imageName == 'menu-private_message_block-dark' {
-		$image-x: 614px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-private_message_block-dark.png@641,0,d6fb9950d3f78ab33e5d5fa55cd8c0b5
+	@if $image-name == 'menu-private_message_block-dark' {
+		$image-x: 641px;
+		$image-y: 0;
 		$image-width: 15px;
 		$image-height: 17px;
 	}
-	// @autosprite-image-details: menu-private_message_block-light.png@641,0,ce976b00e00150b609509b4e18bd3468
-	@if $imageName == 'menu-private_message_block-light' {
-		$image-x: 641px;
-		$image-y: 0px;
+	// @autosprite-image-details: menu-private_message_block-light.png@668,0,a68899f6f645b7a4ef9b657d862a71cc
+	@if $image-name == 'menu-private_message_block-light' {
+		$image-x: 668px;
+		$image-y: 0;
 		$image-width: 15px;
 		$image-height: 17px;
 	}
 	@if $image-x != -1 {
-		$position-x: 0px - $image-x;
-		$position-y: 0px - $image-y;
+		$position-x: 0 - $image-x;
+		$position-y: 0 - $image-y;
 		@if $width > 0 {
-			$position-x: $position-x + ( $width - $image-width ) / 2;
+			$position-x: $position-x + ($width - $image-width) / 2;
 		}
 		@if $height > 0 {
-			$position-y: $position-y + ( $height - $image-height ) / 2;
+			$position-y: $position-y + ($height - $image-height) / 2;
 		}
 		@if $offset-x != 0 {
 			$position-x: $position-x + $offset-x;
@@ -168,71 +190,339 @@
 		background-position: $position-x $position-y;
 	}
 }
-@mixin sprite-Chat-full($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
-	@include sprite-Chat-base;
-	@include sprite-Chat($imageName,$width,$height,$offset-x,$offset-y);
+
+@mixin sprite-Chat-embed($image-name, $width: 0, $height: 0, $offset-x: 0, $offset-y: 0) {
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: icon-chat_bubble.png@72,0,fdd19bb2c91ef59326b522f2420dcaea
+	@if $image-name == 'icon-chat_bubble' {
+		$image-width: 17px;
+		$image-height: 15px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/icon-chat_bubble.png'); /* base64 */
+	}
+	// @autosprite-image-details: icon-chat_mod.png@101,0,ed3484ab8420522238e1f3bff1c7c5a6
+	@if $image-name == 'icon-chat_mod' {
+		$image-width: 15px;
+		$image-height: 15px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/icon-chat_mod.png'); /* base64 */
+	}
+	// @autosprite-image-details: icon-staff-dark.png@128,0,1a884d4bf6a62560922a24ee7c1c0b26
+	@if $image-name == 'icon-staff-dark' {
+		$image-width: 14px;
+		$image-height: 14px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/icon-staff-dark.png'); /* base64 */
+	}
+	// @autosprite-image-details: icon-staff-light.png@154,0,603e33577efbb81e078cad58ca641304
+	@if $image-name == 'icon-staff-light' {
+		$image-width: 14px;
+		$image-height: 14px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/icon-staff-light.png'); /* base64 */
+	}
+	// @autosprite-image-details: icon-vstf.png@180,0,be296588c1642103486e5ffef682b56e
+	@if $image-name == 'icon-vstf' {
+		$image-width: 15px;
+		$image-height: 15px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/icon-vstf.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-allow-dark.png@207,0,73a8006d13d6669aa5823c3359e53986
+	@if $image-name == 'menu-allow-dark' {
+		$image-width: 19px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-allow-dark.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-allow-light.png@238,0,e32f69154fb6299174c200b4402fda09
+	@if $image-name == 'menu-allow-light' {
+		$image-width: 19px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-allow-light.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-ban-dark.png@269,0,e8fe929f8793e44ef76f45bc904eefac
+	@if $image-name == 'menu-ban-dark' {
+		$image-width: 19px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-ban-dark.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-ban-light.png@300,0,3564b8a48ea0c4c5a7038dbacdaf67d7
+	@if $image-name == 'menu-ban-light' {
+		$image-width: 19px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-ban-light.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-chat_mod-dark.png@331,0,ecf0eeb388046b8b58027b2334bff6e4
+	@if $image-name == 'menu-chat_mod-dark' {
+		$image-width: 19px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-chat_mod-dark.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-chat_mod-light.png@362,0,f955822beee2a480c3db7f4d87aa1121
+	@if $image-name == 'menu-chat_mod-light' {
+		$image-width: 19px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-chat_mod-light.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-contributions-dark.png@393,0,308cdb04e89a274f2ae9211f48b262b1
+	@if $image-name == 'menu-contributions-dark' {
+		$image-width: 19px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-contributions-dark.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-contributions-light.png@424,0,539f8c8b49b0946d773d485705fdd04b
+	@if $image-name == 'menu-contributions-light' {
+		$image-width: 19px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-contributions-light.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-kick-dark.png@455,0,5ba6ee5f19ca6749e9af9ecc044815fa
+	@if $image-name == 'menu-kick-dark' {
+		$image-width: 19px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-kick-dark.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-kick-light.png@486,0,b9d3c34463b7d8639df846b70ca37efe
+	@if $image-name == 'menu-kick-light' {
+		$image-width: 19px;
+		$image-height: 18px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-kick-light.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-message_wall-dark.png@517,0,c18d77697d594c6757ac61345484df4c
+	@if $image-name == 'menu-message_wall-dark' {
+		$image-width: 19px;
+		$image-height: 17px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-message_wall-dark.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-message_wall-light.png@548,0,8cfdd9e7ae8858544d1ef4cd192e4aff
+	@if $image-name == 'menu-message_wall-light' {
+		$image-width: 19px;
+		$image-height: 17px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-message_wall-light.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-private_message-dark.png@579,0,cc42a3a81e291749c306b4b52fe4868d
+	@if $image-name == 'menu-private_message-dark' {
+		$image-width: 19px;
+		$image-height: 16px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-private_message-dark.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-private_message-light.png@610,0,c639cbbb3a6e49cf70d625b36117ca97
+	@if $image-name == 'menu-private_message-light' {
+		$image-width: 19px;
+		$image-height: 16px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-private_message-light.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-private_message_block-dark.png@641,0,d6fb9950d3f78ab33e5d5fa55cd8c0b5
+	@if $image-name == 'menu-private_message_block-dark' {
+		$image-width: 15px;
+		$image-height: 17px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-private_message_block-dark.png'); /* base64 */
+	}
+	// @autosprite-image-details: menu-private_message_block-light.png@668,0,a68899f6f645b7a4ef9b657d862a71cc
+	@if $image-name == 'menu-private_message_block-light' {
+		$image-width: 15px;
+		$image-height: 17px;
+		background-image: url('/extensions/wikia/Chat2/images/sprite-Chat/menu-private_message_block-light.png'); /* base64 */
+	}
+	@if $image-width != -1 {
+		$position-x: 0;
+		$position-y: 0;
+		@if $width > 0 {
+			$position-x: $position-x + ($width - $image-width) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ($height - $image-height) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
 }
-@mixin sprite-Chat-deep($width: 0,$height: 0) {
+
+@mixin sprite-Chat-full($image-name, $width: 0, $height: 0, $offset-x: 0, $offset-y: 0) {
 	@include sprite-Chat-base;
+	@include sprite-Chat($image-name, $width, $height, $offset-x, $offset-y);
+}
+
+@mixin sprite-Chat-full-embed($image-name, $width: 0, $height: 0, $offset-x: 0, $offset-y: 0) {
+	@include sprite-Chat-base-embed;
+	@include sprite-Chat-embed($image-name, $width, $height, $offset-x, $offset-y);
+}
+
+@mixin sprite-Chat-deep($width: 0, $height: 0) {
+	@include sprite-Chat-base;
+
 	&.icon-chat-bubble {
-		@include sprite-Chat('icon-chat_bubble',$width,$height);
+		@include sprite-Chat('icon-chat_bubble', $width, $height);
 	}
+
 	&.icon-chat-mod {
-		@include sprite-Chat('icon-chat_mod',$width,$height);
+		@include sprite-Chat('icon-chat_mod', $width, $height);
 	}
+
 	&.icon-staff-dark {
-		@include sprite-Chat('icon-staff-dark',$width,$height);
+		@include sprite-Chat('icon-staff-dark', $width, $height);
 	}
+
 	&.icon-staff-light {
-		@include sprite-Chat('icon-staff-light',$width,$height);
+		@include sprite-Chat('icon-staff-light', $width, $height);
 	}
+
+	&.icon-vstf {
+		@include sprite-Chat('icon-vstf', $width, $height);
+	}
+
 	&.menu-allow-dark {
-		@include sprite-Chat('menu-allow-dark',$width,$height);
+		@include sprite-Chat('menu-allow-dark', $width, $height);
 	}
+
 	&.menu-allow-light {
-		@include sprite-Chat('menu-allow-light',$width,$height);
+		@include sprite-Chat('menu-allow-light', $width, $height);
 	}
+
 	&.menu-ban-dark {
-		@include sprite-Chat('menu-ban-dark',$width,$height);
+		@include sprite-Chat('menu-ban-dark', $width, $height);
 	}
+
 	&.menu-ban-light {
-		@include sprite-Chat('menu-ban-light',$width,$height);
+		@include sprite-Chat('menu-ban-light', $width, $height);
 	}
+
 	&.menu-chat-mod-dark {
-		@include sprite-Chat('menu-chat_mod-dark',$width,$height);
+		@include sprite-Chat('menu-chat_mod-dark', $width, $height);
 	}
+
 	&.menu-chat-mod-light {
-		@include sprite-Chat('menu-chat_mod-light',$width,$height);
+		@include sprite-Chat('menu-chat_mod-light', $width, $height);
 	}
+
 	&.menu-contributions-dark {
-		@include sprite-Chat('menu-contributions-dark',$width,$height);
+		@include sprite-Chat('menu-contributions-dark', $width, $height);
 	}
+
 	&.menu-contributions-light {
-		@include sprite-Chat('menu-contributions-light',$width,$height);
+		@include sprite-Chat('menu-contributions-light', $width, $height);
 	}
+
 	&.menu-kick-dark {
-		@include sprite-Chat('menu-kick-dark',$width,$height);
+		@include sprite-Chat('menu-kick-dark', $width, $height);
 	}
+
 	&.menu-kick-light {
-		@include sprite-Chat('menu-kick-light',$width,$height);
+		@include sprite-Chat('menu-kick-light', $width, $height);
 	}
+
 	&.menu-message-wall-dark {
-		@include sprite-Chat('menu-message_wall-dark',$width,$height);
+		@include sprite-Chat('menu-message_wall-dark', $width, $height);
 	}
+
 	&.menu-message-wall-light {
-		@include sprite-Chat('menu-message_wall-light',$width,$height);
+		@include sprite-Chat('menu-message_wall-light', $width, $height);
 	}
+
 	&.menu-private-message-dark {
-		@include sprite-Chat('menu-private_message-dark',$width,$height);
+		@include sprite-Chat('menu-private_message-dark', $width, $height);
 	}
+
 	&.menu-private-message-light {
-		@include sprite-Chat('menu-private_message-light',$width,$height);
+		@include sprite-Chat('menu-private_message-light', $width, $height);
 	}
+
 	&.menu-private-message-block-dark {
-		@include sprite-Chat('menu-private_message_block-dark',$width,$height);
+		@include sprite-Chat('menu-private_message_block-dark', $width, $height);
 	}
+
 	&.menu-private-message-block-light {
-		@include sprite-Chat('menu-private_message_block-light',$width,$height);
+		@include sprite-Chat('menu-private_message_block-light', $width, $height);
 	}
 }
+
+@mixin sprite-Chat-deep-embed($width: 0, $height: 0) {
+	@include sprite-Chat-base-embed;
+
+	&.icon-chat-bubble {
+		@include sprite-Chat-embed('icon-chat_bubble', $width, $height);
+	}
+
+	&.icon-chat-mod {
+		@include sprite-Chat-embed('icon-chat_mod', $width, $height);
+	}
+
+	&.icon-staff-dark {
+		@include sprite-Chat-embed('icon-staff-dark', $width, $height);
+	}
+
+	&.icon-staff-light {
+		@include sprite-Chat-embed('icon-staff-light', $width, $height);
+	}
+
+	&.icon-vstf {
+		@include sprite-Chat-embed('icon-vstf', $width, $height);
+	}
+
+	&.menu-allow-dark {
+		@include sprite-Chat-embed('menu-allow-dark', $width, $height);
+	}
+
+	&.menu-allow-light {
+		@include sprite-Chat-embed('menu-allow-light', $width, $height);
+	}
+
+	&.menu-ban-dark {
+		@include sprite-Chat-embed('menu-ban-dark', $width, $height);
+	}
+
+	&.menu-ban-light {
+		@include sprite-Chat-embed('menu-ban-light', $width, $height);
+	}
+
+	&.menu-chat-mod-dark {
+		@include sprite-Chat-embed('menu-chat_mod-dark', $width, $height);
+	}
+
+	&.menu-chat-mod-light {
+		@include sprite-Chat-embed('menu-chat_mod-light', $width, $height);
+	}
+
+	&.menu-contributions-dark {
+		@include sprite-Chat-embed('menu-contributions-dark', $width, $height);
+	}
+
+	&.menu-contributions-light {
+		@include sprite-Chat-embed('menu-contributions-light', $width, $height);
+	}
+
+	&.menu-kick-dark {
+		@include sprite-Chat-embed('menu-kick-dark', $width, $height);
+	}
+
+	&.menu-kick-light {
+		@include sprite-Chat-embed('menu-kick-light', $width, $height);
+	}
+
+	&.menu-message-wall-dark {
+		@include sprite-Chat-embed('menu-message_wall-dark', $width, $height);
+	}
+
+	&.menu-message-wall-light {
+		@include sprite-Chat-embed('menu-message_wall-light', $width, $height);
+	}
+
+	&.menu-private-message-dark {
+		@include sprite-Chat-embed('menu-private_message-dark', $width, $height);
+	}
+
+	&.menu-private-message-light {
+		@include sprite-Chat-embed('menu-private_message-light', $width, $height);
+	}
+
+	&.menu-private-message-block-dark {
+		@include sprite-Chat-embed('menu-private_message_block-dark', $width, $height);
+	}
+
+	&.menu-private-message-block-light {
+		@include sprite-Chat-embed('menu-private_message_block-light', $width, $height);
+	}
+}
+
 // @autosprite-end

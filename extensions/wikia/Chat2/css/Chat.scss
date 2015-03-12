@@ -165,6 +165,9 @@ a {
 	&.staff .username:after {
 		@include sprite-Chat('icon-staff' + $sprite-normal, 14px, 14px);
 	}
+	&.vstf .username:after {
+		@include sprite-Chat('icon-vstf', 15px, 15px);
+	}
 	.details {
 		font-size: 11px;
 	}
