@@ -38,10 +38,11 @@ class Chat {
 
 		global $wgUser, $wgMemc;
 		if( !$wgUser->isLoggedIn() ) {
-			return array("key" => false ) ;
+			return false;
 		}
 		$key = md5( $wgUser->getId() . "_" . time() . '_' .  mt_rand(0, 65535) );
 		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*48);
+		self::logChatWindowOpenedEvent();
 		return $key;
 	} // end echoCookies()
 
