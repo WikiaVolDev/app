@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * <doc>
+ */
 class RSHiscores {
 	public static $ch = NULL;
 	public static $cache = array();
@@ -16,56 +20,64 @@ class RSHiscores {
 	}
 
 	/**
-	 * Retrieve the raw hiscores data from RuneScape.
+	 * Attempts to lookup hiscore data in memcached before making a fresh request
 	 *
 	 * @param string $hs Which hiscores API to retrieve from.
 	 * @param string $player Player's display name.
 	 * @return string Raw hiscores data
 	 */
-	private static function retrieveHiscores( $hs, $player ) {
-		global $wgHTTPTimeout;
+	private static function lookupHiscores( $hs, $player ) {
+		return WikiaDataAccess::cacheWithLock(
+			// individually cache each player and hiscores?
+			'rshiscores-' . $player . '-' . $hs,
+			// in seconds, might need tweaking further down the line
+			60,
+			function () use ( $hs, $player ) {
+				global $wgHTTPTimeout;
 
-		if ( $hs == 'rs3' ) {
-			$url = 'http://services.runescape.com/m=hiscore/index_lite.ws?player=';
-		} elseif ( $hs == 'osrs' ) {
-			$url = 'http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player=';
-		} else {
-			// Unknown or unsupported hiscores API.
-			return 'H';
-		}
+				if ( $hs == 'rs3' ) {
+					$url = 'http://services.runescape.com/m=hiscore/index_lite.ws?player=';
+				} elseif ( $hs == 'osrs' ) {
+					$url = 'http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player=';
+				} else {
+					// Unknown or unsupported hiscores API.
+					return 'H';
+				}
 
-		// Setup the cURL handler if not previously initialised.
-		if ( self::$ch == NULL ) {
-			self::$ch = curl_init();
-			curl_setopt( self::$ch, CURLOPT_TIMEOUT, $wgHTTPTimeout );
-			curl_setopt( self::$ch, CURLOPT_RETURNTRANSFER, TRUE );
-		}
+				// Setup the cURL handler if not previously initialised.
+				if ( self::$ch == NULL ) {
+					self::$ch = curl_init();
+					curl_setopt( self::$ch, CURLOPT_TIMEOUT, $wgHTTPTimeout );
+					curl_setopt( self::$ch, CURLOPT_RETURNTRANSFER, TRUE );
+				}
 
-		curl_setopt( self::$ch, CURLOPT_URL, $url . urlencode( $player ) );
+				curl_setopt( self::$ch, CURLOPT_URL, $url . urlencode( $player ) );
 
-		if ( $data = curl_exec( self::$ch ) ) {
-			$status = curl_getinfo( self::$ch, CURLINFO_HTTP_CODE );
+				if ( $data = curl_exec( self::$ch ) ) {
+					$status = curl_getinfo( self::$ch, CURLINFO_HTTP_CODE );
 
-			if ( $status == 200 ) {
-				return $data;
-			} elseif ( $status == 404 ) {
-				// The player could not be found.
-				return 'B';
+					if ( $status == 200 ) {
+						return $data;
+					} elseif ( $status == 404 ) {
+						// The player could not be found.
+						return 'B';
+					}
+
+					// An unexpected HTTP status code was returned, so report it.
+					return 'D' . $status;
+				}
+
+				// An unexpected curl error occurred, so report it.
+				$errno = curl_errno ( self::$ch );
+
+				if ( $errno ) {
+					return 'C' . $errno;
+				}
+
+				// Should be impossible, but odd things happen, so handle it.
+				return 'C';
 			}
-
-			// An unexpected HTTP status code was returned, so report it.
-			return 'D'.$status;
-		}
-
-		// An unexpected curl error occurred, so report it.
-		$errno = curl_errno ( self::$ch );
-
-		if( $errno ) {
-			return 'C'.$errno;
-		}
-
-		// Should be impossible, but odd things happen, so handle it.
-		return 'C';
+		);
 	}
 
 	/**
@@ -117,7 +129,8 @@ class RSHiscores {
 		global $wgRSLimit;
 
 		if ( $hs != 'rs3' && $hs != 'osrs' ) {
-			// RSHiscores 3.0 breaks backward-compatibility. Add a tracking category to allow fixing existing usage.
+			// RSHiscores 3.0 breaks backward-compatibility.
+			// Add a tracking category to allow fixing existing usage.
 			$parser->addTrackingCategory( 'rshiscores-error-category' );
 			// Unknown or unsupported hiscores API.
 			return 'H';
@@ -137,10 +150,11 @@ class RSHiscores {
 			// Update the name limit counter.
 			self::$times++;
 
-			// Get the hiscores data from the site.
-			$data = self::retrieveHiscores( $hs, $player );
+			// Check to see if we have the hscores data in memcached.
+			// If not, get the hiscores data from the site.
+			$data = self::lookupHiscores( $hs, $player );
 
-			// escape the result as it's from an external API
+			// Escape the result as it's from an external API.
 			$data = htmlspecialchars( $data, ENT_QUOTES );
 
 			// Add the hiscores data to the cache.
