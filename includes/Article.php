@@ -1280,57 +1280,58 @@ class Article extends Page {
 	 * @return string containing HMTL with redirect link
 	 */
 	public function viewRedirect( $target, $appendSubtitle = true, $forceKnown = false ) {
-		global $wgOut, $wgStylePath;
+		// Wikia change - begin - Backporting MW 1.23+ handling for redirect pages
+		$lang = $this->getTitle()->getPageLanguage();
+		$out = $this->getContext()->getOutput();
+		if ( $appendSubtitle ) {
+			$out->addSubtitle( wfMessage( 'redirectpagesub' ) );
+		}
+		$out->addModuleStyles( 'mediawiki.action.view.redirectPage' );
+		return static::getRedirectHeaderHtml( $lang, $target, $forceKnown );
+		// Wikia change - end
+	}
 
+	// Wikia change - begin - Backporting MW 1.23+ handling for redirect pages
+
+	/**
+	 * Return the HTML for the top of a redirect page
+	 *
+	 * Chances are you should just be using the ParserOutput from
+	 * WikitextContent::getParserOutput instead of calling this for redirects.
+	 *
+	 * @since 1.23
+	 * @param Language $lang
+	 * @param Title|array $target Destination(s) to redirect
+	 * @param bool $forceKnown Should the image be shown as a bluelink regardless of existence?
+	 * @return string Containing HTML with redirect link
+	 */
+	public static function getRedirectHeaderHtml( Language $lang, $target, $forceKnown = false ) {
 		if ( !is_array( $target ) ) {
 			$target = array( $target );
 		}
 
-		$lang = $this->getTitle()->getPageLanguage();
-		$imageDir = $lang->getDir();
-
-		if ( $appendSubtitle ) {
-			$wgOut->appendSubtitle( wfMsgHtml( 'redirectpagesub' ) );
+		$html = '<ul class="redirectText">';
+		/** @var Title $title */
+		foreach ( $target as $title ) {
+			$html .= '<li>' . Linker::link(
+					$title,
+					htmlspecialchars( $title->getFullText() ),
+					array(),
+					// Automatically append redirect=no to each link, since most of them are
+					// redirect pages themselves.
+					array( 'redirect' => 'no' ),
+					( $forceKnown ? array( 'known', 'noclasses' ) : array() )
+				) . '</li>';
 		}
-
-		// the loop prepends the arrow image before the link, so the first case needs to be outside
-
-		/**
-		 * @var $title Title
-		 */
-		$title = array_shift( $target );
-
-		if ( $forceKnown ) {
-			$link = Linker::linkKnown( $title, htmlspecialchars( $title->getFullText() ) );
-		} else {
-			$link = Linker::link( $title, htmlspecialchars( $title->getFullText() ) );
-		}
-
-		$nextRedirect = $wgStylePath . '/common/images/nextredirect' . $imageDir . '.png';
-		$alt = $lang->isRTL() ? '←' : '→';
-		// Automatically append redirect=no to each link, since most of them are redirect pages themselves.
-		foreach ( $target as $rt ) {
-			$link .= Html::element( 'img', array( 'src' => $nextRedirect, 'alt' => $alt ) );
-			if ( $forceKnown ) {
-				$link .= Linker::linkKnown( $rt, htmlspecialchars( $rt->getFullText(), array(), array( 'redirect' => 'no' ) ) );
-			} else {
-				$link .= Linker::link( $rt, htmlspecialchars( $rt->getFullText() ), array(), array( 'redirect' => 'no' ) );
-			}
-		}
-
-		$imageUrl = $wgStylePath . '/common/images/redirect' . $imageDir . '.png';
-
-		# start wikia change - overwrite imageUrl with $wgRedirectIconUrl
-		global $wgRedirectIconUrl;
-		if( !empty( $wgRedirectIconUrl ) ) {
-			$imageUrl = $wgRedirectIconUrl;
-		}
-		# end wikia change
-
+		$html .= '</ul>';
+		$redirectToText = '#REDIRECT';
 		return '<div class="redirectMsg">' .
-			Html::element( 'img', array( 'src' => $imageUrl, 'alt' => '#REDIRECT' ) ) .
-			'<span class="redirectText">' . $link . '</span></div>';
+		'<p>' . $redirectToText . '</p>' .
+		$html .
+		'</div>';
 	}
+
+	// Wikia change - end
 
 	/**
 	 * Handle action=render

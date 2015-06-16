@@ -685,6 +685,14 @@ return array(
 		),
 	),
 
+	// Wikia change - begin - backporting MW 1.23+ redirects
+	// @author TK-999
+	'mediawiki.action.view.redirectPage' => array(
+		'position' => 'top',
+		'styles' => 'resources/mediawiki.action/mediawiki.action.view.redirectPage.css',
+	),
+	// Wikia change - end
+
 	/* MediaWiki Language */
 
 	'mediawiki.language' => array(
