@@ -106,6 +106,12 @@ $wgAutoloadClasses['AchBadge'] = $dir.'AchBadge.class.php';
 $wgAutoloadClasses[ 'UploadAchievementsFromFile' ] = "{$dir}UploadAchievementsFromFile.class.php";
 $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/WikiaPhotoGalleryUpload.class.php";
 
+// tasks
+$wgAutoloadClasses['ManageTracksTask'] = __DIR__ . '/tasks/ManageTracksTask.class.php';
+
+// hooks
+$wgAutoloadClasses['AchievementsHooksHelper'] = __DIR__  . '/AchievementsHooksHelper.class.php';
+
 // I18N
 $wgExtensionMessagesFiles['AchievementsII'] = $dir.'i18n/AchievementsII.i18n.php';
 $wgExtensionMessagesFiles['AchievementsIIAliases'] = $dir.'AchievementsII.alias.php' ;
@@ -133,26 +139,12 @@ function Ach_Setup() {
 
 	//hooks for user preferences
 	$wgHooks['GetPreferences'][] = 'Ach_UserPreferences';
-	$wgHooks['MonacoSidebarGetMenu'][] = 'Ach_GetMenu';
 
-	//hook for purging Achievemets-related cache
+	//hook for purging Achievements-related cache
 	$wgHooks['AchievementsInvalidateCache'][] = 'Ach_InvalidateCache';
+	$wgHooks['ArticleUpdateCategoryCounts'][] = 'AchievementsHooksHelper::onArticleUpdateCategoryCounts';
 
 	wfProfileOut(__METHOD__);
-}
-
-function Ach_GetMenu(&$nodes) {
-	$nodes[0]['children'][] = count($nodes);
-	$nodes[] = array(
-		//'original' => 'achievementsleaderboard',
-		//the message is stored in /languages/messages/wikia/MessagesEn.php to avoid loading the i18n for the extension
-		'text' => wfMsg('achievements-leaderboard-navigation-item'),
-		'href' => Skin::makeSpecialUrl("Leaderboard"),
-  		//'depth' => 1,
-		//'parentIndex' => 0
-	);
-
-	return true;
 }
 
 function Ach_MastheadEditCounter(&$editCounter, $user) {

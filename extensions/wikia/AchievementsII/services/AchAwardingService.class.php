@@ -9,6 +9,9 @@ class AchAwardingService {
 	var $mArticle;
 	var $mRevision;
 	var $mStatus;
+	/**
+	 * @var Title $mTitle
+	 */
 	var $mTitle;
 	var $mBadges = array();
 	var $mNewBadges = array();
@@ -348,8 +351,6 @@ class AchAwardingService {
 	private function processAllInTrack() {
 		wfProfileIn(__METHOD__);
 
-		global $wgContLang;
-
 		if($this->mTitle->isContentPage()) {
 
 			// BADGE_EDIT
@@ -359,26 +360,33 @@ class AchAwardingService {
 			$this->mCounters[BADGE_EDIT]++;
 
 			// EDIT+CATEGORY
-
+/*
 			// get categories article already belongs to
 			$articleCategories = array_change_key_case($this->mTitle->getParentCategories(), CASE_LOWER);
 
 			// get categories to which article is added within this edit
 			$insertedCategories = array_change_key_case(Wikia::getVar('categoryInserts'), CASE_LOWER);
+*/
+			// Fetch edit tracks for page from cache
+			$id = $this->mTitle->getArticleID();
+			$editTracks = ( new \Wikia\Cache\AsyncCache() )
+				->key( self::getEditTrackCacheKeyForPage( $id ) )
+				->ttl( 0 )
+				->callback( 'AchAwardingService::getEditTracksForPage' )
+				->callbackParams( [ $id ] )
+				->value();
+			$logger = Wikia\Logger\WikiaLogger::instance();
+			$logger->debug('edit tracks are ' . json_encode($editTracks));
 
 			// get configuration of edit+categories
 			$editPlusCategory = AchConfig::getInstance()->getInTrackEditPlusCategory();
-
-			$cat1 = strtolower($wgContLang->getNSText(NS_CATEGORY));
-			foreach($editPlusCategory as $badge_type_id => $badge_config) {
-				if($badge_config['enabled']) {
-					$cat2 = str_replace(' ', '_', strtolower($badge_config['category']));
-					if(isset($insertedCategories[$cat2]) || isset($articleCategories[$cat1.':'.$cat2])) {
-						if(empty($this->mCounters[$badge_type_id])) {
-							$this->mCounters[$badge_type_id] = 0;
-						}
-						$this->mCounters[$badge_type_id]++;
+			$logger->debug('existing ones are ' . json_encode($editPlusCategory));
+			foreach ($editPlusCategory as $badge_type_id => $badge_config ) {
+				if ( $badge_config['enabled'] && in_array( $badge_config['category'], $editTracks ) ) {
+					if(  empty( $this->mCounters[$badge_type_id] ) ) {
+						$this->mCounters[$badge_type_id] = 0;
 					}
+					$this->mCounters[$badge_type_id]++;
 				}
 			}
 
@@ -707,5 +715,69 @@ class AchAwardingService {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get edit tracks for the given article
+	 * @param int $id article id
+	 * @return array edit track list
+	 */
+	public static function getEditTracksForPage( $id ) {
+		$db = wfGetDB( DB_MASTER );
+		$data = ( new WikiaSQL() )
+			->SELECT( 'cl_to' )
+			->FROM( 'categorylinks' )
+			->WHERE( 'cl_from' )
+			->EQUAL_TO( $id )
+			->run( $db, function ( $result ) {
+				$data = [];
+				$cache = new \Wikia\Cache\AsyncCache();
+				foreach ( $result as $row ) {
+					$title = Title::newFromText( $row->cl_to, NS_CATEGORY );
+					if ( $title->exists() ) {
+						$tracks = $cache
+							->key( self::getEditTrackCacheKeyForPage( $title->getArticleID() ) )
+							->ttl( 0 )
+							->callback( 'AchAwardingService::getEditTracksForCategory' )
+							->callbackParams( [ $title->getArticleID() ] )
+							->value();
+						$data = array_merge( $data, $tracks );
+					}
+				}
+				return $data;
+			} );
+		return $data;
+	}
+
+	/**
+	 * Get edit tracks for the category marked by $id
+	 * @param int $id category page id
+	 * @return bool|mixed
+	 */
+	public static function getEditTracksForCategory( $id ) {
+		$dbw = wfGetDB( DB_MASTER );
+		return ( new WikiaSQL() )
+			->SELECT( 'pp_propname' )
+			->FROM( 'page_props' )
+			->WHERE( 'pp_value' )
+			->EQUAL_TO( ManageTracksTask::ACHIEVEMENTS_TRACK_DB )
+			->AND_( 'pp_page' )
+			->EQUAL_TO( $id )
+			->run( $dbw, function ( $result ) {
+				$data = [];
+				foreach ( $result as $row ) {
+					$data[] = explode( '::', $row->pp_propname )[ 2 ];
+				}
+				return $data;
+			} );
+	}
+
+	/**
+	 * Get the cache key for edit track data pertaining to a page
+	 * @param int $id article id
+	 * @return string the cache key
+	 */
+	public static function getEditTrackCacheKeyForPage( $id ) {
+		return sha1( 'AchievementsII::' . $id );
 	}
 }
