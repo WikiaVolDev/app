@@ -57,7 +57,6 @@ class Forum extends Walls {
 	 * @return int board count
 	 */
 	public function getBoardCount( $db = DB_SLAVE ) {
-		wfProfileIn( __METHOD__ );
 
 		$dbw = wfGetDB( $db );
 
@@ -70,7 +69,6 @@ class Forum extends Walls {
 			array()
 		);
 
-		wfProfileOut(__METHOD__);
 		return $result['cnt'];
 	}
 
@@ -80,7 +78,6 @@ class Forum extends Walls {
 	 * @return integer $totalThreads
 	 */
 	public function getTotalThreads( $days = 0 ) {
-		wfProfileIn( __METHOD__ );
 
 		$memKey = $this->getMemKeyTotalThreads( $days );
 		$totalThreads = $this->wg->Memc->get( $memKey );
@@ -116,7 +113,6 @@ class Forum extends Walls {
 			$this->wg->Memc->set( $memKey, $totalThreads, 60 * 60 * 12 );
 		}
 
-		wfProfileOut( __METHOD__ );
 
 		return $totalThreads;
 	}
@@ -147,7 +143,6 @@ class Forum extends Walls {
 	}
 
 	public function hasAtLeast( $ns, $count ) {
-		wfProfileIn( __METHOD__ );
 
 		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasAtLeast', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
 			$db = wfGetDB( DB_MASTER );
@@ -164,7 +159,6 @@ class Forum extends Walls {
 			}
 		} );
 
-		wfProfileOut( __METHOD__ );
 		return $out == "YES";
 	}
 
@@ -189,8 +183,6 @@ class Forum extends Walls {
 	 */
 
 	public function createOrders() {
-		wfProfileIn( __METHOD__ );
-
 		$dbw = wfGetDB( DB_MASTER );
 
 		// get board list
@@ -204,27 +196,42 @@ class Forum extends Walls {
 		while ( $row = $dbw->fetchObject( $result ) ) {
 			wfSetWikiaPageProp( WPP_WALL_ORDER_INDEX, $row->page_id, $row->page_id );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
-	 *  createBoard
+	 * Creates a board titled $titletext
+	 *
+	 * @param string $titletext Title of the board to be created
+	 * @param string $body Board description
+	 * @param bool $bot Whether to perform the edit as bot
+	 * @return Status status object indicating edit success
 	 */
-
 	public function createBoard( $titletext, $body, $bot = false ) {
 		return $this->createOrEditBoard( null, $titletext, $body, $bot );
 	}
 
-	public function editBoard( $id, $titletext, $body, $bot = false ) {
-		return $this->createOrEditBoard( $id, $titletext, $body, $bot );
+	/**
+	 * Edits an existing forum board
+	 *
+	 * @param ForumBoard $board ForumBoard instance being edited
+	 * @param string $titletext Board title
+	 * @param string $body Board description
+	 * @param bool $bot Whether to perform the edit as bot
+	 * @return Status status object indicating edit success
+	 */
+	public function editBoard( ForumBoard $board, $titletext, $body, $bot = false ) {
+		return $this->createOrEditBoard( $board, $titletext, $body, $bot );
 	}
 
 	/**
-	 *  create or edit board, if $board = null then we are creating new one
+	 * Create or edit board, if $board = null then we are creating new one
+	 * @param ForumBoard|null $board ForumBoard instance being edited or null if creating one
+	 * @param string $titletext Board title
+	 * @param string $body Board description
+	 * @param bool $bot Whether to perform the edit as bot
+	 * @return Status status object indicating edit success
 	 */
 	protected function createOrEditBoard( $board, $titletext, $body, $bot = false ) {
-		wfProfileIn( __METHOD__ );
 		$id = null;
 		if ( !empty( $board ) ) {
 			$id = $board->getId();
@@ -234,7 +241,6 @@ class Forum extends Walls {
 			self::LEN_OK !== $this->validateLength( $titletext, 'title' ) ||
 			self::LEN_OK !== $this->validateLength( $body, 'desc' )
 		) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -249,14 +255,24 @@ class Forum extends Walls {
 			$title = $nt;
 		}
 
-		$article = new Article( $title );
-		$editPage = new EditPage( $article );
-
-		$editPage->edittime = $article->getTimestamp();
-		$editPage->textbox1 = $body;
-
-		$result = array();
-		$retval = $editPage->internalAttemptSave( $result, $bot );
+		$page = new WikiPage( $title );
+		$status = null;
+		if ( $bot ) {
+			// Set internal IP for bot user to avoid cluttering CU
+			$this->wg->Request->setIP( '127.0.0.1' );
+			$status = $page->doEdit(
+				$body,
+				wfMessage( 'forum-board-edit-summary' )->inContentLanguage()->text(),
+				EDIT_FORCE_BOT | EDIT_MINOR | EDIT_SUPPRESS_RC,
+				false,
+				User::newFromName( Forum::AUTOCREATE_USER )
+			);
+		} else {
+			$status = $page->doEdit(
+				$body,
+				wfMessage( 'forum-board-edit-summary' )->inContentLanguage()->text()
+			);
+		}
 
 		if ( $id == null ) {
 			$title = Title::newFromText( $titletext, NS_WIKIA_FORUM_BOARD );
@@ -267,8 +283,7 @@ class Forum extends Walls {
 
 		Forum::$allowToEditBoard = false;
 
-		wfProfileOut( __METHOD__ );
-		return $retval;
+		return $status;
 	}
 
 	/**
@@ -308,44 +323,30 @@ class Forum extends Walls {
 	}
 
 	/**
-	 * delete board
+	 * Deletes an existing forum board
+	 * @param ForumBoard $board ForumBoard instance to be deleted
 	 */
-
-	public function deleteBoard( $board ) {
-		wfProfileIn( __METHOD__ );
-
+	public function deleteBoard( ForumBoard $board ) {
 		Forum::$allowToEditBoard = true;
 
 		$article = new Article( $board->getTitle() );
 		$article->doDeleteArticle( '', true );
 
 		Forum::$allowToEditBoard = false;
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function createDefaultBoard() {
-		wfProfileIn( __METHOD__ );
-		$app = F::App();
 		if ( !$this->hasAtLeast( NS_WIKIA_FORUM_BOARD, 0 ) ) {
 			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0 ) );
-			/* the wgUser swap is the only way to create page as other user then current */
-			$tmpUser = $app->wg->User;
-			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );
 			for ( $i = 1; $i <= 5; $i++ ) {
-				$body = wfMessage( 'forum-autoboard-body-' . $i, $app->wg->Sitename )->inContentLanguage()->text();
-				$title = wfMessage( 'forum-autoboard-title-' . $i, $app->wg->Sitename )->inContentLanguage()->text();
+				$body = wfMessage( 'forum-autoboard-body-' . $i, $this->wg->Sitename )->inContentLanguage()->text();
+				$title = wfMessage( 'forum-autoboard-title-' . $i, $this->wg->Sitename )->inContentLanguage()->text();
 
 				$this->createBoard( $title, $body, true );
 			}
-
-			$app->wg->User = $tmpUser;
-
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		wfProfileOut( __METHOD__ );
 		return false;
 	}
 

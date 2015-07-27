@@ -191,6 +191,9 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 
 	'forum-related-discussion-see-more' => 'See more discussions',
 	'forum-confirmation-board-deleted' => '"$1" has been deleted.',
+
+	/* edit summary for board modification */
+	'forum-board-edit-summary' => 'Created or edited board',
 );
 
 /** Message documentation (Message documentation)
