@@ -1,0 +1,11 @@
+/* Styling for Expand all/Collapse all button on enhanced RecentChanges */
+#mw-enhanced-rc-toggle-all {
+	display: inline-block;
+	float: right;
+}
+#mw-enhanced-rc-toggle-all:before {
+	content: '[';
+}
+#mw-enhanced-rc-toggle-all:after {
+	content : ']';
+}

@@ -62,4 +62,22 @@ class RecentChangesHooks {
 
 		return true;
 	}
+
+	/**
+	 * Hook: FetchChangesList
+	 * If enhanced RC is enabled, add an "Expand/Collapse all" button to the page
+	 * @author TK-999
+	 *
+	 * @param User $user
+	 * @param Skin $skin
+	 * @param null $list unused - we don't want to create our own ChangesList
+	 * @return bool true to continue hook processing
+	 */
+	public static function onFetchChangesList( User $user, Skin $skin, &$list ) {
+		$isEnhanced = !$skin->getRequest()->getBool( 'hideenhanced', !$user->getGlobalPreference( 'usenewrc' ) );
+		if ( $isEnhanced ) {
+			$skin->getOutput()->addModules( 'wikia.enhancedrc' );
+		}
+		return true;
+	}
 }

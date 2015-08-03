@@ -22,3 +22,23 @@ $wgAutoloadClasses['RecentChangesFiltersStorage'] =  $dir . 'RecentChangesFilter
 // Hooks
 $wgHooks['onGetNamespaceCheckbox'][] = 'RecentChangesHooks::onGetNamespaceCheckbox';
 $wgHooks['SpecialRecentChangesQuery'][] = 'RecentChangesHooks::onGetRecentChangeQuery';
+$wgHooks['FetchChangesList'][] = 'RecentChangesHooks::onFetchChangesList';
+
+// i18n
+$wgExtensionMessagesFiles['RecentChanges'] = $dir . 'RecentChanges.i18n.php';
+
+// ResourceLoader module for enhanced RC
+$wgResourceModules['wikia.enhancedrc'] = [
+	'scripts' => [
+		'js/wikia.enhancedrc.js'
+	],
+	'styles' => [
+		'css/wikia.enhancedrc.css'
+	],
+	'messages' => [
+		'rc-enhanced-expand-all',
+		'rc-enhanced-collapse-all'
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/RecentChanges'
+];

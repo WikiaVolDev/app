@@ -5,14 +5,26 @@
 * @addtogroup Languages
 */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'recentchanges-desc' => 'Recent changes - Wikia implementation',
 	'recentchanges-dropdown-select-all' => 'Select All',
-);
+	'rc-enhanced-expand-all' => 'Expand all',
+	'rc-enhanced-collapse-all' => 'Collapse all',
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'recentchanges-desc' => '{{desc}}',
 	'recentchanges-dropdown-select-all' => 'Shown next to checkbox in toolbar. Used for selecting all other checkboxes.',
-);
+];
+
+/**
+ * Hungarian (magyar)
+ */
+$messages['hu'] = [
+	'recentchanges-desc' => 'Wikia-féle friss változtatások',
+	'recentchanges-dropdown-select-all' => 'Összes kijelölése',
+	'rc-enhanced-expand-all' => 'Összes részlet megjelenítése',
+	'rc-enhanced-collapse-all' => 'Összes részlet elrejtése',
+];
