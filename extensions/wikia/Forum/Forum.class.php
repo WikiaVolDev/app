@@ -8,7 +8,18 @@ class Forum extends Walls {
 
 	const ACTIVE_DAYS = 7;
 	const BOARD_MAX_NUMBER = 50;
+
+	/**
+	 * @var string Name of the Wikia bot used to perform Board autocreates
+	 */
 	const AUTOCREATE_USER = 'Wikia';
+
+	/**
+	 * @var string
+	 * The autocreate user should use an internal IP
+	 * Otherwise, the automated edits will clutter CheckUser queries
+	 */
+	const AUTOCREATE_USER_IP = '127.0.0.1';
 	//controlling from outside if use can edit/create/delete board page
 	static $allowToEditBoard = false;
 
@@ -258,8 +269,9 @@ class Forum extends Walls {
 		$page = new WikiPage( $title );
 		$status = null;
 		if ( $bot ) {
+			// The edit should be performed by the bot - Board autocreation
 			// Set internal IP for bot user to avoid cluttering CU
-			$this->wg->Request->setIP( '127.0.0.1' );
+			$this->wg->Request->setIP( Forum::AUTOCREATE_USER_IP );
 			$status = $page->doEdit(
 				$body,
 				wfMessage( 'forum-board-edit-summary' )->inContentLanguage()->text(),
@@ -268,6 +280,8 @@ class Forum extends Walls {
 				User::newFromName( Forum::AUTOCREATE_USER )
 			);
 		} else {
+			// The action should not be performed by the bot
+			// This means an existing board is being edited
 			$status = $page->doEdit(
 				$body,
 				wfMessage( 'forum-board-edit-summary' )->inContentLanguage()->text()
@@ -329,8 +343,8 @@ class Forum extends Walls {
 	public function deleteBoard( ForumBoard $board ) {
 		Forum::$allowToEditBoard = true;
 
-		$article = new Article( $board->getTitle() );
-		$article->doDeleteArticle( '', true );
+		$page = new WikiPage( $board->getTitle() );
+		$page->doDeleteArticle( '', true );
 
 		Forum::$allowToEditBoard = false;
 	}
