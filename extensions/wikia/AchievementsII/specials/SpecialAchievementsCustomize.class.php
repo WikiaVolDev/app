@@ -97,11 +97,9 @@ class SpecialAchievementsCustomize extends SpecialPage {
 
 							$jsonObj->sectionId = $badge_type_id = $dbw->insertId();
 
-							/*$task = ( new ManageTracksTask( $safeCatName ) )->wikiId( F::app()->wg->CityId );
+							$task = ( new ManageTracksTask( $safeCatName ) )->wikiId( F::app()->wg->CityId );
 							$task->call( 'addTrack' );
-							$task->queue();*/
-							// SRSLY
-							( new ManageTracksTask( $safeCatName ) )->addTrack();
+							$task->queue();
 						}
 					}
 				}

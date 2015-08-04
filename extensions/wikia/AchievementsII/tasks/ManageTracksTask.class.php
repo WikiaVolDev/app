@@ -1,6 +1,14 @@
 <?php
+/**
+ * Handles adding/removing edit tracks to/from categories
+ * @author TK-999
+ *
+ * @file
+ * @ingroup extensions
+ */
 
 use Wikia\Tasks\Tasks\BaseTask;
+
 class ManageTracksTask extends BaseTask {
 
 	const ACHIEVEMENTS_TRACK_PREFIX = 'AchievementsII::Track::';
@@ -35,12 +43,13 @@ class ManageTracksTask extends BaseTask {
 	 * into a category that already has an edit track.
 	 */
 	public function addTrack() {
-		$this->debug( 'Adding achievements track for category ' .  $this->categoryName );
+		$this->info( 'Adding achievements track for category ' .  $this->categoryName, [
+			'method' => __METHOD__
+		] );
 		$targets = $this->getSubCategoriesRecursive( $this->categoryName );
 
 		foreach ( $targets as $pageId ) {
-			//$this->call( 'setPageProp', $pageId );
-			$this->setTrackForCategory( $pageId );
+			$this->call( 'setTrackForCategory', $pageId );
 		}
 	}
 
@@ -48,7 +57,9 @@ class ManageTracksTask extends BaseTask {
 	 * Removes an achievements track from the wiki.
 	 */
 	public function removeTrack() {
-		$this->debug( 'Removing achievements track ' . $this->trackName );
+		$this->info( 'Removing achievements track ' . $this->trackName, [
+			'method' => __METHOD__
+		] );
 		( new WikiaSQL() )
 			->DELETE( 'page_props' )
 			->WHERE( 'pp_propname' )
@@ -77,16 +88,18 @@ class ManageTracksTask extends BaseTask {
 	}
 
 	/**
-	 * Recursively fetches all page IDs for a given category and its subcategories
+	 * Recursively fetches the page IDs of a given category and its subcategories
 	 * @param string $categoryName
 	 * @return array Array of page IDs
 	 */
 	private function getSubCategoriesRecursive( $categoryName ) {
 		$category = Category::newFromName( $categoryName );
+		/** @var TitleArrayFromResult $members */
 		$members = $category->getMembers();
 		$targetPages = [ $category->getTitle()->getArticleId() ];
 
 		while ( $members->valid() ) {
+			/** @var Title $title */
 			$title = $members->current;
 			if ( $title->getNamespace() == NS_CATEGORY ) {
 				$targetPages = array_merge( $targetPages, $this->getSubCategoriesRecursive( $title->getText() ) );

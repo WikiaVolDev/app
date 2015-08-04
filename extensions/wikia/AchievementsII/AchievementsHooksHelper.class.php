@@ -29,6 +29,7 @@ class AchievementsHooksHelper {
 			// If it's a category, we need to check what edit tracks
 			// do the newly added/removed categories add or remove
 			if ( $title->getNamespace() == NS_CATEGORY ) {
+				$cityId = F::app()->wg->CityId;
 				// fetch current tracks from cache
 				$cache = new \Wikia\Cache\AsyncCache();
 				$currentTracks = $cache
@@ -49,11 +50,9 @@ class AchievementsHooksHelper {
 						->value();
 					$newTracks = array_diff( $catTracks, $currentTracks );
 					foreach ( $newTracks as $track ) {
-						//$task = ( new ManageTracksTask( $title->getText(), $track ) )->wikiId( F::app()->wg->CityId );
-						$task = ( new ManageTracksTask( $title->getText(), $track ) );
-						/*$task->call( 'addTrack' );
-						$task->queue();*/
-						$task->addTrack();
+						$task = ( new ManageTracksTask( $title->getText(), $track ) )->wikiId( $cityId);
+						$task->call( 'addTrack' );
+						$task->queue();
 					}
 				}
 
@@ -67,11 +66,9 @@ class AchievementsHooksHelper {
 						->callbackParams( [ $catTitle->getArticleID() ] )
 						->value();
 					foreach ( $catTracks as $track ) {
-						//$task = ( new ManageTracksTask( $title->getText(), $track ) )->wikiId( F::app()->wg->CityId );
-						$task = ( new ManageTracksTask( $title->getText(), $track ) );
-						/*$task->call( 'removeTrack' );
-						$task->queue();*/
-						$task->removeTrack();
+						$task = ( new ManageTracksTask( $title->getText(), $track ) )->wikiId( $cityId );
+						$task->call( 'removeTrack' );
+						$task->queue();
 					}
 				}
 			}
