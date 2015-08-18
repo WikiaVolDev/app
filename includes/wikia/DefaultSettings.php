@@ -40,7 +40,6 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
-
 /**
  * Add composer dependencies before proceeding to lib/Wikia. For now, we are committing
  * dependencies added via composer to lib/composer until external dependencies with composer/packagist
@@ -55,6 +54,8 @@ FluentSql\StaticSQL::setClass("\\WikiaSQL");
  * ttps://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md.
  */
 require_once ( $IP."/lib/Wikia/autoload.php");
+
+require_once ( $IP."/lib/Swagger/autoload.php");
 
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
@@ -300,6 +301,8 @@ $wgAutoloadClasses['SwaggerParameter'] = "$IP/includes/wikia/swagger/SwaggerPara
 $wgAutoloadClasses['SwaggerModel'] = "$IP/includes/wikia/swagger/SwaggerModel.php";
 $wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/SwaggerModelProperty.php";
 $wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
+$wgAutoloadClasses['TemplateClassification'] = "$IP/includes/wikia/TemplateClassification.class.php";
+$wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataExtractor.class.php";
 
 /**
  * Resource Loader enhancements
@@ -353,6 +356,7 @@ $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/Solr
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
+$wgAutoloadClasses['PortableInfoboxDataService'] = $IP . '/extensions/wikia/PortableInfobox/services/PortableInfoboxDataService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -423,6 +427,7 @@ $wgAutoloadClasses['UserAllowedRequirementTrait'] = $IP . '/includes/wikia/trait
 $wgAutoloadClasses['UserAllowedRequirementThrowsErrorTrait'] = $IP . '/includes/wikia/traits/UserAllowedRequirementTrait.php';
 $wgAutoloadClasses['IncludeMessagesTrait'] = $IP . '/includes/wikia/traits/IncludeMessagesTrait.php';
 $wgAutoloadClasses['PowerUserTrait'] = $IP . '/includes/wikia/traits/PowerUserTrait.php';
+$wgAutoloadClasses['GlobalUserDataTrait'] = $IP . '/includes/wikia/traits/GlobalUserDataTrait.php';
 $wgAutoloadClasses['TitleTrait'] = $IP . '/includes/wikia/traits/TitleTrait.php';
 
 // Profiler classes
@@ -433,7 +438,7 @@ $wgAutoloadClasses['ProfilerDataScribeSink'] = "{$IP}/includes/profiler/sinks/Pr
 
 // Skin loading scripts
 $wgHooks['WikiaSkinTopScripts'][] = 'WikiFactoryHubHooks::onWikiaSkinTopScripts';
-$wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
+//$wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
 
 // Set the WikiaLogger mode early in the setup process
 $wgHooks['Debug'][] = 'Wikia\\Logger\\Hooks::onDebug';
@@ -629,6 +634,7 @@ include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
+include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -774,6 +780,7 @@ $wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
 $wgSpecialsDB = 'specials';
+$wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 $wgWikiaMailerDB = 'wikia_mailer';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
@@ -1286,6 +1293,12 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverDelayBelowTheFold = false;
 
 /**
+ * @name $wgAdDriverEnableInvisibleHighImpactSlot
+ * Enables INVISIBLE_HIGH_IMPACT slot
+ */
+$wgAdDriverEnableInvisibleHighImpactSlot = true;
+
+/**
  * @name $wgAdDriverUseAdsAfterInfobox
  * Enable new mobile_in_content slot after infobox placement
  */
@@ -1376,6 +1389,13 @@ $wgSitewideDisableRubiconRTP = false;
 $wgSitewideDisableSevenOneMedia = false;
 
 /**
+ * @name $wgEnableKruxTargeting
+ *
+ * Enables Krux Targeting
+ */
+$wgEnableKruxTargeting = true;
+
+/**
  * @name $wgSitewideDisableKrux
  * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableKrux
@@ -1418,16 +1438,11 @@ $wgAdDriverSevenOneMediaOverrideSub2Site = null;
 $wgAdDriverTrackState = false;
 
 /**
- * @name $wgAdDriverForceLiftiumAd
- * Forces to use Liftium for all slots managed by this provider and disables other providers
+ * @name $wgAdDriverForcedProvider
+ * @example 'liftium', 'turtle' or 'openx'
+ * Forces to use passed provider for all slots managed by this provider and disables other providers.
  */
-$wgAdDriverForceLiftiumAd = false;
-
-/**
- * @name $wgAdDriverForceOpenXAd
- * Forces to use OpenX for all slots managed by this provider and disables other providers
- */
-$wgAdDriverForceOpenXAd = false;
+$wgAdDriverForcedProvider = null;
 
 /**
  * @name $wgAdDriverEnableAdsInMaps
@@ -1459,10 +1474,18 @@ $wgAdDriverRubiconRTPConfig = null;
 $wgAdDriverRubiconRTPCountries = null;
 
 /**
- * @name $wgEnableKruxOnMobile
- * Whether to enable Krux on wikiamobile skin
+ * @name $wgAdDriverKruxCountries
+ * List of countries Krux will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgEnableKruxOnMobile = true;
+$wgAdDriverKruxCountries = null;
+
+/**
+ * @name $wgAdDriverScrollHandlerCountries
+ * List of countries scroll handler will be enabled on
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverScrollHandlerCountries = null;
 
 /**
  * @name $wgHighValueCountries
@@ -1484,6 +1507,13 @@ $wgAdDriverTurtleCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOpenXCountries = null;
+
+/**
+ * @name $wgAdDriverSourcePointCountries
+ * List of countries to call ads through SourcePoint
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverSourcePointCountries = null;
 
 /**
  * trusted proxy service registry
@@ -1720,7 +1750,7 @@ $wgOasisBreakpoints = true;
  * see CONCF-433
  * todo remove when 71M adjusts their styles
  */
-$wgOasisBreakpointsDE = false;
+$wgOasisBreakpointsDE = true;
 
 /**
  * Add poweruser to implicit groups
@@ -1752,3 +1782,8 @@ $wgPaidAssetDropConfig = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverIncontentPlayerSlotCountries = null;
+
+/**
+ * flag for using (possibly external) service for managing a user's preferences
+ */
+$wgPreferencesUseService = false;

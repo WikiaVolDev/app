@@ -1,6 +1,10 @@
 @import './insights-settings';
 
 @if $is-dark-wiki {
+	.insights-icon-flags {
+		background-image: url('/extensions/wikia/Insights/images/flags_dark.svg'); /* inline */
+	}
+
 	.insights-icon-uncategorizedpages {
 		background-image: url('/extensions/wikia/Insights/images/uncategorized_dark.svg'); /* inline */
 	}
@@ -21,6 +25,10 @@
 		background-image: url('/extensions/wikia/Insights/images/genericinsights_dark.svg'); /* inline */
 	}
 } @else {
+	.insights-icon-flags {
+		background-image: url('/extensions/wikia/Insights/images/flags.svg'); /* inline */
+	}
+
 	.insights-icon-uncategorizedpages {
 		background-image: url('/extensions/wikia/Insights/images/uncategorized.svg'); /* inline */
 	}
@@ -75,6 +83,7 @@
 
 .insights-container-nav {
 	float: left;
+	padding-right: $width-insights-nav-content-space;
 	width: $width-insights-nav;
 
 	.insights-nav-list {
@@ -131,7 +140,7 @@
 .insights-container-main {
 	box-sizing: border-box;
 	float: right;
-	width: calc(100% - #{$width-insights-nav});
+	width: calc(100% - #{$width-insights-nav + $width-insights-nav-content-space});
 
 }
 
@@ -149,14 +158,6 @@
 	margin: 0;
 	table-layout: fixed;
 	width: 100%;
-
-	tr {
-
-		td:first-child,
-		th:first-child {
-			padding-left: 15px;
-		}
-	}
 }
 
 .insights-list-header {
@@ -165,6 +166,11 @@
 	border-top: $border-insights-default;
 	padding: 5px 10px;
 	text-align: left;
+	white-space: nowrap;
+}
+
+.insights-list-header-altaction {
+	text-align: right;
 }
 
 .insights-list-header-pageviews {
@@ -178,7 +184,17 @@
 	padding: 10px;
 }
 
+.insights-list-cell-altaction {
+	padding: 0 10px;
+	text-align: right;
+}
+
 .insights-list-item {
+
+	.insights-list-item:first-child,
+	.insights-list-header:first-child {
+		padding-left: 15px;
+	}
 
 	&:last-child {
 

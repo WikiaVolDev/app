@@ -255,7 +255,7 @@ class BodyController extends WikiaController {
 			$page_owner = User::newFromName($wgTitle->getText());
 
 			if($page_owner) {
-				if ( !$page_owner->getOption('hidefollowedpages') ) {
+				if ( !$page_owner->getGlobalPreference('hidefollowedpages') ) {
 					$railModuleList[1101] = array('FollowedPages', 'Index', null);
 				}
 
@@ -412,6 +412,15 @@ class BodyController extends WikiaController {
 		$this->isGridLayoutEnabled = self::isGridLayoutEnabled();
 		if($this->isGridLayoutEnabled) {
 			OasisController::addBodyClass('wikia-grid');
+		}
+
+		if( $this->isOasisBreakpoints() ) {
+			OasisController::addBodyClass( 'oasis-breakpoints' );
+		}
+
+		//@TODO remove this check after deprecating responsive (July 2015)
+		if( $this->isResponsiveLayoutEnabled() ) {
+			OasisController::addBodyClass( 'oasis-responsive' );
 		}
 
 		// if we are on a special search page, pull in the css file and don't render a header

@@ -65,7 +65,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
-		'//extensions/wikia/AdEngine/js/AdInContentPlayer.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
@@ -75,22 +74,30 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
-		'//extensions/wikia/AdEngine/js/GptHelper.js',
-		'//extensions/wikia/AdEngine/js/GptSraHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
-		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/sourcePointTag.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/sraHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.targeting.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
+		'//extensions/wikia/AdEngine/js/slot/inContentPlayer.js',
+		'//extensions/wikia/AdEngine/js/slot/scrollHandler.js',
+		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
@@ -340,6 +347,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//resources/wikia/modules/csspropshelper.js',
 		'//resources/wikia/modules/fluidlayout.js',
+		'//resources/wikia/modules/breakpointsLayout.js',
 
 		// oasis specific files
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
@@ -702,16 +710,21 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
-		'//extensions/wikia/AdEngine/js/GptHelper.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
-		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
+		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adDetect.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.targeting.js',
 		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
@@ -739,6 +752,7 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/geo.js',
+		'//resources/wikia/modules/instantGlobals.js',
 
 		'#group_mobile_base_ads_js',
 		'//resources/wikia/modules/cache.js',
@@ -774,7 +788,11 @@ $config['interactivemaps_ads_js'] = array(
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMaps.js',
-		'//extensions/wikia/AdEngine/js/GptHelper.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js'
 	)
@@ -1002,10 +1020,22 @@ $config['relatedpages_wikiamobile_js'] = array(
 );
 
 /** EditPageLayout **/
+$config['editpage_events_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/EditPreview/js/editpage.event.preview.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.diff.js',
+		'//extensions/wikia/EditPreview/js/editpage.event.helper.js',
+		'//extensions/wikia/EditPreview/js/editpage.events.js'
+	)
+];
+
 $config['editpage_common_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
+		'//extensions/wikia/EditPreview/js/preview.js',
+		'#group_editpage_events_js',
 	)
 );
 
@@ -1037,8 +1067,17 @@ $config['ace_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_editpage_common_js',
+		'#group_ace_editor_plugins_js',
 		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
-		'//extensions/wikia/EditPageLayout/js/editor/AceEditor.js',
+		'//extensions/wikia/EditPageLayout/js/editor/AceEditor.js'
+	)
+);
+
+$config['ace_editor_plugins_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Noticearea.js'
 	)
 );
 
@@ -1627,14 +1666,6 @@ $config['imagedrop_scss'] = array(
 
 /** AnalyticsEngine **/
 /** Note: this group is also used in Oasis! */
-$config['analytics_gas_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile', 'venus' ],
-	'assets' => [
-		'//extensions/wikia/AnalyticsEngine/js/analytics.js'
-	]
-);
-
 $config['universal_analytics_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'wikiamobile', 'venus' ],
@@ -1822,6 +1853,7 @@ $config['special_css_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
+		'#group_editpage_events_js',
 		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js'
@@ -2419,7 +2451,10 @@ $config['portable_infobox_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
+		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
+		/* @TODO DAT-3079 Remove PortableInfobox_beforeSimplification.scss
+		 * once all articles will be purged after release; @see DAT-3009 purging ticket */
+		'//extensions/wikia/PortableInfobox/styles/PortableInfobox_beforeSimplification.scss'
 	]
 ];
 
@@ -2428,7 +2463,10 @@ $config['portable_infobox_monobook_scss'] = [
 	'skin' => ['monobook'],
 	'assets' => [
 		'#group_portable_infobox_scss',
-		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss',
+		/* @TODO DAT-3079 Remove PortableInfoboxMonobook_beforeSimplification.scss
+		 * once all articles will be purged after release; @see DAT-3009 purging ticket */
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook_beforeSimplification.scss'
 	]
 ];
 
@@ -2437,6 +2475,7 @@ $config['flags_view_scss'] = [
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/Flags/styles/Flags.scss',
+		'//extensions/wikia/Flags/styles/FlagsViewEditEntryPoint.scss',
 	],
 ];
 
@@ -2446,6 +2485,23 @@ $config['flags_editform_js'] = [
 	'assets' => [
 		'//extensions/wikia/Flags/scripts/FlagsModal.js'
 	]
+];
+
+$config['flags_special_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/Flags/specials/styles/SpecialFlags.scss',
+	],
+];
+
+$config['flags_special_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/Flags/specials/scripts/SpecialFlags.js',
+		'//extensions/wikia/Flags/specials/scripts/FlagEditForm.js',
+	],
 ];
 
 $config['paid_asset_drop_desktop_js'] = [
@@ -2470,3 +2526,12 @@ $config['sitemap_page_css'] = array(
 		'//extensions/wikia/SitemapPage/styles/SitemapPage.scss',
 	]
 );
+
+$config['template_draft'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/TemplateDraft/scripts/rightRailModule.js',
+		'//extensions/wikia/TemplateDraft/scripts/templateDraft.run.js',
+		'//extensions/wikia/TemplateDraft/scripts/templateDraftTracking.js'
+	]
+];

@@ -43,27 +43,137 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 	}
 
 	public function adContextDataProvider() {
+		$defaultParameters = [
+			'titleMockType' => 'article',
+			'flags' => [],
+			'expectedOpts' => [],
+			'expectedTargeting' => [],
+			'expectedProviders' => [],
+			'expectedForceProviders' => null,
+			'expectedSlots' => [],
+		];
+
 		return [
 			[ ],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverEnableAdsInMaps'],
+				'expectedOpts' => ['enableAdsInMaps' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverEnableInvisibleHighImpactSlot'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForceProviders' => null,
+				'expectedSlots' => ['invisibleHighImpact' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverForceTurtleAd'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForcedProvider' => 'turtle'
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverTrackState'],
+				'expectedOpts' => ['trackSlotState' => true],
+				'expectedTargeting' => []
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverUseMonetizationService', 'wgEnableMonetizationModuleExt'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => ['monetizationService' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverUseSevenOneMedia'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => ['sevenOneMedia' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverWikiIsTop1000'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['wikiIsTop1000' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableAdsInContent'],
+				'expectedOpts' => ['adsInContent' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableOutboundScreenExt'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForceProviders' => null,
+				'expectedSlots' => ['exitstitial' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgOutboundScreenRedirectDelay'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForceProviders' => null,
+				'expectedSlots' => ['exitstitialRedirectDelay' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableWikiaHomePageExt'],
+				'expectedOpts' => ['pageType' => 'corporate'],
+				'expectedTargeting' => ['wikiIsCorporate' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableWikiaHubsV3Ext'],
+				'expectedOpts' => ['pageType' => 'corporate'],
+				'expectedTargeting' => ['pageIsHub' => true, 'wikiIsCorporate' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgWikiDirectedAtChildrenByFounder'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['wikiDirectedAtChildren' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgWikiDirectedAtChildrenByStaff'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['wikiDirectedAtChildren' => true]
+			],
+			[
+				'titleMockType' => 'mainpage',
+				'flags' => [],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['pageType' => 'home']
+			],
+			[
+				'titleMockType' => 'search',
+				'flags' => [],
+				'expectedOpts' => ['pageType' => 'search'],
+				'expectedTargeting' => ['pageType' => 'search', 'pageName' => 'Special:Search']
+			],
 
-			[ 'article', ['wgAdDriverEnableAdsInMaps'], ['enableAdsInMaps' => true] ],
-			[ 'article', ['wgAdDriverEnableInvisibleHighImpactSlot'], [], [], [], [], ['invisibleHighImpact' => true] ],
-			[ 'article', ['wgAdDriverForceTurtleAd'], [], [], [], ['turtle' => true] ],
-			[ 'article', ['wgAdDriverTrackState'], ['trackSlotState' => true], [] ],
-			[ 'article', ['wgAdDriverUseMonetizationService', 'wgEnableMonetizationModuleExt'], [], [], ['monetizationService' => true] ],
-			[ 'article', ['wgAdDriverUseSevenOneMedia'], [], [], ['sevenOneMedia' => true] ],
-			[ 'article', ['wgAdDriverWikiIsTop1000'], [], ['wikiIsTop1000' => true] ],
-			[ 'article', ['wgEnableAdsInContent'], ['adsInContent' => true] ],
-			[ 'article', ['wgEnableKruxTargeting'], [], ['enableKruxTargeting' => true] ],
-			[ 'article', ['wgEnableOutboundScreenExt'], [], [], [], [], ['exitstitial' => true] ],
-			[ 'article', ['wgOutboundScreenRedirectDelay'], [], [], [], [], ['exitstitialRedirectDelay' => true] ],
-			[ 'article', ['wgEnableWikiaHomePageExt'], ['pageType' => 'corporate'], ['wikiIsCorporate' => true] ],
-			[ 'article', ['wgEnableWikiaHubsV3Ext'], ['pageType' => 'corporate'], ['pageIsHub' => true, 'wikiIsCorporate' => true] ],
-			[ 'article', ['wgWikiDirectedAtChildrenByFounder'], [], ['wikiDirectedAtChildren' => true] ],
-			[ 'article', ['wgWikiDirectedAtChildrenByStaff'], [], ['wikiDirectedAtChildren' => true] ],
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'tv', 'expectedMappedVertical' => 'ent']],
 
-			[ 'mainpage', [], [], ['pageType' => 'home'] ],
-			[ 'search', [], ['pageType' => 'search'], ['pageType' => 'search', 'pageName' => 'Special:Search'] ],
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'games', 'expectedMappedVertical' => 'gaming']],
+
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'books', 'expectedMappedVertical' => 'ent']],
+
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'comics', 'expectedMappedVertical' => 'ent']],
+
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'lifestyle', 'expectedMappedVertical' => 'life']],
+
+			$defaultParameters + ['expectedMappings' => ['sourceVertical' => 'not-existing', 'expectedMappedVertical' => 'error']],
 		];
 	}
 
@@ -79,8 +189,9 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedOpts = [],
 		$expectedTargeting = [],
 		$expectedProviders = [],
-		$expectedForceProviders = [],
-		$expectedSlots = []
+		$expectedForcedProvider = null,
+		$expectedSlots = [],
+		$verticals = ['sourceVertical' => 'other', 'expectedMappedVertical' => 'life']
 	) {
 		$langCode = 'xx';
 		$artId = 777;
@@ -93,7 +204,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
 		$sevenOneMediaSub2Site = 'customsub2site';
-		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3Den%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
+		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
+		$expectedSourcePointUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint';
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
@@ -106,10 +218,13 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgDBname', $dbName );
 		$this->mockGlobalVariable( 'wgAdDriverSevenOneMediaOverrideSub2Site', $sevenOneMediaSub2Site );
 
+		if ( !is_null( $expectedForcedProvider ) ) {
+			$this->mockGlobalVariable( 'wgAdDriverForcedProvider', $expectedForcedProvider );
+		}
+
 		// Flags
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableInvisibleHighImpactSlot', false );
-		$this->mockGlobalVariable( 'wgAdDriverForceTurtleAd', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseMonetizationService', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseSevenOneMedia', false );
@@ -130,6 +245,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		// Mock WikiFactoryHub
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryId', $catId );
 		$this->mockStaticMethod( 'WikiFactoryHub', 'getCategoryShort', $shortCat );
+		$this->mockStaticMethod( 'WikiFactoryHub', 'getWikiVertical', ['short'=>$verticals['sourceVertical']] );
 
 		// Mock HubService
 		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object) ['cat_name' => $vertical] );
@@ -157,13 +273,13 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'wikiDbName' => $dbName,
 				'wikiLanguage' => $langCode,
 				'wikiVertical' => $vertical,
+				'mappedVerticalName' => $verticals['expectedMappedVertical']
 			],
 			'providers' => [
 			],
 			'slots' => [
 			],
-			'forceProviders' => [
-			],
+			'forcedProvider' => $expectedForcedProvider
 		];
 
 		foreach ( $expectedOpts as $var => $val ) {
@@ -178,12 +294,14 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$expected['providers'][$var] = $val;
 		}
 
-		foreach ( $expectedForceProviders as $var => $val ) {
-			$expected['forceProviders'][$var] = $val;
-		}
-
 		foreach ( $expectedSlots as $var => $val ) {
 			$expected['slots'][$var] = $val;
+		}
+
+		// Check for SourcePoint URL
+		if ( $skinName === 'oasis' ) {
+			$this->assertStringMatchesFormat( $expectedSourcePointUrlFormat, $result['opts']['sourcePointUrl'] );
+			unset( $result['opts']['sourcePointUrl'] );
 		}
 
 		// Extra check for SevenOne Media URL
