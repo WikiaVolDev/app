@@ -16,19 +16,20 @@ require(
 	 * @param {Object} event
 	 */
 	function toggleAll(event) {
-			var $target = $(event.target),
-				stateWas = $target.data('state');
-			$('.rc-conntent .mw-collapsible-toggle').click();
+		var $target = $(event.target),
+			stateWas = $target.data('state');
 
-			// Check if we collapsed or expanded all
-			// and update the state accordingly.
-			if (stateWas === 'collapsed') {
-				$target.html(mw.message('rc-enhanced-collapse-all').escaped());
-				$target.data('state', 'expanded');
-			} else {
-				$target.html(mw.message('rc-enhanced-expand-all').escaped());
-				$target.data('state', 'collapsed');
-			}
+		// Check if we should collapse or expand all
+		// and update the state accordingly.
+		if (stateWas === 'collapsed') {
+			$('.rc-conntent .mw-collapsible-toggle-collapsed').click();
+			$target.text(mw.message('rc-enhanced-collapse-all').text());
+			$target.data('state', 'expanded');
+		} else {
+			$('.rc-conntent .mw-collapsible-toggle-expanded').click();
+			$target.text(mw.message('rc-enhanced-expand-all').text());
+			$target.data('state', 'collapsed');
+		}
 	}
 
 	/**
@@ -37,8 +38,11 @@ require(
 	function init() {
 		$(document.createElement('a'))
 			.data('state', 'collapsed')
-			.html(mw.message('rc-enhanced-expand-all').escaped())
-			.attr({ id: 'mw-enhanced-rc-toggle-all' })
+			.text(mw.message('rc-enhanced-expand-all').text())
+			.attr({
+				id: 'mw-enhanced-rc-toggle-all',
+				role: 'button'
+			})
 			.on('click', toggleAll)
 			.appendTo('.rc-conntent h4:first');
 	}

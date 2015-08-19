@@ -17,6 +17,8 @@ $messages['en'] = [
 $messages['qqq'] = [
 	'recentchanges-desc' => '{{desc}}',
 	'recentchanges-dropdown-select-all' => 'Shown next to checkbox in toolbar. Used for selecting all other checkboxes.',
+	'rc-enhanced-expand-all' => 'Label for Expand all button',
+	'rc-enhanced-collapse-all' => 'Label for Collapse all button',
 ];
 
 /**

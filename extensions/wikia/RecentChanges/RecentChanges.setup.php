@@ -5,12 +5,12 @@
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'name' => 'RecentChanges',
-	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
+	'author' => [ 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ],
 	'descriptionmsg' => 'recentchanges-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/RecentChanges'
-);
+];
 
 $dir = __DIR__ . '/';
 

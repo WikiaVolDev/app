@@ -1,11 +1,15 @@
 /* Styling for Expand all/Collapse all button on enhanced RecentChanges */
 #mw-enhanced-rc-toggle-all {
+	cursor: pointer;
 	display: inline-block;
 	float: right;
+	font-size: 80%;
 }
 #mw-enhanced-rc-toggle-all:before {
+	color: #000;
 	content: '[';
 }
 #mw-enhanced-rc-toggle-all:after {
+	color: #000;
 	content : ']';
 }
