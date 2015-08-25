@@ -163,7 +163,7 @@ class PageHeaderController extends WikiaController {
 	 *
 	 * @return string $title
 	 */
-	private function getTitle( $mainpageTitle = false ) {
+	private function getTitle( $mainpageTitle = null ) {
 		$displayTitle = true;
 		$wg = $this->wg;
 		$ns = $wg->Title->getNamespace();
@@ -193,7 +193,7 @@ class PageHeaderController extends WikiaController {
 
 		// use message for mainpage title unless it needs to be overridden
 		} else if ( WikiaPageType::isMainPage() ) {
-			$title = isset( $mainpageTitle )
+			$title = $mainpageTitle !== null
 				? $mainpageTitle
 				: wfMessage( 'oasis-home' )->escaped();
 
