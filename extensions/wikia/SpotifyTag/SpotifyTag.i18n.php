@@ -10,6 +10,6 @@ $messages['en'] = [
 
 $messages['qqq'] = [
 	'spotifytag-desc' => 'The description of the app found on [[Special:Version]]',
-	'spotifytag-noid' => 'The error text displayed when there is no uri attribute. In the English one, it points to the help page',
+	'spotifytag-nouri' => 'The error text displayed when there is no uri attribute. In the English one, it points to the help page',
 	'spotifytag-failed-to-render' => 'The error text displayed when we fail to render the Spotify widget'
 ];
