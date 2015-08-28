@@ -46,6 +46,14 @@ class SpotifyTagHooks {
 		}
 		
 		$attributes['src'] = 'https://embed.spotify.com/?uri=' . urlencode( $args['uri'] );
+		if ( !empty( $args['theme'] ) ) {
+			$attributes['src'] = $attributes['src'] . '&theme=' . urlencode( $args['theme'] );
+		}
+		
+		if ( !empty( $args['view'] ) ) {
+			$attributes['src'] = $attributes['src'] . '&view=' . urlencode( $args['view'] );
+		}
+		
 		$attributes['frameborder'] = '0';
 		$attributes['allowtransparency'] = 'true';
 		
