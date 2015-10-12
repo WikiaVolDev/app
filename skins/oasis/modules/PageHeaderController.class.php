@@ -338,9 +338,9 @@ class PageHeaderController extends WikiaController {
 			$this->subtitle = '';
 		}
 
-		// set redirect page type here
-		// this is normally set in Article.php, but it's overriden below (onArticleViewCustom hook)
-		// for redirects in oasis
+		// set "redirect page" subtitle here
+		// this is suppressed in oasis so it can be rebuilt as part of the breadcrumbs
+		// @see Article::view
 		if ( $wg->Title->isRedirect() ) {
 			$this->pageType = wfMessage( 'redirectpagesub' )->escaped();
 		}
@@ -584,39 +584,4 @@ class PageHeaderController extends WikiaController {
 			->inContentLanguage()
 			->text();
 	}
-
-	/**
-	 * Re-implements handling for redirect pages so it doesn't output the "redirect page" subtitle
-	 * Said subtitle is implemented above instead
-	 *
-	 * @param string $text
-	 * @param string $title
-	 * @param OutputPage $output
-	 * @return bool
-	 */
-	public static function onArticleViewCustom( $text, $title, OutputPage $output ) {
-		global $wgParser;
-
-		$skin = RequestContext::getMain()->getSkin();
-
-		// only affect oasis
-		if ( $skin === 'oasis' ) {
-			return true;
-		}
-
-		$rt = Title::newFromRedirectArray( $text );
-
-		if ( $rt ) {
-			$article = new Article( $title );
-			$output->addHTML( $article->viewRedirect( $rt, /* $appendSubtitle = */ false ) );
-
-			$parserOptions = $article->getParserOptions();
-			$parserOutput = $wgParser->parse( $text, $title, $parserOptions );
-			$output->addParserOutputNoText( $parserOutput );
-		}
-
-		return false;
-		
-	}
-
 }
