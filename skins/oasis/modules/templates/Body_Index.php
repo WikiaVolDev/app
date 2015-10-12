@@ -1,5 +1,5 @@
 <?php if ( $displayHeader ) {
-	echo $seoTestOneH1 ? '<h2>' : '<h1>' );
+	echo ( $seoTestOneH1 ? '<h2>' : '<h1>' );
 		echo wfMessage( 'oasis-global-page-header' )->escaped();
 	echo ( $seoTestOneH1 ? '</h2>' : '</h1>' );
 } ?>
