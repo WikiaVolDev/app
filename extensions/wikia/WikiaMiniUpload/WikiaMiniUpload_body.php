@@ -18,21 +18,21 @@ class WikiaMiniUpload {
 		global $wgFileExtensions, $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgUser;
 		global $wgRequest;
 
-		$script_a = array();
+		$script_a = [];
 
-		$script_a['wmu_back'] = htmlspecialchars( wfMsg('wmu-back') );
-		$script_a['wmu_imagebutton'] = htmlspecialchars( wfMsg('wmu-imagebutton') );
-		$script_a['wmu_close'] = htmlspecialchars( wfMsg('wmu-close') );
-		$script_a['wmu_warn1'] = htmlspecialchars( wfMsg('wmu-warn1') );
-		$script_a['wmu_warn2'] = htmlspecialchars( wfMsg('wmu-warn2') );
-		$script_a['wmu_warn3'] = htmlspecialchars( wfMsg('wmu-warn3') );
+		$script_a['wmu_back'] = htmlspecialchars( wfMsg( 'wmu-back' ) );
+		$script_a['wmu_imagebutton'] = htmlspecialchars( wfMsg( 'wmu-imagebutton' ) );
+		$script_a['wmu_close'] = htmlspecialchars( wfMsg( 'wmu-close' ) );
+		$script_a['wmu_warn1'] = htmlspecialchars( wfMsg( 'wmu-warn1' ) );
+		$script_a['wmu_warn2'] = htmlspecialchars( wfMsg( 'wmu-warn2' ) );
+		$script_a['wmu_warn3'] = htmlspecialchars( wfMsg( 'wmu-warn3' ) );
 
-		$script_a['wmu_bad_extension'] = htmlspecialchars( wfMsg('wmu-bad-extension') );
-		$script_a['wmu_title'] = htmlspecialchars( wfMsg('wmu-title') );
-		$script_a['wmu_max_thumb'] = htmlspecialchars( wfMsg('wmu-max-thumb') );
-		$script_a['wmu_no_protect'] = htmlspecialchars( wfMsg('wmu-no-protect') );
-		$script_a['wmu_no_rights'] = htmlspecialchars( wfMsg('wmu-no-rights') );
-		$script_a['badfilename'] = htmlspecialchars( wfMsg('badfilename') );
+		$script_a['wmu_bad_extension'] = htmlspecialchars( wfMsg( 'wmu-bad-extension' ) );
+		$script_a['wmu_title'] = htmlspecialchars( wfMsg( 'wmu-title' ) );
+		$script_a['wmu_max_thumb'] = htmlspecialchars( wfMsg( 'wmu-max-thumb' ) );
+		$script_a['wmu_no_protect'] = htmlspecialchars( wfMsg( 'wmu-no-protect' ) );
+		$script_a['wmu_no_rights'] = htmlspecialchars( wfMsg( 'wmu-no-rights' ) );
+		$script_a['badfilename'] = htmlspecialchars( wfMsg( 'badfilename' ) );
 
 		$script_a['file_extensions'] = $wgFileExtensions;
 		$script_a['file_blacklist'] = $wgFileBlacklist;
@@ -53,7 +53,7 @@ class WikiaMiniUpload {
 		$out = '<div class="reset" id="ImageUpload">';
 		$out .= '<div id="ImageUploadBorder"></div>';
 		$out .= '<div id="ImageUploadProgress1" class="ImageUploadProgress"></div>';
-		$out .= '<div id="ImageUploadBack"><img src="'.$wgBlankImgUrl.'" id="fe_wmuback_img" class="sprite back" alt="'.wfMsg('wmu-back').'" /><a href="#">' . wfMsg( 'wmu-back' ) . '</a></div>' ;
+		$out .= '<div id="ImageUploadBack"><img src="' . $wgBlankImgUrl . '" id="fe_wmuback_img" class="sprite back" alt="' . wfMsg('wmu-back') . '" /><a href="#">' . wfMsg( 'wmu-back' ) . '</a></div>' ;
 		$out .= '<div id="ImageUploadBody" class="nope">';
 		$out .= '<div id="ImageUploadError"></div>';
 		$out .= '<div id="ImageUploadMain">' . $this->loadMain() . '</div>';
@@ -76,13 +76,13 @@ class WikiaMiniUpload {
 	 * @return string
 	 */
 	function loadMain( $error = false ) {
-		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-		$tmpl->set_vars(array(
+		$tmpl = new EasyTemplate( __DIR__ . '/templates/' );
+		$tmpl->set_vars( [
 				'result' => $this->recentlyUploaded(),
 				'error'  => $error
-				)
+			]
 		);
-		return $tmpl->render("main");
+		return $tmpl->render( 'main' );
 	}
 
 	/**
@@ -94,54 +94,45 @@ class WikiaMiniUpload {
 		global $wgRequest;
 
 		$limit = 8;
-		$offset = $wgRequest->getVal('offset');
+		$offset = $wgRequest->getVal( 'offset' );
 
-		$constrain = array();
-		$exactHeight = $wgRequest->getVal('exactHeight');
+		$constrain = [];
+		$exactHeight = $wgRequest->getVal( 'exactHeight' );
 		if ( $exactHeight ) {
 			$constrain[] = "img_height = $exactHeight";
 		}
 
-		$exactWidth = $wgRequest->getVal('exactWidth');
+		$exactWidth = $wgRequest->getVal( 'exactWidth' );
 		if ( $exactWidth ) {
 			$constrain[] = "img_width = $exactWidth";
 		}
 
-		$info = $this->getImages($limit, $offset, $constrain);
+		$info = $this->getImages( $limit, $offset, $constrain );
 
-		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-		$tmpl->set_vars(array('data' => $info));
-		return $tmpl->render("results_recently");
+		$tmpl = new EasyTemplate( __DIR__ . '/templates/' );
+		$tmpl->set_vars( ['data' => $info] );
+		return $tmpl->render( 'results_recently' );
 	}
 
      function query() {
-        global $wgRequest, $wgFlickrAPIKey;
+        global $wgRequest;
 
-        $query = $wgRequest->getText('query');
-        $page = $wgRequest->getVal('page', 1);
-        $sourceId = $wgRequest->getVal('sourceId');
+        $query = $wgRequest->getText( 'query' );
+        $page = $wgRequest->getVal( 'page', 1 );
 
-        if ( $sourceId == 1 ) {
+		if ( (int)$page == 0 ) 
+			$page = 1;
 
-            $flickrAPI = new phpFlickr($wgFlickrAPIKey);
-            $flickrResult = $flickrAPI->photos_search(array('tags' => $query, 'tag_mode' => 'all', 'page' => $page, 'per_page' => 8, 'license' => '4,5', 'sort' => 'interestingness-desc'));
+		$mediaService = new MediaQueryService();
+		$results = $mediaService->searchInTitle( $query, $page, 8 );
 
-			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-            $tmpl->set_vars(array('results' => $flickrResult, 'query' => addslashes($query)));
-
-            return $tmpl->render('results_flickr');
-
-        } else if ( $sourceId == 0 ) {
-
-			if ( (int)$page == 0 ) $page = 1;
-
-			$mediaService = new MediaQueryService();
-			$results = $mediaService->searchInTitle( $query, $page, 8 );
-
-			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-			$tmpl->set_vars(array('results' => $results, 'query' => addslashes($query)));
-			return $tmpl->render('results_thiswiki');
-        }
+		$tmpl = new EasyTemplate( __DIR__ . '/templates/' );
+		$tmpl->set_vars( [
+				'results' => $results, 
+				'query' => addslashes($query)
+			]
+		);
+		return $tmpl->render( 'results_thiswiki' );
     }
 
 
@@ -165,14 +156,14 @@ class WikiaMiniUpload {
 		)->getPath( );
 
 
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 		$dbw->insert(
 			'garbage_collector',
-			array(
+			[
 				'gc_filename'	=>	$path,
 				'gc_timestamp'	=>	$dbw->timestamp(),
 				'gc_wiki_id'	=>	$wgCityId,
-			),
+			],
 			__METHOD__
 		);
 		$dbw->commit();
@@ -187,12 +178,12 @@ class WikiaMiniUpload {
 	function tempFileClearInfo( $id ) {
 		global $wgExternalSharedDB;
 
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 		$dbw->delete(
 			'garbage_collector',
-			array(
+			[
 				'gc_id'	=>	$id,
-			),
+			],
 			__METHOD__
 		);
 		$dbw->commit();
@@ -205,37 +196,16 @@ class WikiaMiniUpload {
 	 */
 	function chooseImage() {
 		global $wgRequest, $wgUser;
-		$itemId = $wgRequest->getVal('itemId');
-		$sourceId = $wgRequest->getInt('sourceId');
+		$itemId = $wgRequest->getVal( 'itemId' );
 
 		$this->assertValidRequest();
 
-		if ( $sourceId == 0 ) {
-			$file = wfFindFile(Title::newFromText($itemId, 6));
-			$props = array();
-			$props['file'] = $file;
-			$props['mwname'] = $itemId;
-			$props['default_caption'] = !empty($file) ? Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption') : '';
-		} else if ( $sourceId == 1 ) {
-
-			$flickrResult = $this->getFlickrPhotoInfo( $itemId );
-
-			$url = "http://farm{$flickrResult['farm']}.static.flickr.com/{$flickrResult['server']}/{$flickrResult['id']}_{$flickrResult['secret']}.jpg";
-			$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => $url);
-			$upload = new UploadFromUrl();
-			$upload->initializeFromRequest(new FauxRequest($data, true));
-			$upload->fetchFile();
-			$tempname = $this->tempFileName( $wgUser );
-			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
-			$file->upload($upload->getTempPath(), '', '');
-			$tempid = $this->tempFileStoreInfo( $tempname );
-			$props = array();
-			$props['file'] = $file;
-			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']).'.jpg');
-			$props['mwname'] = $tempname;
-			$props['extraId'] = $itemId;
-			$props['tempid'] = $tempid;
-		}
+		$file = wfFindFile(Title::newFromText($itemId, 6));
+		$props = [];
+		$props['file'] = $file;
+		$props['mwname'] = $itemId;
+		$props['default_caption'] = !empty($file) ? Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption') : '';
+		
 		return $this->detailsPage($props);
 	}
 
@@ -247,10 +217,10 @@ class WikiaMiniUpload {
 	function checkImage() {
 		global $wgRequest, $wgUser;
 
-		$mSrcName = stripslashes($wgRequest->getFileName( 'wpUploadFile' ));
+		$mSrcName = stripslashes( $wgRequest->getFileName( 'wpUploadFile' ) );
 
 		$upload = new UploadFromFile();
-		$upload->initializeFromRequest($wgRequest);
+		$upload->initializeFromRequest( $wgRequest );
 		$permErrors = $upload->verifyPermissions( $wgUser );
 
 		if ( $permErrors !== true ) {
@@ -259,7 +229,7 @@ class WikiaMiniUpload {
 
 		$ret = $upload->verifyUpload();
 
-		if ( !wfRunHooks('WikiaMiniUpload:BeforeProcessing', array($mSrcName)) ) {
+		if ( !wfRunHooks( 'WikiaMiniUpload:BeforeProcessing', [$mSrcName] ) ) {
 			wfDebug( "Hook 'WikiaMiniUpload:BeforeProcessing' broke processing the file." );
 			return UploadBase::VERIFICATION_ERROR;
 		}
@@ -300,17 +270,17 @@ class WikiaMiniUpload {
 		$check_result = $this->checkImage() ;
 		if ( UploadBase::SUCCESS == $check_result ) {
 			$tempname = $this->tempFileName( $wgUser );
-			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
-			$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
+			$file = new FakeLocalFile( Title::newFromText( $tempname, 6 ), RepoGroup::singleton()->getLocalRepo() );
+			$file->upload( $wgRequest->getFileTempName( 'wpUploadFile' ), '', '' );
 			$tempid = $this->tempFileStoreInfo( $tempname );
-			$props = array();
+			$props = [];
 			$props['file'] = $file;
-			$props['name'] = stripslashes($wgRequest->getFileName('wpUploadFile'));
+			$props['name'] = stripslashes( $wgRequest->getFileName( 'wpUploadFile' ) );
 			$props['mwname'] = $tempname;
 			$props['tempid'] = $tempid;
 			$props['upload'] = true;
-			$props['default_caption'] = Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption');
-			return $this->detailsPage($props);
+			$props['default_caption'] = Wikia::getProps( $file->getTitle()->getArticleID(), 'default_caption' );
+			return $this->detailsPage( $props );
 		} else {
 			return $this->loadMain( $this->translateError( $check_result ) );
 		}
@@ -324,9 +294,9 @@ class WikiaMiniUpload {
 	 */
 	function detailsPage( $props ) {
 
-		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+		$tmpl = new EasyTemplate( __DIR__ . '/templates/' );
 
-		if ( isset($props['name']) ) {
+		if ( isset( $props['name'] ) ) {
 			list( $partname, $ext ) = UploadBase::splitExtensions( $props['name'] );
 
 			if ( count( $ext ) ) {
@@ -350,8 +320,8 @@ class WikiaMiniUpload {
 			return $this->loadMain( $this->translateError( UploadBase::EMPTY_FILE ) );
 		}
 
-		$tmpl->set_vars(array('props' => $props));
-		return $tmpl->render('details');
+		$tmpl->set_vars( ['props' => $props] );
+		return $tmpl->render( 'details' );
 	}
 
 	/**
@@ -371,7 +341,7 @@ class WikiaMiniUpload {
 		$page = $name;
 
 		if ( $page ) {
-			$query = isset($query) ? '&page=' . urlencode( $page ) : 'page=' . urlencode( $page );
+			$query = isset( $query ) ? '&page=' . urlencode( $page ) : 'page=' . urlencode( $page );
 		}
 		$file = wfFindFile( $name );
 		$url = $title->getLocalURL( $query );
@@ -403,7 +373,7 @@ class WikiaMiniUpload {
 						'desc-query' => '') );
 
 			$zoomicon = '';
-			$s .= "</div>";
+			$s .= '</div>';
 		} else {
 			$s = "<div class=\"thumb t{$layout}\"><div class=\"thumbinner\" style=\"width:{$width};\">";
 			$s .= $thumb->toHtml( array(
@@ -413,12 +383,12 @@ class WikiaMiniUpload {
 						'desc-link' => true,
 						'desc-query' => '') );
 				$zoomicon =  '<div class="magnify">'.
-					'<a href="'.$url.'" class="internal" title="'.$more.'">'.
-					'<img src="'.$wgStylePath.'/common/images/magnify-clip.png" ' .
+					'<a href="' . $url . '" class="internal" title="' . $more . '">'.
+					'<img src="' . $wgStylePath . '/common/images/magnify-clip.png" ' .
 					'width="15" height="11" alt="" /></a></div>';
-			$s .= '  <div class="thumbcaption">'.$zoomicon. htmlspecialchars( $caption ) ."</div></div></div>";
+			$s .= '  <div class="thumbcaption">' . $zoomicon . htmlspecialchars( $caption ) . "</div></div></div>";
 		}
-		return str_replace("\n", ' ', $s);
+		return str_replace( '\n', ' ', $s );
 	}
 
 	/**
@@ -431,10 +401,10 @@ class WikiaMiniUpload {
 
 		$this->assertValidRequest();
 
-		$type = $wgRequest->getVal('type');
-		$name = $wgRequest->getVal('name');
-		$mwname = $wgRequest->getVal('mwname');
-		$tempid = $wgRequest->getVal('tempid');
+		$type = $wgRequest->getVal( 'type' );
+		$name = $wgRequest->getVal( 'name' );
+		$mwname = $wgRequest->getVal( 'mwname' );
+		$tempid = $wgRequest->getVal( 'tempid' );
 
 		$gallery = $wgRequest->getVal( 'gallery', '' );
 		$title_main = urldecode( $wgRequest->getVal( 'article', '' ) );
@@ -444,16 +414,15 @@ class WikiaMiniUpload {
 		// Are we in the ck editor?
 		$ck = $wgRequest->getVal( 'ck' );
 
-		$extraId = $wgRequest->getVal('extraId');
 		$newFile =  true;
 		$file = null;
 		if ( $name !== NULL ) {
 			$name = urldecode( $name );
 			if ( $name == '' ) {
-				header('X-screen-type: error');
+				header( 'X-screen-type: error' );
 				return WfMsg( 'wmu-warn3' );
 			} else {
-				$name = preg_replace("/[^".Title::legalChars()."]|:/", '-', $name);
+				$name = preg_replace( '/[^' . Title::legalChars(). ']|:/' , '-', $name );
 				// did they give no extension at all when they changed the name?
 				$ext = explode( '.', $name );
 				array_shift( $ext );
@@ -464,64 +433,54 @@ class WikiaMiniUpload {
 				}
 
 				if ( '' == $finalExt ) {
-					header('X-screen-type: error');
+					header( 'X-screen-type: error' );
 					return wfMsg( 'wmu-filetype-missing' );
 				}
 
 				$title = Title::makeTitleSafe(NS_IMAGE, $name);
 				if ( is_null($title) ) {
-					header('X-screen-type: error');
+					header( 'X-screen-type: error' );
 					return wfMsg ( 'wmu-filetype-incorrect' );
 				}
 				if ( $title->exists() ) {
 					if ( $type == 'overwrite' ) {
-						$title = Title::newFromText($name, 6);
+						$title = Title::newFromText( $name, 6 );
 						// is the target protected?
 						$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
 						$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
-						$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
+						$permErrorsCreate = ( $title->exists() ? [] : $title->getUserPermissionsErrors( 'create', $wgUser ) );
 
 						if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-							header('X-screen-type: error');
+							header( 'X-screen-type: error' );
 							return wfMsg( 'wmu-file-protected' );
 						}
 
-						$file_name = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
-						$file_mwname = new FakeLocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
+						$file_name = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
+						$file_mwname = new FakeLocalFile( Title::newFromText( $mwname, 6 ), RepoGroup::singleton()->getLocalRepo() );
 
-						if ( !empty($extraId) ) {
-							$flickrResult = $this->getFlickrPhotoInfo( $extraId );
+						$caption = '';
 
-							$nsid = $flickrResult['owner']['nsid']; // e.g. 49127042@N00
-							$username = $flickrResult['owner']['username']; // e.g. bossa67
-							$license = $flickrResult['license'];
-
-							$caption = '{{MediaWiki:Flickr'.intval($license).'|1='.wfEscapeWikiText($extraId).'|2='.wfEscapeWikiText($nsid).'|3='.wfEscapeWikiText($username).'}}';
-						} else {
-							$caption = '';
-						}
-
-						$file_name->upload($file_mwname->getPath(), '', $caption);
-						$file_mwname->delete('');
+						$file_name->upload( $file_mwname->getPath(), '', $caption );
+						$file_mwname->delete( '' );
 						$this->tempFileClearInfo( $tempid );
 						$newFile = false;
 					} else if ( $type == 'existing' ) {
 						$file = wfFindFile( Title::newFromText( $name, 6 ) );
 
 						if ( !empty( $file ) ) {
-							header('X-screen-type: existing');
+							header( 'X-screen-type: existing' );
 							$props = array();
 							$props['file'] = $file;
 							$props['mwname'] = $name;
-							$props['default_caption'] = Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption');
-							return $this->detailsPage($props);
+							$props['default_caption'] = Wikia::getProps( $file->getTitle()->getArticleID(), 'default_caption' );
+							return $this->detailsPage( $props );
 						} else {
-							header('X-screen-type: error');
+							header( 'X-screen-type: error' );
 							return wfMsg( 'wmu-file-error' );
 						}
 					} else {
-						header('X-screen-type: conflict');
-						$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+						header( 'X-screen-type: conflict' );
+						$tmpl = new EasyTemplate( __DIR__ . '/templates/' );
 
 						// extensions check
 						list( $partname, $ext ) = UploadBase::splitExtensions( $name );
@@ -541,8 +500,7 @@ class WikiaMiniUpload {
 						$tmpl->set_vars(array(
 									'partname' => $partname,
 									'extension' => strtolower( $finalExt ),
-									'mwname' => $mwname,
-									'extraId' => $extraId
+									'mwname' => $mwname
 								     ));
 						return $tmpl->render('conflict');
 					}
@@ -553,59 +511,49 @@ class WikiaMiniUpload {
 					$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
 
 					if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-						header('X-screen-type: error');
+						header( 'X-screen-type: error' );
 						return wfMsg( 'wmu-file-protected' );
 					}
 
-					$temp_file = new FakeLocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
-					$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
+					$temp_file = new FakeLocalFile( Title::newFromText( $mwname, 6 ), RepoGroup::singleton()->getLocalRepo() );
+					$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
 
-					if ( !empty($extraId) ) {
-						$flickrResult = $this->getFlickrPhotoInfo( $extraId );
+					// get the supplied license value
+					$license = $wgRequest->getVal( 'ImageUploadLicense' );
 
-						$nsid = $flickrResult['owner']['nsid']; // e.g. 49127042@N00
-						$username = $flickrResult['owner']['username']; // e.g. bossa67
-						$license = $flickrResult['license'];
-
-						$caption = '{{MediaWiki:Flickr'.intval($license).'|1='.wfEscapeWikiText($extraId).'|2='.wfEscapeWikiText($nsid).'|3='.wfEscapeWikiText($username).'}}';
+					if ( $license != '' ) {
+						$caption = '== ' . wfMsgForContent( 'license' ) . ' ==\n' . '{{' . $license . '}}' . '\n';
 					} else {
-						// get the supplied license value
-						$license = $wgRequest->getVal( 'ImageUploadLicense' );
-
-						if ( $license != '' ) {
-							$caption = '== ' . wfMsgForContent( 'license' ) . " ==\n" . '{{' . $license . '}}' . "\n";
-						} else {
-							$caption = "";
-						}
+						$caption = '';
 					}
 
-					$file->upload($temp_file->getPath(), '', $caption);
-					$temp_file->delete('');
+					$file->upload( $temp_file->getPath(), '', $caption );
+					$temp_file->delete( '' );
 					$this->tempFileClearInfo( $tempid );
 				}
 
 				if ( $wgUser->getGLobalPreference( 'watchdefault' ) || ( $newFile && $wgUser->getGlobalPreference( 'watchcreations' ) ) ) {
-					$wgUser->addWatch($title);
+					$wgUser->addWatch( $title );
 				}
-				$db =& wfGetDB(DB_MASTER);
+				$db =& wfGetDB( DB_MASTER );
 				$db->commit();
 			}
 		} else {
-			$title = Title::newFromText($mwname, 6);
+			$title = Title::newFromText( $mwname, 6 );
 		}
 
-		if ( is_null($file) ) {
+		if ( is_null( $file ) ) {
 			$file = wfFindFile( $title );
 		}
 
-		if ( !is_object($file) ) {
-			header('X-screen-type: error');
-			return wfMessage('wmu-file-not-found')->plain();
+		if ( !is_object( $file ) ) {
+			header( 'X-screen-type: error' );
+			return wfMessage( 'wmu-file-not-found' )->plain();
 		}
 
 		// Test if this violates the size requirements we've been given
-		if ( $msg = $this->invalidSize($file) ) {
-			header('X-screen-type: error');
+		if ( $msg = $this->invalidSize( $file ) ) {
+			header( 'X-screen-type: error' );
 			return $msg;
 		}
 
@@ -614,19 +562,19 @@ class WikiaMiniUpload {
 		if ( ( -2 == $gallery ) && !$ck ) {
 			// this went in from the single placeholder...
 			$name = $title->getText();
-			$size = $wgRequest->getVal('size');
-			$width = $wgRequest->getVal('width');
-			$layout = $wgRequest->getVal('layout');
+			$size = $wgRequest->getVal( 'size' );
+			$width = $wgRequest->getVal( 'width' );
+			$layout = $wgRequest->getVal( 'layout' );
 
 			// clear the old caption for upload
-			$caption = $wgRequest->getVal('caption');
-			$slider = $wgRequest->getVal('slider');
+			$caption = $wgRequest->getVal( 'caption' );
+			$slider = $wgRequest->getVal( 'slider' );
 
 			$title_obj = Title::newFromText( $title_main, $ns );
 			$article_obj = new Article( $title_obj );
 			$text = $article_obj->getContent();
 
-			wfRunHooks( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
+			wfRunHooks( 'WikiaMiniUpload::fetchTextForImagePlaceholder', [ &$title_obj, &$text ] );
 
 			$box = $wgRequest->getVal( 'box', '' );
 
@@ -638,7 +586,7 @@ class WikiaMiniUpload {
 				$gallery_split = explode( ':', $our_gallery );
 				$thumb = false;
 
-				$tag = $gallery_split[0] . ":" . $name;
+				$tag = $gallery_split[0] . ':' . $name;
 
 				if ( $size != 'full' ) {
 					$tag .= '|thumb';
@@ -658,36 +606,36 @@ class WikiaMiniUpload {
 				}
 
 
-				$tag .= "]]";
+				$tag .= ']]';
 
 				$text = substr_replace( $text, $tag, $placeholder[1], strlen( $our_gallery ) );
 				// return the proper embed code with all fancies around it
 				$embed_code = $this->generateImage( $file, $name, $title_obj, $thumb, (int)str_replace( 'px', '', $width ), $layout, $caption );
 				$message = wfMsg( 'wmu-success' );
 
-				Wikia::setVar('EditFromViewMode', true);
+				Wikia::setVar( 'EditFromViewMode', true );
 
 				$summary = wfMsg( 'wmu-added-from-plc' ) ;
 				$success = $article_obj->doEdit( $text, $summary);
 			}
 
 			if ( $success ) {
-				header('X-screen-type: summary');
+				header( 'X-screen-type: summary' );
 			} else {
 				// failure signal opens js alert (BugId:4935)
-				header('X-screen-type: error');
+				header( 'X-screen-type: error' );
 				return;
 			}
 		} else {
-			header('X-screen-type: summary');
+			header( 'X-screen-type: summary' );
 
-			$size = $wgRequest->getVal('size');
-			$width = $wgRequest->getVal('width');
-			$layout = $wgRequest->getVal('layout');
-			$caption = $wgRequest->getVal('caption');
-			$slider = $wgRequest->getVal('slider');
+			$size = $wgRequest->getVal( 'size' );
+			$width = $wgRequest->getVal( 'width' );
+			$layout = $wgRequest->getVal( 'layout' );
+			$caption = $wgRequest->getVal( 'caption' );
+			$slider = $wgRequest->getVal( 'slider' );
 
-			$tag = '[[' . $ns_img . ':'.$title->getDBkey();
+			$tag = '[[' . $ns_img . ':' . $title->getDBkey();
 			if ( $size != 'full' && ($file->getMediaType() == 'BITMAP' || $file->getMediaType() == 'DRAWING') ) {
 				$tag .= '|thumb';
 				if ( $layout != 'right' ) {
@@ -718,16 +666,16 @@ class WikiaMiniUpload {
 		$message = wfMsg( 'wmu-success' );
 
 		if ( $wgRequest->getVal ( 'update_caption' ) == 'on' ) {
-			Wikia::setProps($title->getArticleID(), array('default_caption' => $caption));
+			Wikia::setProps($title->getArticleID(), ['default_caption' => $caption] );
 		}
 
-		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-		$tmpl->set_vars(array(
+		$tmpl = new EasyTemplate( __DIR__ . '/templates/' );
+		$tmpl->set_vars([
 						'tag' => $tag,
 						'filename' => $ns_img . ':'.$title->getDBkey(),
 						'message' => $message,
 						'code' => isset($embed_code) ? $embed_code : '',
-					 ));
+					 ]);
 		return $tmpl->render('summary');
 	}
 
@@ -746,11 +694,11 @@ class WikiaMiniUpload {
 	 */
 	function invalidSize( $file ) {
 		global $wgRequest;
-		$exactHeight = $wgRequest->getVal('exactHeight');
-		$exactWidth = $wgRequest->getVal('exactWidth');
+		$exactHeight = $wgRequest->getVal( 'exactHeight' );
+		$exactWidth = $wgRequest->getVal( 'exactWidth' );
 
 		// Skip this check if we don't have any constraints
-		if (empty($exactHeight) && empty($exactWidth)) {
+		if ( empty( $exactHeight ) && empty( $exactWidth ) ) {
 			return false;
 		}
 
@@ -763,20 +711,20 @@ class WikiaMiniUpload {
 		//   wmu-error-exact-width-height
 		$msgString = 'wmu-error-exact';
 		$params = array();
-		if ( !empty($exactWidth) && ($fileWidth != $exactWidth) ) {
+		if ( !empty( $exactWidth ) && ( $fileWidth != $exactWidth ) ) {
 			$msgString .= '-width';
 			$params[] = $exactWidth;
 			$params[] = $fileWidth;
 		}
-		if ( !empty($exactHeight) && ($fileHeight != $exactHeight) ) {
+		if ( !empty( $exactHeight ) && ( $fileHeight != $exactHeight ) ) {
 			$msgString .= '-height';
 			$params[] = $exactHeight;
 			$params[] = $fileHeight;
 		}
 
 		// Check if the minimum sizes failed before moving on
-		if (count($params)) {
-			return wfMessage($msgString, $params)->plain();
+		if ( count( $params ) ) {
+			return wfMessage( $msgString, $params )->plain();
 		}
 
 		return false;
@@ -784,19 +732,9 @@ class WikiaMiniUpload {
 
 	function clean() {
 		global $wgRequest;
-		$file = new FakeLocalFile(Title::newFromText($wgRequest->getVal('mwname'), 6), RepoGroup::singleton()->getLocalRepo());
-		$file->delete('');
-		$this->tempFileClearInfo( $wgRequest->getVal('tempid') );
-	}
-
-	function getFlickrPhotoInfo( $itemId ) {
-		global $wgFlickrAPIKey;
-
-		$flickrAPI = new phpFlickr( $wgFlickrAPIKey );
-		$flickrResult = $flickrAPI->photos_getInfo( $itemId );
-
-		// phpFlickr 3.x has different response structure than previous version
-		return $flickrResult['photo'];
+		$file = new FakeLocalFile( Title::newFromText( $wgRequest->getVal( 'mwname' ), 6 ), RepoGroup::singleton()->getLocalRepo() );
+		$file->delete( '' );
+		$this->tempFileClearInfo( $wgRequest->getVal( 'tempid' ) );
 	}
 
 	/**
@@ -812,7 +750,7 @@ class WikiaMiniUpload {
 	 * @param array $constrain An array of constraint/value that will be used in the query
 	 * @return array An array of images
 	 */
-	function getImages( $limit, $offset = 0, $constrain = array() ) {
+	function getImages( $limit, $offset = 0, $constrain = [] ) {
 
 		// Load the next set of images, eliminating images uploaded by bots as
 		// well as eliminating any video files
@@ -821,13 +759,13 @@ class WikiaMiniUpload {
 		$sql = 'SELECT img_size, img_name, img_user, img_user_text, img_description, img_timestamp '.
 				"FROM $image";
 
-		$botconds = array();
+		$botconds = [];
 		foreach ( User::getGroupsWithPermission( 'bot' ) as $groupname ) {
 			$botconds[] = 'ug_group = ' . $dbr->addQuotes( $groupname );
 		}
 
 		$where = array();
-		if ( count($botconds) ) {
+		if ( count( $botconds ) ) {
 			$isbotmember = $dbr->makeList( $botconds, LIST_OR );
 
 			// LEFT join to the user_groups table on being a bot and then make sure
@@ -858,7 +796,7 @@ class WikiaMiniUpload {
 		}
 		$res = $dbr->query( $sql, __FUNCTION__ );
 
-		$images = array();
+		$images = [];
 		while ( $s = $dbr->fetchObject( $res ) ) {
 			$images[] = $s;
 		}
@@ -866,10 +804,10 @@ class WikiaMiniUpload {
 
 		// Load the images into a new gallery
 		$gallery = new WikiaPhotoGallery();
-		$gallery->parseParams( array(
+		$gallery->parseParams( [
 			"rowdivider"   => true,
 			"hideoverflow" => true
-			) );
+			] );
 
 		$gallery->setWidths( 212 );
 
@@ -886,7 +824,7 @@ class WikiaMiniUpload {
 			$gallery->add( $nt );
 		}
 
-		$info = array("gallery" => $gallery);
+		$info = ['gallery' => $gallery];
 
 		// Set pagination information
 		if ( $offset > 0 ) {

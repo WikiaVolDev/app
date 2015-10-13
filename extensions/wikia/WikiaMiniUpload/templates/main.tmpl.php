@@ -37,16 +37,6 @@ if (!$wgEnableUploads) {
 	<tr id="ImageUploadFind">
 		<td><h1><?= wfMsg('wmu-find') ?></h1></td>
 		<td>
-<?php
-if( $wgUser->isLoggedIn() && $wgUser->isAllowed('upload') && $wgEnableUploads && !wfReadOnly() ) {
-?>
-			<div onclick="WMU_changeSource(event);" style="font-size: 9pt; float: right; margin-top: 5px;">
-				<a id="WMU_source_0" href="#" style="font-weight: bold;"><?= wfMsg('wmu-thiswiki') ?></a> |
-				<a id="WMU_source_1" href="#"><?= wfMsg('wmu-flickr') ?></a>
-			</div>
-<?php
-}
-?>
 			<input onkeydown="WMU_trySendQuery(event);" type="text" id="ImageQuery" />
 			<input onclick="WMU_trySendQuery(event);" type="button" value="<?= wfMsg('wmu-find-btn') ?>" />
 			<img src="<?= $wgStylePath ?>/common/images/ajax.gif" id="ImageUploadProgress2" style="visibility: hidden;"/>
@@ -54,14 +44,6 @@ if( $wgUser->isLoggedIn() && $wgUser->isAllowed('upload') && $wgEnableUploads &&
 	</tr>
 </table>
 
-<div id="WMU_results_0">
+<div id="WMU_results">
 	<?= $result ?>
-</div>
-
-<div id="WMU_results_1" style="display: none;">
-	<br/><br/><br/><br/><br/>
-	<div style="text-align: center;">
-		<img src="<?= $wgExtensionsPath ?>/wikia/WikiaMiniUpload/images/flickr_logo.gif" />
-		<div class="ImageUploadSourceNote"><?= wfMsg('wmu-flickr-inf') ?></div>
-	</div>
 </div>

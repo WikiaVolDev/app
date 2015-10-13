@@ -3,7 +3,7 @@
 <?php
 if($results['page'] > 1) {
 ?>
-	<a onclick="WMU_sendQuery('<?= $query ?>', <?= $results['page']-1 ?>, 0, 'prev'); return false;" href="#"><?= wfMsg('wmu-prev') ?></a>
+	<a onclick="WMU_sendQuery('<?= $query ?>', <?= $results['page']-1 ?>, 'prev'); return false;" href="#"><?= wfMsg('wmu-prev') ?></a>
 <?php
 }
 if($results['page'] > 1 && $results['page'] < $results['pages']) {
@@ -13,7 +13,7 @@ if($results['page'] > 1 && $results['page'] < $results['pages']) {
 }
 if($results['page'] < $results['pages']) {
 ?>
-	<a onclick="WMU_sendQuery('<?= $query ?>', <?= $results['page']+1 ?>, 0, 'next'); return false;" href="#"><?= wfMsg('wmu-next') ?></a>
+	<a onclick="WMU_sendQuery('<?= $query ?>', <?= $results['page']+1 ?>, 'next'); return false;" href="#"><?= wfMsg('wmu-next') ?></a>
 <?php
 }
 ?>
@@ -34,7 +34,7 @@ if(isset($results['images'])) {
 				$file = wfLocalFile(Title::newFromText($results['images'][$i]['title'], 6));
 				$results['images'][$i]['file'] = $file;
 ?>
-				<td><a href="#" alt="<?= addslashes($file->getName()) ?>" title="<?= addslashes($file->getName()) ?>" onclick="WMU_chooseImage(0, '<?= urlencode($file->getName()) ?>'); return false;"><?= $file->transform( array( 'width' => 120, 'height' => 90 ) )->toHtml() ?></a></td>
+				<td><a href="#" alt="<?= addslashes($file->getName()) ?>" title="<?= addslashes($file->getName()) ?>" onclick="WMU_chooseImage('<?= urlencode($file->getName()) ?>'); return false;"><?= $file->transform( array( 'width' => 120, 'height' => 90 ) )->toHtml() ?></a></td>
 <?php
 			}
 		}
@@ -45,7 +45,7 @@ if(isset($results['images'])) {
 		for($i = $j*4; $i < ($j+1)*4; $i++) {
 			if(isset($results['images'][$i])) {
 ?>
-				<td><a href="#" onclick="WMU_chooseImage(0, '<?= urlencode($results['images'][$i]['file']->getName()) ?>'); return false;"><?= wfMsg('wmu-insert3') ?></a></td>
+				<td><a href="#" onclick="WMU_chooseImage('<?= urlencode($results['images'][$i]['file']->getName()) ?>'); return false;"><?= wfMsg('wmu-insert3') ?></a></td>
 <?php
 			}
 		}
