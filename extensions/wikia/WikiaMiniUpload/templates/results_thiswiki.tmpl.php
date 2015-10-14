@@ -1,40 +1,41 @@
 <div id="ImageUploadHeadline">
 <div id="ImageUploadPagination">
 <?php
-if($results['page'] > 1) {
+if ( $results['page'] > 1 ) {
 ?>
-	<a onclick="WMU_sendQuery('<?= $query ?>', <?= $results['page']-1 ?>, 'prev'); return false;" href="#"><?= wfMsg('wmu-prev') ?></a>
+	<a onclick="WMU_sendQuery('<?= $query ?>', <?= $results['page'] -1 ?>, 'prev'); return false;" href="#"><?= wfMessage( 'wmu-prev' )->escaped() ?></a>
 <?php
 }
-if($results['page'] > 1 && $results['page'] < $results['pages']) {
+if ( $results['page'] > 1 && $results['page'] < $results['pages'] ) {
 ?>
 	|
 <?php
 }
-if($results['page'] < $results['pages']) {
+if ( $results['page'] < $results['pages'] ) {
 ?>
-	<a onclick="WMU_sendQuery('<?= $query ?>', <?= $results['page']+1 ?>, 'next'); return false;" href="#"><?= wfMsg('wmu-next') ?></a>
+	<a onclick="WMU_sendQuery('<?= $query ?>', <?= $results['page'] + 1 ?>, 'next'); return false;" href="#"><?= wfMessage( 'wmu-next' )->escaped() ?></a>
 <?php
 }
 ?>
 </div>
-<?= wfMsgExt( 'wmu-thiswiki2', 'parsemag', $results['total'] ) ?>
+<?= wfMessage( 'wmu-thiswiki2', $results['total'] )->parse() ?>
 </div>
 
 <table cellspacing="0" id="ImageUploadFindTable">
 	<tbody>
 <?php
-if(isset($results['images'])) {
-	for($j = 0; $j < ceil(count($results['images']) / 4); $j++) {
+if ( isset( $results['images'] ) ) {
+	for ( $j = 0; $j < ceil( count( $results['images'] ) / 4 ); $j++ ) {
 ?>
 		<tr class="ImageUploadFindImages">
 <?php
-		for($i = $j*4; $i < ($j+1)*4; $i++) {
-			if(isset($results['images'][$i])) {
-				$file = wfLocalFile(Title::newFromText($results['images'][$i]['title'], 6));
+		for ( $i = $j * 4; $i < ( $j + 1 ) * 4; $i++ ) {
+			if ( isset( $results['images'][$i] ) ) {
+				$file = wfLocalFile( Title::newFromText( $results['images'][$i]['title'], 6 ) );
 				$results['images'][$i]['file'] = $file;
 ?>
-				<td><a href="#" alt="<?= addslashes($file->getName()) ?>" title="<?= addslashes($file->getName()) ?>" onclick="WMU_chooseImage('<?= urlencode($file->getName()) ?>'); return false;"><?= $file->transform( array( 'width' => 120, 'height' => 90 ) )->toHtml() ?></a></td>
+				<td><a href="#" alt="<?= addslashes( $file->getName() ) ?>" title="<?= addslashes( $file->getName() ) ?>" onclick="WMU_chooseImage('<?= urlencode( $file->getName() ) ?>'); return false;"><?= $file->transform(
+				[ 'width' => 120, 'height' => 90 ] )->toHtml() ?></a></td>
 <?php
 			}
 		}
@@ -42,10 +43,10 @@ if(isset($results['images'])) {
 		</tr>
 		<tr class="ImageUploadFindLinks">
 <?php
-		for($i = $j*4; $i < ($j+1)*4; $i++) {
-			if(isset($results['images'][$i])) {
+		for ( $i = $j * 4; $i < ( $j + 1 ) * 4; $i++ ) {
+			if ( isset( $results['images'][$i] ) ) {
 ?>
-				<td><a href="#" onclick="WMU_chooseImage('<?= urlencode($results['images'][$i]['file']->getName()) ?>'); return false;"><?= wfMsg('wmu-insert3') ?></a></td>
+				<td><a href="#" onclick="WMU_chooseImage('<?= urlencode( $results['images'][$i]['file']->getName() ) ?>'); return false;"><?= wfMessage( 'wmu-insert3' )->escaped() ?></a></td>
 <?php
 			}
 		}
