@@ -1,8 +1,8 @@
 <?php
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wmu-desc' => 'WikiaMiniUpload extension',
 	'wmu-upload-image' => 'Upload Photo',
 	'wmu-title' => 'Upload Photo',
@@ -78,7 +78,7 @@ $messages['en'] = array(
 	'wmu-error-exact-width' => 'Image width must be exactly $1 px (got $2 px)',
 	'wmu-error-exact-width-height' => 'Image width and height must be exactly $1 x $3 px (got $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'Aspect ratio is incorrect ($1 x $2 px)',
-);
+];
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
@@ -86,7 +86,7 @@ $messages['en'] = array(
  * @author Shirayuki
  * @author Siebrand
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wmu-desc' => '{{desc}}',
 	'wmu-upload' => '{{Identical|Upload}}',
 	'wmu-find' => 'Text of a heading (H1)
@@ -120,12 +120,12 @@ $messages['qqq'] = array(
 	'wmu-error-exact-width' => 'Error shown when the image selected/uploaded was not the required width',
 	'wmu-error-exact-width-height' => 'Error shown when the image selected/uploaded was not the required dimensions',
 	'wmu-error-bad-aspect-ratio' => 'Error shown when the aspect ratio was incorrect',
-);
+];
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = array(
+$messages['af'] = [
 	'wmu-upload-image' => 'Laai foto op',
 	'wmu-title' => 'Laai foto',
 	'wmu-upload' => 'Oplaai',
@@ -201,21 +201,21 @@ U kan nie hier beelde byvoeg nie.',
 	'wmu-alignment' => 'Uitlyning',
 	'wmu-file-protected' => 'Hierdie beeld is beveilig.',
 	'wmu-file-error' => "'n Fout het tydens die oplaai-proses voorgekom. Probeer asseblief weer.",
-);
+];
 
 /** Aragonese (aragonés)
  * @author Juanpabl
  */
-$messages['an'] = array(
+$messages['an'] = [
 	'wmu-insert' => 'Insertar',
 	'wmu-thumbnail' => 'Miniatura',
-);
+];
 
 /** Old English (Ænglisc)
  * @author Espreon
  * @author Gott wisst
  */
-$messages['ang'] = array(
+$messages['ang'] = [
 	'wmu-upload' => 'Forþsendan',
 	'wmu-notlogged' => 'Inmeldian oþþe macian grīman tō forþsendenne biliþ fram þīnum spearctellere',
 	'wmu-find' => 'Findan',
@@ -256,7 +256,7 @@ $messages['ang'] = array(
 	'wmu-imagebutton' => 'Ēacnian mid biliðum',
 	'wmu-license-cc' => 'Ȝifen forþlǣtnesse æfter Creative Commons Attribution-Share Alike 3.0',
 	'wmu-bad-extension' => 'Þū sōhtest tō forþsendenne unlagfæst ȝeƿithordcynd. Bidde þē tō underȝinnenne eft.',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
@@ -264,7 +264,7 @@ $messages['ang'] = array(
  * @author Meno25
  * @author OsamaK
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'wmu-upload-image' => 'تحميل صورة',
 	'wmu-title' => 'تحميل صورة',
 	'wmu-upload' => 'تحميل',
@@ -339,12 +339,12 @@ $messages['ar'] = array(
 	'wmu-error-exact-width' => 'يجب أن يكون عرض الصورة تحديدًا $1 بكسل (لديك هنا $2 بكسل)',
 	'wmu-error-exact-width-height' => 'عرض الصورة وارتفاعها يجب أن يكونا تحديدًا $1 × $3 بكسل (لديك هنا $2 × $4 بكسل)',
 	'wmu-error-bad-aspect-ratio' => 'نسبة العرض إلى الارتفاع غير صحيحة ($1 × $2 بكسل)',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'wmu-upload-image' => 'Şəkil yüklə',
 	'wmu-title' => 'Şəkil yüklə',
 	'wmu-upload' => 'Yüklə',
@@ -355,20 +355,20 @@ $messages['az'] = array(
 	'wmu-width' => 'Eni',
 	'wmu-imagebutton' => 'Bütün şəkillər',
 	'wmu-gallery' => 'Qalereya',
-);
+];
 
 /** South Azerbaijani (تۆرکجه)
  * @author Erdemaslancan
  */
-$messages['azb'] = array(
+$messages['azb'] = [
 	'wmu-licensing' => 'لیسانس',
-);
+];
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'wmu-upload' => 'Загрузіць',
 	'wmu-notlogged' => 'Увайдзіце ў сыстэму альбо зарэгіструйцеся каб загружаць выявы з Вашага кампутара',
 	'wmu-find' => 'Знайсьці',
@@ -428,12 +428,12 @@ $messages['be-tarask'] = array(
 	'wmu-no-preview' => 'Вы ня можаце дадаць выяву са старонкі ў рэжыме папярэдняга прагляду',
 	'wmu-no-protect' => 'Гэта старонка абароненая, Вы ня можаце уставіць у яе выяву',
 	'wmu-no-rights' => 'Вам не дазволена дадаваць выявы на гэту старонку',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'wmu-upload' => 'Качване',
 	'wmu-thiswiki' => 'Това уики',
 	'wmu-upload-btn' => 'Качване',
@@ -454,14 +454,14 @@ $messages['bg'] = array(
 	'wmu-gallery-btn2' => 'Добавяне на галерия в страницата',
 	'wmu-alignment' => 'Подравняване',
 	'wmu-file-not-found' => 'Файлът не беше намерен',
-);
+];
 
 /** Banjar (Bahasa Banjar)
  * @author Ezagren
  */
-$messages['bjn'] = array(
+$messages['bjn'] = [
 	'wmu-back' => 'mantuk', # Fuzzy
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
@@ -469,7 +469,7 @@ $messages['bjn'] = array(
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'wmu-upload-image' => 'Enporzhiañ ur skeudenn',
 	'wmu-title' => 'Enporzhiañ ur skeudenn',
 	'wmu-upload' => 'Enporzhiañ',
@@ -539,7 +539,7 @@ $messages['br'] = array(
 	'wmu-alignment' => 'Linennadur',
 	'wmu-file-protected' => 'Gwarezet eo ar skeudenn-mañ',
 	'wmu-file-not-found' => "N'eo ket bet kavet ar restr",
-);
+];
 
 /** Catalan (català)
  * @author BroOk
@@ -548,7 +548,7 @@ $messages['br'] = array(
  * @author Paucabot
  * @author Unapersona
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'wmu-upload-image' => 'Carregar una imatge',
 	'wmu-title' => 'Carregar una imatge',
 	'wmu-upload' => 'Carrega',
@@ -622,13 +622,13 @@ $messages['ca'] = array(
 	'wmu-error-exact-height' => "L'alçada de la imatge ha de ser eactamanet $1 px (aquesta té $2 px)",
 	'wmu-error-exact-width' => "L'amplada de la imatge ha de ser exactament $1 (aquesta té $2 px)",
 	'wmu-error-exact-width-height' => 'La mida de la imatge ha de ser exactamanet $1 x $3 px (aquesta fa $2 x $4 px)',
-);
+];
 
 /** Chechen (нохчийн)
  * @author Sasan700
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'wmu-upload' => 'Чуяккха',
 	'wmu-find' => 'Лахар',
 	'wmu-upload-btn' => 'Чуяккха',
@@ -636,7 +636,7 @@ $messages['ce'] = array(
 	'wmu-insert' => 'Чуйилла',
 	'wmu-license' => 'Лицензи',
 	'wmu-insert2' => 'Файл чуйиллар',
-);
+];
 
 /** Czech (čeština)
  * @author Chmee2
@@ -645,7 +645,7 @@ $messages['ce'] = array(
  * @author Littledogboy
  * @author Mr. Richard Bolla
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'wmu-upload-image' => 'Nahrát obrázek',
 	'wmu-title' => 'Nahrát obrázek',
 	'wmu-upload' => 'Nahrát soubor',
@@ -715,14 +715,14 @@ $messages['cs'] = array(
 	'wmu-alignment' => 'Zarovnání',
 	'wmu-file-protected' => 'Tento obrázek je chráněn',
 	'wmu-file-error' => 'Došlo k chybě při odesílání. Zkuste prosím znovu.',
-);
+];
 
 /** Welsh (Cymraeg)
  * @author Lloffiwr
  * @author Robin Owain
  * @author Xxglennxx
  */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'wmu-upload' => 'Uwchlwytho',
 	'wmu-notlogged' => "Mewngofnodwch neu cofrestrwch er mwyn uwchlwytho lluniau o'ch cyfrifiadur",
 	'wmu-find' => 'Canfod',
@@ -782,7 +782,7 @@ $messages['cy'] = array(
 	'wmu-no-preview' => 'Ni allwch ychwanegu llun o ragolwg o dudalen',
 	'wmu-no-protect' => "Mae'r dudalen hon wedi ei diogelu, ac ni allwch ychwanegu llun ati",
 	'wmu-no-rights' => 'Ni chewch ychwanegu delweddau at y dudalen hon',
-);
+];
 
 /** German (Deutsch)
  * @author Geitost
@@ -792,7 +792,7 @@ $messages['cy'] = array(
  * @author Sebastian Wallroth
  * @author Tiin
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'wmu-desc' => 'WikiaMiniUpload-Erweiterung',
 	'wmu-upload-image' => 'Bild hochladen',
 	'wmu-title' => 'Foto hochladen',
@@ -868,14 +868,14 @@ $messages['de'] = array(
 	'wmu-error-exact-width' => 'Die Bildbreite muss exakt $1 Pixel betragen ($2 Pixel erhalten)',
 	'wmu-error-exact-width-height' => 'Die Bildabmessungen müssen exakt $1 × $3 Pixel betragen ($2 × $4 Pixel erhalten)',
 	'wmu-error-bad-aspect-ratio' => 'Das Seitenverhältnis ist falsch ($1 × $2 Pixel)',
-);
+];
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author LWChris
  * @author Tiin
  */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'wmu-upload' => 'Hochladen',
 	'wmu-notlogged' => 'Melden Sie sich an oder registrieren Sie sich, um Bilder von Ihrem Rechner hochzuladen',
 	'wmu-find' => 'Suchen',
@@ -936,13 +936,13 @@ $messages['de-formal'] = array(
 	'wmu-no-protect' => 'Diese Seite ist geschützt, Sie können ihr kein Bild hinzufügen',
 	'wmu-no-rights' => 'Sie sind nicht berechtigt, Bilder auf dieser Seite hinzuzufügen.',
 	'wmu-file-error' => 'Es gab einen Fehler während des Hochladens. Bitte versuchen Sie es erneut.',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'wmu-upload-image' => 'Resım Bar ke',
 	'wmu-title' => 'Resım Bar ke',
 	'wmu-upload' => 'Bar ke',
@@ -976,24 +976,24 @@ $messages['diq'] = array(
 	'wmu-column' => 'Estûni',
 	'wmu-gallery-btn1' => 'Zewbina resım cı ke',
 	'wmu-alignment' => 'Hiza fi',
-);
+];
 
 /** British English (British English)
  * @author Shirayuki
  */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'wmu-license' => 'Licence',
 	'wmu-licensing' => 'Licencing',
 	'wmu-hide-license-msg' => 'hide licence text',
 	'wmu-show-license-msg' => 'show licence text',
-);
+];
 
 /** Esperanto (Esperanto)
  * @author Tradukisto
  */
-$messages['eo'] = array(
+$messages['eo'] = [
 	'wmu-imagebutton' => ' Aldoni bildojn',
-);
+];
 
 /** Spanish (español)
  * @author Armando-Martin
@@ -1005,7 +1005,7 @@ $messages['eo'] = array(
  * @author Translationista
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'wmu-desc' => 'Extensión WikiaMiniUpload',
 	'wmu-upload-image' => 'Subir una imagen',
 	'wmu-title' => 'Subir imagen',
@@ -1081,13 +1081,13 @@ $messages['es'] = array(
 	'wmu-error-exact-width' => 'El ancho de la imagen debe ser exactamente de $1 px (es de $2 px)',
 	'wmu-error-exact-width-height' => 'El ancho y la altura de la imagen deben ser exactamente de $1 x $3 px (es de $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'La relación de aspecto es incorrecta ($1 x $2 px)',
-);
+];
 
 /** Basque (euskara)
  * @author An13sa
  * @author Subi
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'wmu-upload' => 'Igo',
 	'wmu-find' => 'Aurkitu',
 	'wmu-upload-btn' => 'Igo',
@@ -1112,7 +1112,7 @@ $messages['eu'] = array(
 	'wmu-more-options' => 'Aukera gehiago',
 	'wmu-fewer-options' => 'Aukera gutxiago',
 	'wmu-file-not-found' => 'Ez da fitxategia aurkitu',
-);
+];
 
 /** Persian (فارسی)
  * @author Alirezaaa
@@ -1121,7 +1121,7 @@ $messages['eu'] = array(
  * @author Mjbmr
  * @author Reza1615
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'wmu-upload' => 'بارگذاری',
 	'wmu-find' => 'یافتن',
 	'wmu-thiswiki' => 'این ویکی',
@@ -1146,14 +1146,14 @@ $messages['fa'] = array(
 	'wmu-added-from-plc' => 'افزودن پروندۀ تازه توسط مکان نگه‏دار تصویر',
 	'wmu-alignment' => 'تراز',
 	'wmu-file-not-found' => 'پرونده یافت نشد',
-);
+];
 
 /** Finnish (suomi)
  * @author Centerlink
  * @author Silvonen
  * @author Tofu II
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'wmu-name' => 'Nimi',
 	'wmu-license' => 'Lisenssi',
 	'wmu-licensing' => 'Lisensointi',
@@ -1176,7 +1176,7 @@ $messages['fi'] = array(
 	'wmu-imagebutton' => 'Lisää kuvia',
 	'wmu-hide-license-msg' => 'piilota lisenssiteksti',
 	'wmu-show-license-msg' => 'näytä lisenssiteksti',
-);
+];
 
 /** French (français)
  * @author Gomoko
@@ -1187,7 +1187,7 @@ $messages['fi'] = array(
  * @author Urhixidur
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'wmu-desc' => 'Extension WikiaMiniUpload',
 	'wmu-upload-image' => 'Téléverser une image',
 	'wmu-title' => 'Importer une image',
@@ -1263,25 +1263,25 @@ $messages['fr'] = array(
 	'wmu-error-exact-width' => 'La largeur de l’image doit être de $1 px ($2 px trouvés)',
 	'wmu-error-exact-width-height' => 'La taille de l’image doit être de $1 x $3 px ($2 x $4 px trouvés)',
 	'wmu-error-bad-aspect-ratio' => 'Le ratio d’aspect n’est pas correct ($1 x $2 px)',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'wmu-find' => 'Sykje',
 	'wmu-find-btn' => 'Sykje',
 	'wmu-name' => 'Namme',
 	'wmu-optional' => '(opsjoneel)',
 	'wmu-prev' => 'Foarige 8',
 	'wmu-next' => 'Folgjende 8',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'wmu-upload-image' => 'Subir unha foto',
 	'wmu-title' => 'Subir unha foto',
 	'wmu-upload' => 'Subir',
@@ -1356,13 +1356,13 @@ $messages['gl'] = array(
 	'wmu-error-exact-width' => 'O largo da imaxe debe ser exactamente de $1 px (obtívose $2 px)',
 	'wmu-error-exact-width-height' => 'O tamaño da imaxe debe ser exactamente de $1 x $3 px (obtívose $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'A proporción de aspecto é incorrecta ($1 x $2 px)',
-);
+];
 
 /** Hebrew (עברית)
  * @author YaronSh
  * @author שומבלע
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'wmu-upload-image' => 'העלאת תמונה',
 	'wmu-upload' => 'העלאה',
 	'wmu-notlogged' => 'התחבר או הרשם כדי להעלות תמונות מהמחשב שלך',
@@ -1428,14 +1428,14 @@ $messages['he'] = array(
 	'wmu-fewer-options' => 'פחות אפשרויות',
 	'wmu-replace-default-caption' => 'החלפת כיתוב ברירת המחדל',
 	'wmu-alignment' => 'יישור',
-);
+];
 
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'wmu-upload-image' => 'Kép feltöltése',
 	'wmu-title' => 'Kép feltöltése',
 	'wmu-upload' => 'Feltöltés',
@@ -1505,12 +1505,12 @@ $messages['hu'] = array(
 	'wmu-alignment' => 'Igazítás',
 	'wmu-file-protected' => 'Ez a kép védett',
 	'wmu-file-error' => 'Hiba történt a feltöltési folyamat során, elnézést kérünk. Kérlek, próbáld újra.',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'wmu-upload-image' => 'Incargar imagine',
 	'wmu-title' => 'Incargar photo',
 	'wmu-upload' => 'Incargamento',
@@ -1580,7 +1580,7 @@ $messages['ia'] = array(
 	'wmu-alignment' => 'Alineamento',
 	'wmu-file-protected' => 'Iste imagine es protegite',
 	'wmu-file-error' => 'Un error occurreva in le processo de incargamento, regrettabilemente. Per favor reproba.',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
@@ -1588,7 +1588,7 @@ $messages['ia'] = array(
  * @author Irwangatot
  * @author Kenrick95
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'wmu-upload' => 'Unggah',
 	'wmu-notlogged' => 'Masuk log atau mendaftar untuk mengunggah gambar dari komputer Anda',
 	'wmu-find' => 'Cari',
@@ -1648,20 +1648,20 @@ $messages['id'] = array(
 	'wmu-no-preview' => 'Anda tidak dapat menambahkan gambar dalam artikel dengan modus pratayang',
 	'wmu-no-protect' => 'Halaman ini dilindungi, Anda tidak dapat menambahkan gambar',
 	'wmu-no-rights' => 'Anda tidak diperbolehkan menambahkan gambar ke halaman ini',
-);
+];
 
 /** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
-$messages['inh'] = array(
+$messages['inh'] = [
 	'wmu-gallery' => 'Суртгуллам',
-);
+];
 
 /** Italian (italiano)
  * @author Beta16
  * @author Minerva Titani
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'wmu-upload' => 'Carica',
 	'wmu-find' => 'Trova',
 	'wmu-upload-btn' => 'Carica',
@@ -1678,13 +1678,13 @@ $messages['it'] = array(
 	'wmu-next' => 'Succ 8',
 	'wmu-back' => "Seleziona un'altra immagine",
 	'wmu-imagebutton' => 'Aggiungi immagini',
-);
+];
 
 /** Japanese (日本語)
  * @author Fryed-peach
  * @author Tommy6
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'wmu-upload' => 'アップロード',
 	'wmu-notlogged' => '画像をアップロードするには、アカウントを取得してログインしてください。',
 	'wmu-find' => '画像を探す',
@@ -1749,14 +1749,14 @@ $messages['ja'] = array(
 	'wmu-no-preview' => 'プレビューモードでは記事に画像を追加できません',
 	'wmu-no-protect' => 'このページは保護されており画像を追加できません',
 	'wmu-no-rights' => 'このページに画像を追加する権限がありません',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'wmu-name' => 'ಹೆಸರು',
-);
+];
 
 /** Korean (한국어)
  * @author Hym411
@@ -1765,7 +1765,7 @@ $messages['kn'] = array(
  * @author SeoJeongHo
  * @author 아라
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'wmu-upload-image' => '그림 올리기',
 	'wmu-title' => '그림 올리기',
 	'wmu-upload' => '올리기',
@@ -1786,14 +1786,14 @@ $messages['ko'] = array(
 	'wmu-more-options' => '더 많은 옵션들',
 	'wmu-fewer-options' => '설명 가리기',
 	'wmu-file-not-found' => '파일을 찾지 못했습니다',
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bikarhêner
  * @author George Animal
  * @author Ghybu
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'wmu-upload-image' => 'Wêneyî bar bike',
 	'wmu-upload' => 'Barbike',
 	'wmu-find' => 'Bibîne',
@@ -1814,19 +1814,19 @@ $messages['ku-latn'] = array(
 	'wmu-gallery' => 'Galerî',
 	'wmu-gallery-btn1' => 'Wêneyên din zêde bike',
 	'wmu-file-protected' => 'Ev wêne tê parastin',
-);
+];
 
 /** Latin (Latina)
  * @author Rsa23899
  */
-$messages['la'] = array(
+$messages['la'] = [
 	'wmu-name' => 'Nōmen',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'wmu-upload-image' => 'Foto eroplueden',
 	'wmu-title' => 'Foto eroplueden',
 	'wmu-upload' => 'Eroplueden',
@@ -1860,19 +1860,19 @@ $messages['lb'] = array(
 	'wmu-file-protected' => 'Dëst Bild ass gespaart',
 	'wmu-file-not-found' => 'Fichier gouf net fonnt',
 	'wmu-error-exact-width' => "D'Breet vum Bild muss genee $1 Pixel sinn ($2 Pixel kritt)",
-);
+];
 
 /** Latvian (latviešu)
  * @author GreenZeb
  */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'wmu-show-license-msg' => 'rādīt licences tekstu',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'wmu-desc' => 'Додаток ВикијаМиниПодигање',
 	'wmu-upload-image' => 'Подигни слика',
 	'wmu-title' => 'Подигни слика',
@@ -1948,13 +1948,13 @@ $messages['mk'] = array(
 	'wmu-error-exact-width' => 'Сликата мора да биде широка точно $1 px (добив $2 px)',
 	'wmu-error-exact-width-height' => 'Сликата мора да биде со ширина и висина од точно $1 x $3 px (добив $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'Сразмерот е неисправен ($1 x $2 px)',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  * @author SNN95
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'wmu-desc' => 'Sambungan WikiaMiniUpload',
 	'wmu-upload-image' => 'Muat Naik Gambar',
 	'wmu-title' => 'Muat Naik Gambar',
@@ -2030,20 +2030,20 @@ $messages['ms'] = array(
 	'wmu-error-exact-width' => 'Lebar imej mestilah betul-betul $1 px (sekarang $2 px)',
 	'wmu-error-exact-width-height' => 'Lebar dan ketinggian imej mestilah betul-betul $1 x $3 px (sekarang $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'Nisbah aspek tidak betul ($1 x $2 px)',
-);
+];
 
 /** Maltese (Malti)
  * @author Chrisportelli
  * @author Leli Forte
  */
-$messages['mt'] = array(
+$messages['mt'] = [
 	'wmu-fewer-options' => 'Inqas għażliet',
-);
+];
 
 /** Burmese (မြန်မာဘာသာ)
  * @author Erikoo
  */
-$messages['my'] = array(
+$messages['my'] = [
 	'wmu-upload' => 'Upload တင်ရန်',
 	'wmu-find' => 'ရှာပါ',
 	'wmu-upload-btn' => 'Upload တင်ရန်',
@@ -2058,21 +2058,21 @@ $messages['my'] = array(
 	'wmu-prev' => 'နောက် 8',
 	'wmu-back' => 'နောက်', # Fuzzy
 	'wmu-column' => 'ဒေါင်လိုက်တန်း -',
-);
+];
 
 /** Mazanderani (مازِرونی)
  * @author محک
  */
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'wmu-upload' => 'باربی‌یشتن',
 	'wmu-upload-btn' => 'باربی‌یشتن',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'wmu-upload-image' => 'Last opp bilde',
 	'wmu-title' => 'Last opp bilde',
 	'wmu-upload' => 'Last opp',
@@ -2142,13 +2142,13 @@ $messages['nb'] = array(
 	'wmu-alignment' => 'Justering',
 	'wmu-file-protected' => 'Dette bildet er beskyttet',
 	'wmu-file-error' => 'Det oppstod en feil under opplastingsprossessen, vi beklager. Vennligst prøv igjen.',
-);
+];
 
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wmu-upload-image' => 'Afbeelding uploaden',
 	'wmu-title' => 'Afbeelding uploaden',
 	'wmu-upload' => 'Uploaden',
@@ -2227,12 +2227,12 @@ U kunt er geen afbeeldingen aan toevoegen.',
 	'wmu-error-exact-width' => 'De afbeeldingsbreeste moet precies $1 px zijn ($2 px opgegeven)',
 	'wmu-error-exact-width-height' => 'Afbeeldingsbreedte en -hoogte moeten precies  $1 x $3 px zijn ($2 x $4 px opgegeven)',
 	'wmu-error-bad-aspect-ratio' => 'De beeldverhouding is onjuist ($1 x $2 px)',
-);
+];
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'wmu-notlogged' => 'Meld je aan of registreer een gebruiker om afbeeldingen te uploaden',
 	'wmu-conflict-inf' => '<h1>Er bestaat al een bestand met deze naam</h1>Wat wil je met <b>$1</b> doen?',
 	'wmu-overwrite' => 'Het bestaande bestand met jouw bestand overschrijven',
@@ -2250,12 +2250,12 @@ Deze wiki is alleen-lezen.',
 Klik hieronder om meer afbeeldingen aan de galerij toe te voegen.',
 	'wmu-no-preview' => 'Je kunt geen afbeelding uit een pagina toevoegen in de voorvertoning',
 	'wmu-no-rights' => 'Je mag geen afbeeldingen toevoegen aan deze pagina',
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'wmu-find' => 'Recercar',
 	'wmu-thiswiki' => 'Aqueste wiki',
 	'wmu-upload-btn' => 'Importar',
@@ -2274,23 +2274,23 @@ $messages['oc'] = array(
 	'wmu-prev' => 'Precedent 8',
 	'wmu-next' => 'Seguent 8',
 	'wmu-license-cc' => 'Jos licéncia Creative Commons Attribution-Share Alike 3.0',
-);
+];
 
 /** Pennsylvania German (Deitsch)
  * @author Xqt
  */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'wmu-link' => 'Gleecher',
 	'wmu-next' => 'Neegschte 8',
 	'wmu-back' => 'zerrick', # Fuzzy
-);
+];
 
 /** Palatine German (Pälzisch)
  */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'wmu-prev' => 'Voriche 8',
 	'wmu-next' => 'Negschte 8',
-);
+];
 
 /** Polish (polski)
  * @author BeginaFelicysym
@@ -2298,7 +2298,7 @@ $messages['pfl'] = array(
  * @author Sovq
  * @author VerMa
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wmu-desc' => 'Rozszerzenie WikiaMiniUpload',
 	'wmu-upload-image' => 'Prześlij obraz',
 	'wmu-title' => 'Prześlij obraz',
@@ -2374,13 +2374,13 @@ $messages['pl'] = array(
 	'wmu-error-exact-width' => 'Obraz musi mieć szerokość $1 px (ma $2 px)',
 	'wmu-error-exact-width-height' => 'Obraz musi mieć wymiary $1 x $3 px (ma $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'Proporcje obrazu są niewłaściwe ($1 x $2 px)',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'wmu-upload-image' => 'Carié na Figura',
 	'wmu-title' => 'Carié na Figura',
 	'wmu-upload' => 'Carié',
@@ -2450,12 +2450,12 @@ $messages['pms'] = array(
 	'wmu-alignment' => 'Aliniament',
 	'wmu-file-protected' => "La figura a l'é proteta",
 	'wmu-file-error' => "A-i é staje n'eror durant ël process ëd cariament, an dëspias. Për piasì, ch'a preuva torna.",
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'wmu-upload-image' => 'انځور پورته کول',
 	'wmu-title' => 'انځور پورته کول',
 	'wmu-upload' => 'پورته کول',
@@ -2482,7 +2482,7 @@ $messages['ps'] = array(
 	'wmu-no-preview' => 'د مخ مخليدنې حالت په وخت کې تاسې انځور نه شی ورگډولی',
 	'wmu-more-options' => 'نورې خوښنې',
 	'wmu-fewer-options' => 'لږې خوښنې',
-);
+];
 
 /** Portuguese (português)
  * @author Giro720
@@ -2490,7 +2490,7 @@ $messages['ps'] = array(
  * @author Luckas
  * @author Malafaya
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wmu-upload-image' => 'Enviar Imagem',
 	'wmu-title' => 'Colocar Fotografia',
 	'wmu-upload' => 'Enviar',
@@ -2559,7 +2559,7 @@ $messages['pt'] = array(
 	'wmu-appearance-in-article' => 'Aspecto no Artigo',
 	'wmu-alignment' => 'Alinhamento',
 	'wmu-file-protected' => 'Esta imagem está protegida',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
@@ -2570,7 +2570,7 @@ $messages['pt'] = array(
  * @author Luckas
  * @author Luckas Blade
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'wmu-upload-image' => 'Enviar Imagem',
 	'wmu-title' => 'Carregar Foto',
 	'wmu-upload' => 'Enviar',
@@ -2640,12 +2640,12 @@ $messages['pt-br'] = array(
 	'wmu-alignment' => 'Alinhamento',
 	'wmu-file-protected' => 'Esta imagem esta protegida',
 	'wmu-file-error' => 'Desculpe, houve um erro no processo de carregamento. Por favor, tente novamente.',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'wmu-upload-image' => "Careche 'a fote",
 	'wmu-title' => "Careche 'a fote",
 	'wmu-upload' => 'Careche',
@@ -2670,7 +2670,7 @@ $messages['roa-tara'] = array(
 	'wmu-insert2' => "'Nzerisce 'nu file",
 	'wmu-prev' => 'Le 8 precedende',
 	'wmu-next' => 'Le prossime 8',
-);
+];
 
 /** Russian (русский)
  * @author DCamer
@@ -2680,7 +2680,7 @@ $messages['roa-tara'] = array(
  * @author Okras
  * @author Александр Сигачёв
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wmu-upload-image' => 'Загрузка изображений',
 	'wmu-title' => 'Загрузить изображение',
 	'wmu-upload' => 'Загрузить',
@@ -2755,23 +2755,23 @@ $messages['ru'] = array(
 	'wmu-error-exact-width' => 'Ширина изображения должна быть точно $1 px (получено $2 px)',
 	'wmu-error-exact-width-height' => 'Ширина и высота изображения должны быть точно $1 x $3 px (получено $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'Пропорции неверны ($1 x $2 px)',
-);
+];
 
 /** Slovenian (slovenščina)
  * @author Dbc334
  */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'wmu-upload-image' => 'Naloži fotografijo',
 	'wmu-title' => 'Naloži fotografijo',
 	'wmu-upload' => 'Naloži',
 	'wmu-back' => 'Izberi drugo fotografijo',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'wmu-upload-image' => 'Отпреми слику',
 	'wmu-title' => 'Отпремање слике',
 	'wmu-upload' => 'Отпреми',
@@ -2836,14 +2836,14 @@ $messages['sr-ec'] = array(
 	'wmu-fewer-options' => 'Мање поставки',
 	'wmu-appearance-in-article' => 'Изглед чланка',
 	'wmu-alignment' => 'Поравнање',
-);
+];
 
 /** Swedish (svenska)
  * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'wmu-desc' => 'WikiaMiniUpload-tillägg',
 	'wmu-upload-image' => 'Ladda upp bild',
 	'wmu-title' => 'Ladda upp foto',
@@ -2919,13 +2919,13 @@ $messages['sv'] = array(
 	'wmu-error-exact-width' => 'Bildbredden måste vara exakt $1 bildpunkter (har $2 bildpunkter)',
 	'wmu-error-exact-width-height' => 'Bildens bredd och höjd måste vara exakt $1 x $3 bildpunkter (har $2 x $4 bildpunkter)',
 	'wmu-error-bad-aspect-ratio' => 'Bildförhållandet är inkorrekt ($1 x $2 bildpunkter)',
-);
+];
 
 /** Swahili (Kiswahili)
  * @author Lloffiwr
  * @author Muddyb Blast Producer
  */
-$messages['sw'] = array(
+$messages['sw'] = [
 	'wmu-name' => 'Jina',
 	'wmu-license' => 'Hatimiliki',
 	'wmu-size' => 'Ukubwa',
@@ -2934,13 +2934,13 @@ $messages['sw'] = array(
 	'wmu-width' => 'Upana',
 	'wmu-caption' => 'Maelezo ya picha',
 	'wmu-link' => 'Kiungo',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'wmu-thiswiki' => 'ఈ వికీ',
 	'wmu-name' => 'పేరు',
 	'wmu-size' => 'పరిమాణం',
@@ -2952,19 +2952,19 @@ $messages['te'] = array(
 	'wmu-prev' => 'గత 8',
 	'wmu-next' => 'తర్వాతి 8',
 	'wmu-back' => 'వెనక్కి', # Fuzzy
-);
+];
 
 /** Tetum (tetun)
  * @author MF-Warburg
  */
-$messages['tet'] = array(
+$messages['tet'] = [
 	'wmu-name' => 'Naran',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'wmu-upload-image' => 'Ikarga ang Larawan',
 	'wmu-title' => 'Ikargang Papaitaas ang Larawan',
 	'wmu-upload' => 'Ikarga',
@@ -3034,25 +3034,25 @@ $messages['tl'] = array(
 	'wmu-alignment' => 'Talatag',
 	'wmu-file-protected' => 'Nakaprutekta ang larawang ito',
 	'wmu-file-error' => 'Mayroong isang kamalian sa proseso ng pagkakargang papaitaas, paumanhin. Paki subukan ulit.',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Erdemaslancan
  * @author Incelemeelemani
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'wmu-optional' => '(isteğe bağlı)',
 	'wmu-imagebutton' => 'Resim ekle',
 	'wmu-license-cc' => 'Creative Commons Attribution-Share Alike 3.0 lisansı altındadır',
 	'wmu-bad-extension' => 'Geçersiz dosya türü yüklemeye çalıştınız. Lütfen yeniden deneyin.',
 	'wmu-gallery' => 'Galeri',
 	'wmu-alignment' => 'Hizalama',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'wmu-upload-image' => 'Рәсемнәр йөкләү',
 	'wmu-title' => 'Рәсемне йөкләү',
 	'wmu-upload' => 'Йөкләү',
@@ -3100,14 +3100,14 @@ $messages['tt-cyrl'] = array(
 	'wmu-filetype-incorrect' => 'Бу йөкләмәнең файл киңәйтелмәсе дөрес түгел.',
 	'wmu-hide-license-msg' => 'лицензия текстын күрсәтергә',
 	'wmu-show-license-msg' => 'лицензия текстын яшерергә',
-);
+];
 
 /** Tuvinian (тыва дыл)
  * @author Agilight
  */
-$messages['tyv'] = array(
+$messages['tyv'] = [
 	'wmu-find' => 'Диле',
-);
+];
 
 /** Ukrainian (українська)
  * @author A1
@@ -3117,7 +3117,7 @@ $messages['tyv'] = array(
  * @author Капитан Джон Шепард
  * @author Тест
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'wmu-desc' => 'ВікіяМініЗавантажити розширення',
 	'wmu-upload-image' => 'Завантажити світлину',
 	'wmu-title' => 'Завантажити світлину',
@@ -3193,19 +3193,19 @@ $messages['uk'] = array(
 	'wmu-error-exact-width' => 'Ширина зображення повинна бути в точності $1 px (отримано $2 px)',
 	'wmu-error-exact-width-height' => 'Ширина і висота зображення повинно бути в точності  $1  px  $3  px (отримано $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'Хибний формат зображення ($1 x $2 px)',
-);
+];
 
 /** Uzbek (oʻzbekcha/ўзбекча)
  * @author CoderSI
  */
-$messages['uz'] = array(
+$messages['uz'] = [
 	'wmu-find' => 'Qidiruv',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'wmu-upload-image' => 'Tải lên hình ảnh',
 	'wmu-title' => 'Tải lên hình ảnh',
 	'wmu-upload' => 'Tải lên',
@@ -3279,15 +3279,15 @@ $messages['vi'] = array(
 	'wmu-error-exact-width' => 'Chiều rộng của hình ảnh phải chính xác  $1 px (có $2 px)',
 	'wmu-error-exact-width-height' => 'Hình ảnh chiều rộng và chiều cao phải là chính xác $1 x $3 px (có $2 x $4 px)',
 	'wmu-error-bad-aspect-ratio' => 'Tỷ lệ khía cạnh là không chính xác ($1  x $2 px)',
-);
+];
 
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
-$messages['yi'] = array(
+$messages['yi'] = [
 	'wmu-license' => 'ליצענץ',
 	'wmu-caption' => 'באשרייבונג',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
@@ -3297,7 +3297,7 @@ $messages['yi'] = array(
  * @author Xiaomingyan
  * @author Yfdyh000
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wmu-desc' => 'WikiaMiniUpload扩展',
 	'wmu-upload-image' => '上载图片',
 	'wmu-title' => '上载图片',
@@ -3373,13 +3373,13 @@ $messages['zh-hans'] = array(
 	'wmu-error-exact-width' => '图像宽度必须刚好是 $1 像素（得到的是 $2 像素）',
 	'wmu-error-exact-width-height' => '图像宽度和高度必须刚好是 $1 x $3 像素（得到的是 $2 x $4 像素）',
 	'wmu-error-bad-aspect-ratio' => '纵横比不正确（$1 x $2 像素）',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author LNDDYL
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'wmu-upload-image' => '上傳圖片',
 	'wmu-title' => '上傳圖片',
 	'wmu-upload' => '上傳',
@@ -3452,12 +3452,12 @@ $messages['zh-hant'] = array(
 	'wmu-error-exact-width' => '圖像寬度必須剛好 $1 px (有 $2 px)',
 	'wmu-error-exact-width-height' => '圖像寬度和高度必須剛好 $1 x  $3  px (有 $2 x  $4  px)',
 	'wmu-error-bad-aspect-ratio' => '長寬比不正確 ( $1  x  $2  px)',
-);
+];
 
 /** Chinese (Hong Kong) (中文（香港）‎)
  * @author Tcshek
  */
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'wmu-notlogged' => '請登入或註冊，以便你從電腦上傳圖像',
 	'wmu-rename' => '把圖像重命名',
 	'wmu-overwrite' => '取代現有圖像',
@@ -3467,4 +3467,4 @@ $messages['zh-hk'] = array(
 	'wmu-imagelink' => '<b>最新！</b> 加入圖像',
 	'wmu-notallowed' => '你不能在此wiki上傳圖像',
 	'wmu-file-protected' => '此圖像已被保護',
-);
+];
