@@ -25,19 +25,11 @@ $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.
 
 // special page mapping
 $wgSpecialPages['CreateNewWiki'] = 'SpecialCreateNewWiki';
-$wgSpecialPages['CreateWiki'] = 'SpecialCreateNewWiki';
 
 // i18n mapping
 $wgExtensionMessagesFiles['AutoCreateWiki'] = $dir . 'AutoCreateWiki.i18n.php';
 $wgExtensionMessagesFiles['CreateNewWiki'] = $dir . 'CreateNewWiki.i18n.php';
-
-// permissions
-$wgAvailableRights[] = 'createnewwiki';
-$wgGroupPermissions['*']['createnewwiki'] = true;
-$wgGroupPermissions['staff']['createnewwiki'] = true;
-
-$wgAvailableRights[] = 'createwikilimitsexempt'; // user not bound by creation throttle
-$wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
+$wgExtensionMessagesFiles['CreateNewWikiAlias'] = $dir . 'CreateNewWiki.alias.php';
 
 // setup functions
 $wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';

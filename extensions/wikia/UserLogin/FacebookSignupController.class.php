@@ -39,7 +39,12 @@ class FacebookSignupController extends WikiaController {
 		if ( ( $user instanceof User ) && ( $fbUserId !== 0 ) ) {
 			$errorMsg = '';
 
-			if ( $this->isAccountDisabled( $user ) ) {
+			if ( $user->isAllowed( 'login-restrict-facebook' ) ) {
+				$this->response->setData([
+					'loginAborted' => true,
+					'errorMsg' => $errorMsg,
+				]);
+			} elseif ( $this->isAccountDisabled( $user ) ) {
 				// User account was disabled, abort the login
 				$errorMsg = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
 
@@ -66,7 +71,7 @@ class FacebookSignupController extends WikiaController {
 				] );
 			} else {
 				// account is connected - log the user in
-				$user->setCookies();
+				UserLoginHelper::setCookiesForFacebookUser( $user, \RequestContext::getMain()->getRequest()->response() );
 
 				$this->response->setData( [
 					'loggedIn' => true,
@@ -138,7 +143,7 @@ class FacebookSignupController extends WikiaController {
 	 * @return boolean true if the account is unconfirmed, false otherwise
 	 */
 	private function isAccountUnconfirmed( User $user ) {
-		return $user->getGlobalAttribute( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME );
+		return $user->getGlobalFlag( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME );
 	}
 
 	/**
@@ -347,7 +352,7 @@ class FacebookSignupController extends WikiaController {
 			wfSetupSession();
 		}
 
-		$user->setCookies();
+		UserLoginHelper::setCookiesForFacebookUser( $user, \RequestContext::getMain()->getRequest()->response() );
 
 		// Store the user in the global user object
 		$wg->User = $user;

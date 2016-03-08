@@ -41,7 +41,7 @@ class WikiFactoryLoader {
 
 	// TODO: FIXME: Why is there a mWikiID and an mCityID?
 	public $mServerName, $mWikiID, $mCityHost, $mCityID, $mOldServerName;
-	public $mAlternativeDomainUsed, $mCityDB, $mDebug;
+	public $mAlternativeDomainUsed, $mCityDB, $mCityCluster, $mDebug;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
 	public $mTimestamp, $mCommandLine;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
@@ -287,7 +287,8 @@ class WikiFactoryLoader {
 							"city_public",
 							"city_factory_timestamp",
 							"city_url",
-							"city_dbname"
+							"city_dbname",
+							"city_cluster"
 						),
 						($this->mCityID) ? array( "city_list.city_id" => $this->mCityID ) : array( "city_list.city_dbname" => $this->mCityDB ),
 						__METHOD__ . '::domaindb'
@@ -302,6 +303,7 @@ class WikiFactoryLoader {
 					$this->mIsWikiaActive = $oRow->city_public;
 					$this->mCityHost = $host;
 					$this->mCityDB   = $oRow->city_dbname;
+					$this->mCityCluster = $oRow->city_cluster;
 					$this->mTimestamp = $oRow->city_factory_timestamp;
 					$this->mDomain = array(
 						"id" => $oRow->city_id,
@@ -429,7 +431,7 @@ class WikiFactoryLoader {
 				$url[ "path" ] = "/{$path}" . $url[ "path" ];
 			}
 
-			$target = $url[ "scheme" ] . "://" . $host . $url[ "path" ];
+			$target = WikiFactory::getLocalEnvURL( $url[ "scheme" ] . "://" . $host . $url[ "path" ] );
 			$target = isset( $url[ "query" ] ) ? $target . "?" . $url[ "query" ] : $target;
 
 			$this->debug( "redirected from {$url[ "url" ]} to {$target}" );
@@ -618,6 +620,10 @@ class WikiFactoryLoader {
 				$this->maybeUpgrade();
 			}
 		}
+
+		# take some WF variables values from city_list
+		$this->mVariables["wgDBname"] = $this->mCityDB;
+		$this->mVariables["wgDBCluster"] = $this->mCityCluster;
 
 		// @author macbre
 		wfRunHooks( 'WikiFactory::executeBeforeTransferToGlobals', array( &$this ) );

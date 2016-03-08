@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Helios;
 
+use Email\Controller\EmailConfirmationController;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\User\Auth\AuthService;
 
@@ -9,6 +10,9 @@ use Wikia\Service\User\Auth\AuthService;
  */
 class HelperController extends \WikiaController
 {
+
+	const SCHWARTZ_PARAM = 'secret';
+	const EXTERNAL_SCHWARTZ_PARAM = 'token';
 
 	protected $authService;
 
@@ -122,7 +126,8 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$mailStatus = $user->sendConfirmationMail();
+		$mailStatus = $user->sendConfirmationMail(
+			'created', EmailConfirmationController::TYPE, '', true, '', $this->getVal( 'langCode', 'en' ));
 
 		if ( ! $mailStatus->isGood() ) {
 			$this->response->setVal( 'message', 'could not send an email message' );
@@ -132,7 +137,60 @@ class HelperController extends \WikiaController
 		$this->response->setVal( 'success', true );
 	}
 
+	/**
+	 * UserLogin: send an email with temporary password
+	 */
+	public function sendTemporaryPasswordEmail() {
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+		$this->response->setVal( 'success', false );
+
+		if ( !$this->authenticateViaTheSchwartz() ) {
+			return;
+		}
+
+		$username = $this->getFieldFromRequest( 'username', 'invalid username' );
+		if ( !isset( $username ) ) {
+			return;
+		}
+
+		$tempPassword = $this->getFieldFromRequest( 'password', 'invalid password' );
+		if ( !isset( $tempPassword ) ) {
+			return;
+		}
+
+		$user = \User::newFromName( $username );
+
+		if ( ! $user instanceof \User ) {
+			$this->response->setVal( 'message', 'unable to create a \User object from name' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		if ( ! $user->getId() ) {
+			$this->response->setVal( 'message', 'no such user' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return;
+		}
+
+		$resp = \F::app()->sendRequest( 'Email\Controller\ForgotPassword', 'handle', [
+			'targetUser' => $username,
+			'tempPass' => $tempPassword,
+		] );
+
+		$data = $resp->getData();
+		if ( !empty( $data['result'] ) && $data['result'] == 'ok' ) {
+			$this->response->setVal( 'success', true );
+		} else {
+			$this->response->setVal( 'message', 'could not send an email message' );
+			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+		}
+	}
+
 	public function isBlocked() {
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+
 		if ( !$this->authenticateViaTheSchwartz() ) {
 			return;
 		}
@@ -153,23 +211,34 @@ class HelperController extends \WikiaController
 	}
 
 	protected function getFieldFromRequest( $field, $failureMessage ) {
-		$username = $this->getVal( 'username', null );
-		if ( !isset( $username ) ) {
+		$fieldValue = $this->getVal( $field, null );
+		if ( !isset( $fieldValue ) ) {
 			$this->response->setVal( 'message', $failureMessage );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 		}
 
-		return $username;
+		return $fieldValue;
 	}
 
 	protected function authenticateViaTheSchwartz() {
-		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+		// There is an inconsistency between the parameter used for the Schwartz
+		// token here and elsewhere in MediaWiki (e.g. LogEventsApi). Until we are
+		// able to consolidate on the EXTERNAL_SCHWARTZ_PARAM both in MW and in
+		// external clients, we need to support both.
+		$ourSchwartz          = $this->getVal( self::SCHWARTZ_PARAM );
+		$ourSchwartzIsValid   = $ourSchwartz == $this->wg->TheSchwartzSecretToken;
+
+		$theirSchwartz        = $this->getVal( self::EXTERNAL_SCHWARTZ_PARAM );
+		$theirSchwartzIsValid = $theirSchwartz == $this->wg->TheSchwartzSecretToken;
+
+		if ( $ourSchwartzIsValid || $theirSchwartzIsValid ) {
+			return true;
+		} else {
 			$this->response->setVal( 'message', 'invalid secret' );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
 			return false;
 		}
 
-		return true;
 	}
 
 	public function setAuthService( AuthService $authService ) {
