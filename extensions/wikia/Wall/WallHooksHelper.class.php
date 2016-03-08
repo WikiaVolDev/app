@@ -964,17 +964,16 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	static public function onChangesListInsertDiffHist( $list, &$diffLink, &$historyLink, &$s, $rc, $unpatrolled ) {
-		wfProfileIn( __METHOD__ );
-
-		$app = F::app();
-		if ( in_array( MWNamespace::getSubject( intval( $rc->getAttribute( 'rc_namespace' ) ) ), $app->wg->WallNS ) ) {
+	static public function onChangesListInsertDiffHist( ChangesList $list, &$diffLink, &$historyLink, &$s, $rc, $unpatrolled ) {
+		$ns = MWNamespace::getSubject( intval( $rc->getAttribute( 'rc_namespace' ) ) );
+		if ( in_array( $ns, F::app()->wg->WallNS ) ) {
 			$rcTitle = $rc->getTitle();
 
 			if ( !( $rcTitle instanceof Title ) ) {
 				// it can be media wiki deletion of an article -- we ignore them
-				Wikia::log( __METHOD__, false, "WALL_NOTITLE_FOR_DIFF_HIST " . print_r( [ $rc ], true ) );
-				wfProfileOut( __METHOD__ );
+				\Wikia\Logger\WikiaLogger::instance()->debug( 'WALL_NOTITLE_FOR_DIFF_HIST', [
+					'method' => __METHOD__
+				] );
 				return true;
 			}
 
@@ -982,24 +981,33 @@ class WallHooksHelper {
 				// delete, remove, restore
 				$parts = explode( '/@', $rcTitle->getText() );
 				$isThread = ( count( $parts ) === 2 ) ? true : false;
+				$isForum = in_array( $ns, ForumHelper::$forumNamespaces );
 
 				if ( $isThread ) {
-					$wallTitleObj = Title::newFromText( $parts[0], NS_USER_WALL );
-					$historyLink = ( !empty( $parts[0] ) && $wallTitleObj instanceof Title ) ? $wallTitleObj->getFullURL( [ 'action' => 'history' ] ) : '#';
-					$historyLink = Xml::element( 'a', [ 'href' => $historyLink ], wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-history-link' )->text() );
+					$wallTitleObj = Title::newFromText( $parts[0], $isForum ? NS_WIKIA_FORUM_BOARD : NS_USER_WALL );
+					$historyLink = Linker::linkKnown(
+						$wallTitleObj,
+						$list->msg( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-history-link' )->escaped(),
+						[],
+						[ 'action' => 'history' ]
+					);
 				} else {
 					$wallMessage = new WallMessage( $rcTitle );
-					$historyLink = $wallMessage->getMessagePageUrl( true ) . '?action=history';
-					$historyLink = Xml::element( 'a', [ 'href' => $historyLink ], wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-thread-history-link' )->text() );
+					$historyLink = Linker::linkKnown(
+						Title::newFromID( $wallMessage->getMessagePageId() ),
+						$list->msg( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-thread-history-link' )->escaped(),
+						[],
+						[ 'action' => 'history' ]
+					);
 				}
 
-				$s = '(' . $historyLink . ')';
+				$s = $list->msg( 'parentheses' )->rawParams( $historyLink )->escaped();
 			} else {
 				// new, edit
 				if ( $rc->mAttribs['rc_type'] == RC_NEW || $rc->mAttribs['rc_type'] == RC_LOG ) {
-					$diffLink = wfMessage( 'diff' )->escaped();
+					$diffLink = $list->msg( 'diff' )->escaped();
 				} else if ( !ChangesList::userCan( $rc, Revision::DELETED_TEXT ) ) {
-					$diffLink = wfMessage( 'diff' )->escaped();
+					$diffLink = $list->msg( 'diff' )->escaped();
 				} else {
 					$query = [
 							'curid' => $rc->mAttribs['rc_cur_id'],
@@ -1011,22 +1019,27 @@ class WallHooksHelper {
 						$query['rcid'] = $rc->mAttribs['rc_id'];
 					}
 
-					$diffLink = Xml::element( 'a', [
-							'href' => $rcTitle->getLocalUrl( $query ),
-							'tabindex' => $rc->counter,
-							'class' => 'known noclasses',
-					], wfMessage( 'diff' )->text() );
+					$diffLink = Linker::linkKnown(
+						$rcTitle, $list->msg( 'diff' )->escaped(), [ 'tabindex' => $rc->counter ], $query
+					);
 				}
 
 				$wallMessage = new WallMessage( $rcTitle );
-				$historyLink = $wallMessage->getMessagePageUrl( true ) . '?action=history';
-				$historyLink = Xml::element( 'a', [ 'href' => $historyLink ], wfMessage( 'hist' )->text() );
-				$s = '(' . $diffLink . wfMessage( 'pipe-separator' )->escaped() . $historyLink . ') . . ';
+				$historyLink = Linker::linkKnown(
+					Title::newFromID( $wallMessage->getMessagePageId() ),
+					$list->msg( 'hist' )->escaped(),
+					[],
+					[ 'action' => 'history' ]
+				);
+				$s = $list
+						->msg( 'parentheses' )
+						->rawParams( $diffLink . $list->msg( 'pipe-separator' )->escaped() . $historyLink )
+						->escaped();
+				$s .= ' . . ';
 			}
 
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
