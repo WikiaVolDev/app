@@ -44,40 +44,36 @@ class ArticleCommentInit {
 	 * @param Title $title
 	 * @return bool
 	 */
-	static public function ArticleCommentCheckTitle( $title ) {
-		wfProfileIn( __METHOD__ );
-
+	static public function ArticleCommentCheckTitle( Title $title ) {
 		// enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
 		if ( !self::ArticleCommentCheckNamespace( $title ) ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// non-existing articles
 		if ( !$title->exists() ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// disable on main page (RT#33703)
 		if ( Title::newMainPage()->getText() == $title->getText() ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// disable on pages that cant be read (RT#49525)
 		if ( !$title->userCan( 'read' ) ) {
-			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		// VOLDEV-112: disable for redirect pages
+		if ( $title->isRedirect() ) {
 			return false;
 		}
 
 		// blog listing? (eg: User:Name instead of User:Name/Blog_name) - do not show comments
 		if ( ArticleComment::isBlog() && strpos( $title->getText(), '/' ) === false ) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
