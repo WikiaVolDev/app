@@ -102,7 +102,7 @@ class ChatController extends WikiaController {
 		$themeSettings = $themeSettingObj->getSettings();
 		$this->themeSettings = $themeSettings;
 		$this->wordmarkThumbnailUrl = '';
-		if ( $themeSettings['wordmark-type'] = 'graphic' ) {
+		if ( $themeSettings['wordmark-type'] == 'graphic' ) {
 			$title = Title::newFromText( $themeSettings['wordmark-image-name'], NS_FILE );
 			if ( $title ) {
 				$image = wfFindFile( $title );
