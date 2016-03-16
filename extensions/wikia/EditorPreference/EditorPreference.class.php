@@ -192,14 +192,14 @@ class EditorPreference {
 	 * @return boolean
 	 */
 	public static function onUserProfilePageAfterGetActionButtonData( &$actionButtonArray, $namespace, $canRename,
-		$canProtect, $canDelete, $isUserPageOwner ) {
-		global $wgTitle;
+		$canProtect, $canDelete, $isUserPageOwner, $canEdit ) {
+
 		// If namespace is not User namespace
 		if ( $namespace !== NS_USER ) {
 			return true;
 		}
 
-		if ( $actionButtonArray['name'] === 'editprofile' ) {
+		if ( $actionButtonArray['name'] === 'editprofile' && $canEdit ) {
 			if ( self::isVisualEditorPrimary() ) {
 				// Switch main edit button to use VisualEditor
 				$actionButtonArray[ 'action' ][ 'href' ] = self::getVisualEditorEditUrl();

@@ -175,6 +175,9 @@ class UserProfilePageController extends WikiaController {
 		$isUserPageOwner = ( $user instanceof User && !$user->isAnon() && $user->getId() == $sessionUser->getId() ) ? true : false;
 
 		$editQuery = [ 'action' => 'edit' ];
+		// VOLDEV-146: Show 'view source' link if the user can't edit this page
+		$canEdit = $this->title->userCan( 'edit', $sessionUser );
+		$viewSource = wfMessage( 'viewsource' )->escaped();
 
 		// check if this is an older version of the page
 		$oldid = $this->wg->Request->getInt( 'oldid', 0 );
@@ -188,11 +191,11 @@ class UserProfilePageController extends WikiaController {
 			$actionButtonArray = [
 				'action' => [
 					'href' => $this->title->getLocalUrl( $editQuery ),
-					'text' => wfMessage( 'user-action-menu-edit-profile' )->escaped(),
+					'text' => $canEdit ? wfMessage( 'user-action-menu-edit-profile' )->escaped() : $viewSource,
 					'id' => 'ca-edit',
 					'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
 				],
-				'image' => MenuButtonController::EDIT_ICON,
+				'image' => $canEdit ? MenuButtonController::EDIT_ICON : MenuButtonController::LOCK_ICON,
 				'name' => 'editprofile',
 			];
 		} else {
@@ -206,31 +209,32 @@ class UserProfilePageController extends WikiaController {
 				if ( $title instanceof Title ) {
 					// sometimes title isn't created, I've tried to reproduce it on my devbox and I couldn't
 					// checking if $title is instance of Title is a quick fix -- if it isn't no action button will be shown
+					$canEditTalk = $title->userCan( 'edit', $sessionUser );
 					if ( $isUserPageOwner || $this->wg->Request->getVal( 'oldid' ) ) {
 						$actionButtonArray = [
 							'action' => [
 								'href' => $this->title->getLocalUrl( $editQuery ),
-								'text' => wfMessage( 'user-action-menu-edit' )->escaped(),
+								'text' => $canEditTalk ? wfMessage( 'user-action-menu-edit' )->escaped() : $viewSource,
 								'id' => 'ca-edit',
 								'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
 							],
-							'image' => MenuButtonController::EDIT_ICON,
+							'image' => $canEditTalk ? MenuButtonController::EDIT_ICON : MenuButtonController::LOCK_ICON,
 							'name' => 'editprofile',
 						];
 					} else {
 						$actionButtonArray = [
 							'action' => [
 								'href' => $title->getLocalUrl( array_merge( $editQuery, [ 'section' => 'new' ] ) ),
-								'text' => wfMessage( 'user-action-menu-leave-message' )->escaped(),
+								'text' => $canEditTalk ? wfMessage( 'user-action-menu-leave-message' )->escaped() : $viewSource,
 								'id' => 'ca-addsection',
 								'accesskey' => wfMessage( 'accesskey-ca-addsection' )->escaped(),
 							],
-							'image' => MenuButtonController::MESSAGE_ICON,
+							'image' => $canEditTalk ? MenuButtonController::MESSAGE_ICON : MenuButtonController::LOCK_ICON,
 							'name' => 'leavemessage',
 							'dropdown' => [
 								'edit' => [
 									'href' => $this->title->getFullUrl( $editQuery ),
-									'text' => wfMessage( 'user-action-menu-edit' )->escaped(),
+									'text' => $canEditTalk ? wfMessage( 'user-action-menu-edit' )->escaped() : $viewSource,
 									'id' => 'ca-edit',
 									'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
 								]
@@ -299,7 +303,7 @@ class UserProfilePageController extends WikiaController {
 			];
 		}
 
-		Hooks::run( 'UserProfilePageAfterGetActionButtonData', [ &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner ] );
+		Hooks::run( 'UserProfilePageAfterGetActionButtonData', [ &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner, $canEdit ] );
 
 		$actionButton = F::app()->renderView( 'MenuButton', 'Index', $actionButtonArray );
 		$this->setVal( 'actionButton', $actionButton );
