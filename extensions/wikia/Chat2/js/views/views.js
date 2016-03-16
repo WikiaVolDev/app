@@ -1,7 +1,7 @@
 //
 //Views
 //
-
+/* global wgServer, wgArticlePath, wgInterwikiPrefixes, wgInterwikiUrls */
 var ChatView = Backbone.View.extend({
 	tagName: 'li',
 	template: _.template( $('#message-template').html() ),
@@ -59,14 +59,14 @@ var ChatView = Backbone.View.extend({
 		}
 
 		// helper function (to avoid code duplicates)
-		var linkify = function(article, linkText) {
+		var linkify = function(article, linkText, interwikiURL) {
 			article = article.replace(/ /g, "_");
 			linkText = linkText.replace(/_/g, " ");
 			linkText = unescape( linkText );
 			linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
 			linkText = linkText.replace(/>/g, "&gt;");
 
-			var path = wgServer + wgArticlePath;
+			var path = interwikiURL ? interwikiURL : wgServer + wgArticlePath;
 			article = encodeURIComponent( article );
 			article = article.replace(/%2f/ig, "/"); // make slashes more human-readable (they don't really need to be escaped)
 			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
@@ -74,9 +74,11 @@ var ChatView = Backbone.View.extend({
 			return '<a href="' + url + '">' + linkText + '</a>';
 		}
 
+		var prefixExp = wgInterwikiPrefixes.join('|');
+
 		// Linkify [[Pipes|Pipe-notation]] in bracketed links.
-		var exp = /\[\[([^\[\|\]\r\n\t]*)\|([^\[\]\|\r\n\t]*)\]\]/ig;
-		text = text.replace(exp, function(wholeMatch, article, linkText) {
+		var exp = new RegExp('\\[\\[(' + prefixExp + ')?:?([^\\[\\|\\]\\r\\n\\t]*)\\|([^\\[\\]\\|\\r\\n\\t]*)\\]\\]', 'ig');
+		text = text.replace(exp, function(wholeMatch, prefix, article, linkText) {
 			if (!linkText) { // Parse "pipe-trick" links, eg. [[User:Example|]] expands to <a href="/wiki/User:Example">Example</a>
 				var colonLocation = article.indexOf(":");
 				if (colonLocation == -1) {
@@ -85,15 +87,14 @@ var ChatView = Backbone.View.extend({
 					linkText = article.substring(colonLocation+1);
 				}
 			}
-			return linkify(article, linkText);
+			return linkify(article, linkText, prefix ? wgInterwikiUrls[wgInterwikiPrefixes.indexOf(prefix)] : null);
 		});
 
 		// Linkify [[links]]
-		var exp = /(\[\[[^\[\]\r\n\t]*\]\])/ig;
-		text = text.replace(exp, function(match) {
-			var article = match.substr(2, match.length - 4);
-			var linkText = article.replace(/_/g, " ");
-			return linkify(article, linkText);
+		exp = new RegExp('\\[\\[(' + prefixExp + ')?:?([^\\[\\]\\r\\n\\t]*)\\]\\]', 'ig');
+		text = text.replace(exp, function(wholeMatch, prefix, article) {
+			var linkText = (prefix ? prefix + ':' : '') + article.replace(/_/g, " ");
+			return linkify(article, linkText, prefix ? wgInterwikiUrls[wgInterwikiPrefixes.indexOf(prefix)] : null);
 		});
 
 		// Process emoticons (should be done after the linking because the link code is searching for URLs and the emoticons contain URLs).
