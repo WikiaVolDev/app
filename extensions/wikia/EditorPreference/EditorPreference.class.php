@@ -202,25 +202,29 @@ class EditorPreference {
 		if ( $actionButtonArray['name'] === 'editprofile' ) {
 			if ( self::isVisualEditorPrimary() ) {
 				// Switch main edit button to use VisualEditor
-				$actionButtonArray['action']['href'] = self::getVisualEditorEditUrl();
-				$actionButtonArray['action']['id'] = 'ca-ve-edit';
+				$actionButtonArray[ 'action' ][ 'href' ] = self::getVisualEditorEditUrl();
+				$actionButtonArray[ 'action' ][ 'id' ] = 'ca-ve-edit';
 
 				// Append link to action dropdown for editing in CK or source editor
-				$actionButtonArray['dropdown'] = array( 'edit' => array(
-					'href' => self::getEditUrl(),
-					'text' => wfMessage( self::getDropdownEditMessageKey() )->text(),
-					'id'   => 'ca-edit'
-				) ) + $actionButtonArray['dropdown'];
+				$actionButtonArray[ 'dropdown' ] = [
+						'edit' => [
+							'href' => self::getEditUrl(),
+							'text' => wfMessage( self::getDropdownEditMessageKey() )->text(),
+							'id' => 'ca-edit'
+						]
+				] + $actionButtonArray[ 'dropdown' ];
 
 			} else {
 				// Prepend a VisualEditor link to the action dropdown
-				$actionButtonArray['dropdown'] = array( 've-edit' => array(
-					'href' => self::getVisualEditorEditUrl(),
-					'text' => wfMessage( 'visualeditor-ca-ve-edit' )->text(),
-					'id'   => 'ca-ve-edit'
-				) ) + $actionButtonArray['dropdown'];
+				$actionButtonArray[ 'dropdown' ] = [
+						've-edit' => [
+							'href' => self::getVisualEditorEditUrl(),
+							'text' => wfMessage( 'visualeditor-ca-ve-edit' )->text(),
+							'id' => 'ca-ve-edit'
+						]
+				] + $actionButtonArray[ 'dropdown' ];
 
-				$actionButtonArray['action']['id'] = 'ca-edit';
+				$actionButtonArray[ 'action' ][ 'id' ] = 'ca-edit';
 			}
 		}
 
