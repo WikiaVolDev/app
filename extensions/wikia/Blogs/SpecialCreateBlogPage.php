@@ -147,14 +147,6 @@ class CreateBlogPage extends SpecialCustomEditPage {
 				$this->invalidateCacheConnected( $article );
 				$this->createListingPage();
 
-				// BugID:25123 purge the main blog listing pages cache
-				global $wgMemc;
-				$user = $article->getTitle()->getBaseText();
-				$ns = $article->getTitle()->getNsText();
-				foreach ( range( 0, 5 ) as $page ) {
-					$wgMemc->delete( wfMemcKey( 'blog', 'listing', $ns, $user, $page ) );
-				}
-
 				$this->getOutput()->redirect( $article->getTitle()->getFullURL() );
 				break;
 
@@ -186,7 +178,9 @@ class CreateBlogPage extends SpecialCustomEditPage {
 		 * this should be subpage, invalidate page as well
 		 */
 		list( $page, $subpage ) = explode( "/", $title->getDBkey() );
-		$title = Title::newFromDBkey( $page );
+		
+		// VOLDEV-158: Update the correct page
+		$title = Title::newFromText( $page, NS_BLOG_ARTICLE );
 		$title->invalidateCache();
 		$article->clearBlogListing();
 	}

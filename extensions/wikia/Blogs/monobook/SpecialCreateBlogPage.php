@@ -359,7 +359,9 @@ class CreateBlogPage extends SpecialBlogPage {
 		 * this should be subpage, invalidate page as well
 		 */
 		list( $page, $subpage ) = explode( "/", $title->getDBkey() );
-		$title = Title::newFromDBkey( $page );
+
+		// VOLDEV-158: Update the correct page
+		$title = Title::newFromText( $page, NS_BLOG_ARTICLE );
 		$title->invalidateCache();
 		$article->clearBlogListing();
 	}

@@ -80,7 +80,6 @@ class BlogArticle extends Article {
 	 * @access private
 	 */
 	private function showBlogListing() {
-		$wg = F::app()->wg;
 		$out = $this->getContext()->getOutput();
 		$request = $this->getContext()->getRequest();
 		$out->setSyndicated( true );
@@ -90,22 +89,18 @@ class BlogArticle extends Article {
 		$page = $request->getVal( "page", 0 );
 		$blogPostCount = null;
 
-		$memc = $wg->Memc;
-		$memKey = $this->blogListingMemcacheKey( $owner, $page );
+		// VOLDEV-158: Save and load the blog list with proper parser options set
+		$parserOptions = ParserOptions::newFromContext( $this->getContext() );
 
 		// Use cache unless action=purge was used
 		if ( $request->getVal( 'action' ) != 'purge' ) {
-			$cachedValue = $memc->get( $memKey );
-
-			if ( $cachedValue && isset( $cachedValue['listing'] ) ) {
-				$listing = $cachedValue['listing'];
-				if ( isset( $cachedValue['blogPostCount'] ) ) {
-					$blogPostCount = $cachedValue['blogPostCount'];
-				}
+			$listing = ParserCache::singleton()->get( $this, $parserOptions );
+			if ( $listing ) {
+				$blogPostCount = $listing->getProperty( 'blogPostCount' );
 			}
 		}
 
-		if ( !$listing ) {
+		if ( !$listing || $blogPostCount === false ) {
 			$offset = $page * $this->mCount;
 			$text = "
 				<bloglist
@@ -117,16 +112,13 @@ class BlogArticle extends Article {
 					offset=$offset>
 					<author>$owner</author>
 				</bloglist>";
-			$parserOutput = $wg->Parser->parse( $text, $this->mTitle, new ParserOptions() );
-			$listing = $parserOutput->getText();
-			$blogPostCount = $parserOutput->getProperty( "blogPostCount" );
+			// VOLDEV-158: Parse and save with correct language settings
+			$listing = ParserPool::parse( $text, $this->mTitle, $parserOptions );
+			$blogPostCount = $listing->getProperty( "blogPostCount" );
 
-			$memc->set( $memKey,
-				[
-					'listing' => $listing,
-					'blogPostCount' => $blogPostCount
-				],
-				self::CACHE_TTL );
+			// VOLDEV-158: Save via parser cache
+			$listing->setCacheTime( self::CACHE_TTL );
+			ParserCache::singleton()->save( $listing, $this, $parserOptions );
 		}
 
 		// Link rel=next/prev for SEO
@@ -149,7 +141,7 @@ class BlogArticle extends Article {
 			$out->setRobotPolicy( "noindex,nofollow" );
 		}
 
-		$out->addHTML( $listing );
+		$out->addParserOutput( $listing );
 	}
 
 	/**
@@ -164,36 +156,11 @@ class BlogArticle extends Article {
 		$mcKey = $this->blogListingOasisMemcacheKey();
 		$memc->delete( $mcKey );
 
-		$count = $this->getBlogListingPageCount();
-		foreach ( range( 0, $count - 1 ) as $page ) {
-			$mcKey = $this->blogListingMemcacheKey( $this->getBlogOwner(), $page );
-			$memc->delete( $mcKey );
-		}
-
 		/** @var BlogArticle|WikiPage $this */
 		$this->doPurge();
 
 		$title = Title::newFromText( 'Category:BlogListingPage' );
 		$title->touchLinks();
-	}
-
-	private function getBlogListingPageCount() {
-		$owner = $this->getBlogOwner();
-		$text = "<bloglist type='count'><author>$owner</author></bloglist>";
-		$parserOutput = F::app()->wg->Parser->parse( $text, $this->mTitle, new ParserOptions() );
-		$listing = $parserOutput->getText();
-
-		return ceil( ( (int)trim( $listing ) ) / $this->mCount );
-	}
-
-	/**
-	 * @param int $userKey - user's DB key
-	 * @param int $pageNum - page no
-	 *
-	 * @return String - memcache key
-	 */
-	public function blogListingMemcacheKey( $userKey, $pageNum ) {
-		return wfMemcKey( 'blog', 'listing', 'v' . self::CACHE_VERSION, $userKey, $pageNum );
 	}
 
 	/**
