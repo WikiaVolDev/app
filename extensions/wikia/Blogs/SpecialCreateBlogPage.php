@@ -20,37 +20,38 @@ class CreateBlogPage extends SpecialCustomEditPage {
 
 
 	public function execute( $par ) {
-		if ( !$this->user->isLoggedIn() ) {
-			$this->out->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array( wfGetReturntoParam() ) );
+		$user = $this->getUser();
+		if ( !$user->isLoggedIn() ) {
+			$this->getOutput()->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', [ wfGetReturntoParam() ] );
 			return;
 		}
 
-		if ( $this->user->isBlocked() ) {
-			throw new UserBlockedError( $this->user->mBlock );
+		if ( $user->isBlocked() ) {
+			throw new UserBlockedError( $user->mBlock );
 		}
 
 		if ( wfReadOnly() ) {
-			$this->out->readOnlyPage();
+			$this->getOutput()->readOnlyPage();
 			return;
 		}
 
 		parent::execute( $par );
 
 		/* bugId::34933 Actions::getActionName() assumes every Special page is a view.  Forcing a wgAction override for this page */
-		RequestContext::getMain()->getOutput()->addJsConfigVars( 'wgAction', 'edit' );
+		$this->getOutput()->addJsConfigVars( 'wgAction', 'edit' );
 	}
 
 	protected function afterArticleInitialize( $mode, $title, $article ) {
-		wfRunHooks( 'BlogArticleInitialized', array( $this, $mode ) );
+		wfRunHooks( 'BlogArticleInitialized', [ $this, $mode ] );
 
 		if ( $mode == self::MODE_EDIT ) {
 			$aPageProps = BlogArticle::getProps( $article->getId() );
 			$this->mFormData['isCommentingEnabled'] = empty( $aPageProps['commenting'] ) ? 0 : $aPageProps['commenting'];
 
-			$isAllowed = $this->user->isAllowed( "blog-articles-edit" );
-			if ( ( strtolower( $this->user->getName() ) != strtolower( BlogArticle::getOwner( $title ) ) ) && !$isAllowed ) {
+			$isAllowed = $this->getUser()->isAllowed( "blog-articles-edit" );
+			if ( ( strtolower( $this->getUser()->getName() ) != strtolower( BlogArticle::getOwner( $title ) ) ) && !$isAllowed ) {
 				$this->titleStatus = self::STATUS_BLOG_PERMISSION_DENIED;
-				$this->addEditNotice(  wfMsg( 'create-blog-permission-denied' ) );
+				$this->addEditNotice(  $this->msg( 'create-blog-permission-denied' )->text() );
 			}
 		} else {
 			$this->mFormData['isCommentingEnabled'] = true;
@@ -64,7 +65,7 @@ class CreateBlogPage extends SpecialCustomEditPage {
 		$wikitext = parent::getWikitextFromRequest();
 
 		if ( $this->mode == self::MODE_NEW ) {
-			$catName = wfMsgForContent( "create-blog-post-category" );
+			$catName = $this->msg( "create-blog-post-category" )->inContentLanguage()->text();
 			$sCategoryNSName = $this->contLang->getFormattedNsText( NS_CATEGORY );
 			$wikitext .= "\n[[" . $sCategoryNSName . ":" . $catName . "]]";
 		}
@@ -74,7 +75,7 @@ class CreateBlogPage extends SpecialCustomEditPage {
 
 
 	protected function getTitlePrefix() {
-		return $this->user->getName() . '/';
+		return $this->getUser()->getName() . '/';
 	}
 
 	/**
@@ -82,7 +83,7 @@ class CreateBlogPage extends SpecialCustomEditPage {
 	 */
 	public function beforeSave() {
 		if ( empty( $this->mEditPage->summary ) ) {
-			$this->mEditPage->summary = wfMsgForContent( 'create-blog-updated' );
+			$this->mEditPage->summary = $this->msg( 'create-blog-updated' )->text();
 		}
 		$this->mEditPage->recreate = true;
 	}
@@ -95,44 +96,45 @@ class CreateBlogPage extends SpecialCustomEditPage {
 
 		if ( $this->mode != self::MODE_NEW_SETUP ) {
 			if ( $this->contentStatus == EditPage::AS_BLANK_ARTICLE ) {
-				$this->addEditNotice( wfMsg( 'plb-create-empty-body-error' ) );
+				$this->addEditNotice( $this->msg( 'plb-create-empty-body-error' )->escaped() );
 			}
 
 			switch ( $this->titleStatus ) {
 				case self::STATUS_EMPTY:
-					$this->addEditNotice( wfMsg( 'create-blog-empty-title-error' ) );
+					$this->addEditNotice( $this->msg( 'create-blog-empty-title-error' )->escaped() );
 					break;
 				case self::STATUS_INVALID:
-					$this->addEditNotice( wfMsg( 'create-blog-invalid-title-error' ) );
+					$this->addEditNotice( $this->msg( 'create-blog-invalid-title-error' )->escaped() );
 					break;
 				case self::STATUS_ALREADY_EXISTS:
-					$this->addEditNotice( wfMsg( 'create-blog-article-already-exists' ) );
+					$this->addEditNotice( $this->msg( 'create-blog-article-already-exists' )->escaped() );
 					break;
 			}
 		}
 	}
 	public function getPageTitle() {
 		if ( $this->mode == self::MODE_EDIT ) {
-			return wfMsg( 'create-blog-post-title-edit' );
+			return $this->msg( 'create-blog-post-title-edit' )->text();
 		} else {
-			return wfMsg( 'create-blog-post-title' );
+			return $this->msg( 'create-blog-post-title' )->text();
 		}
 	}
 
 	public function renderHeader( $par ) {
 		$this->forceUserToProvideTitle( 'create-blog-form-post-title' );
-		$this->addCustomCheckbox( self::FIELD_IS_COMMENTING_ENABLED, wfMsg( 'blog-comments-label' ), $this->mFormData['isCommentingEnabled'] );
+		$this->addCustomCheckbox( self::FIELD_IS_COMMENTING_ENABLED, $this->msg( 'blog-comments-label' )->escaped(), $this->mFormData['isCommentingEnabled'] );
 	}
 
-	protected function afterSave( $status ) {
-		switch( $status->value ) {
+	protected function afterSave( Status $status ) {
+		switch ( $status->value ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 
+				/** @var WikiPage|BlogArticle $article */
 				$article = $this->getEditedArticle();
 				$articleId = $article->getID();
 
-				$aPageProps = array();
+				$aPageProps = [];
 				$aPageProps['commenting'] = 0;
 				if ( $this->getField( self::FIELD_IS_COMMENTING_ENABLED ) != "" ) {
 					$aPageProps['commenting'] = 1;
@@ -148,23 +150,24 @@ class CreateBlogPage extends SpecialCustomEditPage {
 				// BugID:25123 purge the main blog listing pages cache
 				global $wgMemc;
 				$user = $article->getTitle()->getBaseText();
-				$ns = $article->getTitle()->getNSText();
+				$ns = $article->getTitle()->getNsText();
 				foreach ( range( 0, 5 ) as $page ) {
 					$wgMemc->delete( wfMemcKey( 'blog', 'listing', $ns, $user, $page ) );
 				}
 
-				$this->out->redirect( $article->getTitle()->getFullUrl() );
+				$this->getOutput()->redirect( $article->getTitle()->getFullURL() );
 				break;
 
 			default:
-				Wikia::log( __METHOD__, "editpage", $status->value );
+				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . '-' . 'editPage', [ 'statusValue' => $status->value ] );
+				$english = Language::factory( 'en' );
 				if ( $status->value == EditPage::AS_READ_ONLY_PAGE_LOGGED ) {
-					$sMsg = wfMsg( 'create-blog-cant-edit' );
+					$sMsg = wfMessage( 'create-blog-cant-edit' )->inLanguage( $english )->text();
 				}
 				else {
-					$sMsg = wfMsg( 'create-blog-spam' );
+					$sMsg = wfMessage( 'create-blog-spam' )->inLanguage( $english )->text();
 				}
-				Wikia::log( __METHOD__, "save error", $sMsg, true );
+				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . '-' . 'saveError', [ 'message' => $sMsg ] );
 				break;
 		}
 	}
@@ -195,20 +198,19 @@ class CreateBlogPage extends SpecialCustomEditPage {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 */
 	private function createListingPage() {
-		global $wgUser;
-
-		$oTitle = Title::newFromText( $wgUser->getName(), NS_BLOG_ARTICLE );
-		$oArticle = new Article( $oTitle, 0 );
+		
+		$oTitle = Title::newFromText( $this->getUser()->getName(), NS_BLOG_ARTICLE );
+		$oArticle = new WikiPage( $oTitle, 0 );
 		if ( !$oArticle->exists( ) ) {
 			/**
 			 * add empty article for newlycreated blog
 			 */
 			$oArticle->doEdit(
-				wfMsg( "create-blog-empty-article" ),     # body
-				wfMsg( "create-blog-empty-article-log" ), # summary
+				$this->msg( "create-blog-empty-article" )->inContentLanguage()->text(),     # body
+				$this->msg( "create-blog-empty-article-log" )->inContentLanguage()->text(), # summary
 				EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT, # flags
 				false,                                  # baseRevId
-				null,                                   # user
+				$this->getUser(),                                   # user
 				true                                    # forcePatrolled
 			);
 		}
