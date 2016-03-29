@@ -99,7 +99,9 @@ class Chat {
 		}
 
 		// Make sure we aren't trying to kick/ban someone who shouldn't be kick/banned
-		if ( $userToKickBan->isAllowed( $kickBanPermission ) && !$kickingUser->isAllowed( 'chatstaff' ) && !$kickingUser->isAllowed( 'chatadmin' ) ) {
+		// VOLDEV-166: users with 'chatadmin' shouldn't be able to be banned by other 'chatadmin' users
+		if ( ( $userToKickBan->isAllowed( $kickBanPermission ) && !$kickingUser->isAllowed( 'chatstaff' ) && !$kickingUser->isAllowed( 'chatadmin' ) ) ||
+			( $userToKickBan->isAllowed( 'chatadmin' ) && !$kickingUser->isAllowed( 'chatstaff' ) )	) {
 			return wfMessage( 'chat-ban-cant-ban-moderator' )
 				->inContentLanguage()->text() . "\n";
 		}
