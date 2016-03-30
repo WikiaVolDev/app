@@ -273,16 +273,20 @@ class Forum extends Walls {
 		$page = new WikiPage( $title );
 		$status = null;
 		if ( $bot ) {
-			// The edit should be performed by the bot - Board autocreation
+			// VOLDEV-142: The edit should be performed by the bot - Board autocreation
 			// Set internal IP for bot user to avoid cluttering CU
+			$realIP = $this->wg->Request->getIP();
 			$this->wg->Request->setIP( Forum::AUTOCREATE_USER_IP );
 			$status = $page->doEdit(
 				$body,
 				wfMessage( 'forum-board-edit-summary' )->inContentLanguage()->text(),
 				EDIT_FORCE_BOT | EDIT_MINOR | EDIT_SUPPRESS_RC,
-				false,
+				false, /* $baseRevId */
 				User::newFromName( Forum::AUTOCREATE_USER )
 			);
+			
+			// Restore original IP after the edit was finished
+			$this->wg->Request->setIP( $realIP );
 		} else {
 			// The action should not be performed by the bot
 			// This means an existing board is being edited
