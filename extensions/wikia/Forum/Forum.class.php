@@ -1,4 +1,5 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Forum
@@ -38,18 +39,22 @@ class Forum extends Walls {
 	const LEN_TOO_SMALL_ERR = -2;
 
 	public function getBoardList( $db = DB_SLAVE ) {
-		$boardTitles = $this->getListTitles( $db, NS_WIKIA_FORUM_BOARD );
-		$titlesBatch = new TitleBatch( $boardTitles );
+		$titlesBatch = $this->getTitlesForNamespace( $db, NS_WIKIA_FORUM_BOARD );
 		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
 
-		$boards = [];
+		$boards = [ ];
 		arsort( $orderIndexes );
 		foreach ( array_keys( $orderIndexes ) as $pageId ) {
-			$title = $boardTitles[$pageId];
+			/** @var Title $title */
+			$title = $titlesBatch->getById( $pageId );
+
+			if ( empty( $title ) ) {
+				WikiaLogger::instance()->error( "Expecting title got null", [ "pageId" => $pageId ] );
+				continue;
+			}
 
 			/** @var $board ForumBoard */
 			$board = ForumBoard::newFromTitle( $title );
-			$title = $board->getTitle();
 
 			$boardInfo = $board->getBoardInfo();
 			$boardInfo['id'] = $title->getArticleID();
@@ -152,9 +157,8 @@ class Forum extends Walls {
 		$this->clearCacheTotalThreads( self::ACTIVE_DAYS );
 	}
 
-	public function hasAtLeast( $ns, $count ) {
-
-		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasAtLeast', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
+	public function hasMoreThan( $ns, $count ) {
+		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasMoreThan', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
 			$db = wfGetDB( DB_MASTER );
 			// check if there is more then 5 forum pages (5 is number of forum pages from starter)
 			// limit 6 is faster solution then count(*) and the compare in php
@@ -173,7 +177,7 @@ class Forum extends Walls {
 	}
 
 	public function haveOldForums() {
-		return $this->hasAtLeast( NS_FORUM, 5 );
+		return $this->hasMoreThan( NS_FORUM, 5 );
 	}
 
 	public function swapBoards( $boardId1, $boardId2 ) {
@@ -349,9 +353,12 @@ class Forum extends Walls {
 		Forum::$allowToEditBoard = false;
 	}
 
+	/**
+	 * @deprecated Remove as soon as SUS-302 and SUS-303 are completed
+	 */
 	public function createDefaultBoard() {
 		if ( !$this->hasAtLeast( NS_WIKIA_FORUM_BOARD, 0 ) ) {
-			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0 ) );
+			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasMoreThan', NS_WIKIA_FORUM_BOARD, 0 ) );
 			for ( $i = 1; $i <= 5; $i++ ) {
 				$body = wfMessage( 'forum-autoboard-body-' . $i, $this->wg->Sitename )->inContentLanguage()->text();
 				$title = wfMessage( 'forum-autoboard-title-' . $i, $this->wg->Sitename )->inContentLanguage()->text();
