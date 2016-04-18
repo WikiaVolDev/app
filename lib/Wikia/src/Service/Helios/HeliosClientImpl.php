@@ -5,6 +5,7 @@ use Wikia\Util\GlobalStateWrapper;
 use Wikia\Service\Constants;
 
 /**
+ * @Injectable(lazy=true)
  * A client for Wikia authentication service.
  *
  * This is a naive implementation.
@@ -12,29 +13,19 @@ use Wikia\Service\Constants;
 class HeliosClientImpl implements HeliosClient
 {
 	const BASE_URI = "helios_base_uri";
-	const CLIENT_ID = "client_id";
-	const CLIENT_SECRET = "client_secret";
 
 	protected $baseUri;
-	protected $clientId;
-	protected $clientSecret;
 	protected $status;
 
 	/**
 	 * @Inject({
-	 *   Wikia\Service\Helios\HeliosClientImpl::BASE_URI,
-	 *   Wikia\Service\Helios\HeliosClientImpl::CLIENT_ID,
-	 *   Wikia\Service\Helios\HeliosClientImpl::CLIENT_SECRET})
+	 *   Wikia\Service\Helios\HeliosClientImpl::BASE_URI})
 	 * The constructor.
 	 * @param string $baseUri
-	 * @param string $clientId
-	 * @param string $clientSecret
 	 */
-	public function __construct( $baseUri, $clientId, $clientSecret )
+	public function __construct( $baseUri )
 	{
 		$this->baseUri = $baseUri;
-		$this->clientId = $clientId;
-		$this->clientSecret = $clientSecret;
 	}
 
 	/**
@@ -53,12 +44,20 @@ class HeliosClientImpl implements HeliosClient
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
 
-		// Add client_id and client_secret to the GET data.
-		$getParams['client_id'] = $this->clientId;
-		$getParams['client_secret'] = $this->clientSecret;
-
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query($getParams);
+
+		// Appending the request remote IP for client to be able to
+		// identify the source of the remote request.
+		if ( isset( $extraRequestOptions['headers'] ) ) {
+			$headers = $extraRequestOptions['headers'];
+			unset( $extraRequestOptions['headers'] );
+		} else {
+			$headers = [];
+		}
+
+		global $wgRequest;
+		$headers['X-Forwarded-For'] = $wgRequest->getIP();
 
 		// Request options pre-processing.
 		$options = [
@@ -69,6 +68,7 @@ class HeliosClientImpl implements HeliosClient
 			'followRedirects' => false,
 			'returnInstance'  => true,
 			'internalRequest' => true,
+			'headers'         => $headers,
 		];
 
 		$options = array_merge( $options, $extraRequestOptions );
@@ -91,7 +91,7 @@ class HeliosClientImpl implements HeliosClient
 			return \Http::request( $options['method'], $uri, $options );
 		} );
 
-		$this->status = $request->status;
+		$this->status = $request->getStatus();
 		return $this->processResponseOutput( $request );
 	}
 
@@ -131,12 +131,12 @@ class HeliosClientImpl implements HeliosClient
 
 		$response = $this->request(
 			'token',
-			[ 'grant_type'	=> 'password' ],
+			[],
 			$postData,
 			[ 'method'	=> 'POST' ]
 		);
 
-		return $response;
+		return [$this->status, $response];
 	}
 
 	/**
@@ -149,20 +149,6 @@ class HeliosClientImpl implements HeliosClient
 			[
 				'code' => $token,
 				'noblockcheck' => 1,
-			]
-		);
-	}
-
-	/**
-	 * A shortcut method for refresh token requests.
-	 */
-	public function refreshToken( $token )
-	{
-		return $this->request(
-			'token',
-			[
-				'grant_type'	=> 'refresh_token',
-				'refresh_token'	=> $token
 			]
 		);
 	}
@@ -183,6 +169,24 @@ class HeliosClientImpl implements HeliosClient
 			[],
 			[ 'method' => 'DELETE',
 				'headers' => array( Constants::HELIOS_AUTH_HEADER => $userId ) ]
+		);
+	}
+
+	/**
+	 * Generate a token for a user.
+	 * Warning: Assumes the user is already authenticated.
+	 *
+	 * @param $userId integer - the current user id
+	 *
+	 * @return array - JSON string deserialized into an associative array
+	 */
+	public function generateToken( $userId )
+	{
+		return $this->request(
+			sprintf('users/%s/tokens', $userId),
+			[],
+			[],
+			[ 'method' => 'POST' ]
 		);
 	}
 

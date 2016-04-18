@@ -3,10 +3,9 @@
 class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 
 	public static function isEnabled() {
-		global $wgAdDriverEnableOpenXBidder, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgAdDriverEnableOpenXBidder, $wgShowAds, $wgAdDriverUseSevenOneMedia;
 
 		return ( $wgAdDriverEnableOpenXBidder )
-			&& $wgEnableAdEngineExt
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage()
 			&& !$wgAdDriverUseSevenOneMedia;
@@ -27,7 +26,7 @@ class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 			qs = new Querystring();
 
 		if (geo.isProperGeo(ac) || qs.getVal('oxbidder', '0') === '1') {
-			oxBidder.call('oasis');
+			oxBidder.call();
 		};
 	});
 CODE;

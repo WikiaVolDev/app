@@ -37,8 +37,9 @@ if ( $data['gallery'] instanceof WikiaPhotoGallery ) {
 				$file = wfLocalFile( $images[$i][0] );
 				$imageTitles[$i] = $file;
 ?>
-				<td><a href="#" alt="<?= addslashes( $file->getName() ) ?>" title="<?= addslashes( $file->getName() ) ?>" onclick="WMU_chooseImage('<?= urlencode( $file->getName() ) ?>'); return false;"><?= $file->transform(
-				[ 'width' => 120, 'height' => 90 ] )->toHtml() ?></a></td>
+
+				<td><a href="#" alt="<?= addslashes( $file->getName()) ?>" title="<?= addslashes( $file->getName() ) ?>" onclick="WMU_chooseImage(0, '<?= $file->getName() ?>'); return false;"><?= $file->transform( [ 'width' => 120, 'height' => 90 ] )->toHtml() ?></a></td>
+
 <?php
 			}
 		}
@@ -49,7 +50,8 @@ if ( $data['gallery'] instanceof WikiaPhotoGallery ) {
 		for ( $i = $j * 4; $i < ( $j + 1 ) * 4; $i++ ) {
 			if ( isset( $imageTitles[$i] ) ) {
 ?>
-				<td><a href="#" onclick="WMU_chooseImage('<?= urlencode( $imageTitles[$i]->getName() ) ?>'); return false;"><?= wfMessage( 'wmu-insert3' )->escaped() ?></a></td>
+				<td><a href="#" onclick="WMU_chooseImage(0, '<?= $imageTitles[$i]->getName() ?>'); return false;"><?= wfMessage( 'wmu-insert3' )->escaped() ?></a></td>
+
 <?php
 			}
 		}

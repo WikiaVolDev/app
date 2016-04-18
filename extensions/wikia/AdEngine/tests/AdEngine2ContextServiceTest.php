@@ -147,13 +147,19 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'titleMockType' => 'article',
 				'flags' => ['wgWikiDirectedAtChildrenByFounder'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiDirectedAtChildren' => true ]
+				'expectedTargeting' => [
+					'newWikiCategories' => [ 'test' ],
+					'esrbRating' => 'ec'
+				]
 			],
 			[
 				'titleMockType' => 'article',
 				'flags' => ['wgWikiDirectedAtChildrenByStaff'],
 				'expectedOpts' => [],
-				'expectedTargeting' => [ 'newWikiCategories' => [ 'test' ], 'wikiDirectedAtChildren' => true ]
+				'expectedTargeting' => [
+					'newWikiCategories' => [ 'test' ],
+					'esrbRating' => 'ec'
+				]
 			],
 			[
 				'titleMockType' => 'mainpage',
@@ -264,8 +270,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$shortCat = 'shortcat';
 		$sevenOneMediaSub2Site = 'customsub2site';
 		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
-		$expectedSourcePointUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint';
-		$expectedSourcePointDetectionUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sourcepoint.detection';
+		$expectedSourcePointDetectionUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.detection';
+		$expectedSourcePointRecoveryUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sp.recovery';
 
 		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
@@ -351,6 +357,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'showAds' => true,
 			],
 			'targeting' => [
+				'esrbRating' => 'teen',
 				'pageName' => $artDbKey,
 				'pageType' => 'article',
 				'sevenOneMediaSub2Site' => $sevenOneMediaSub2Site,
@@ -363,6 +370,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'mappedVerticalName' => $verticals['expectedMappedVertical']
 			],
 			'providers' => [
+				'evolve2' => true
 			],
 			'slots' => [
 			],
@@ -385,10 +393,14 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$expected['slots'][$var] = $val;
 		}
 
+		if ($expected['targeting']['pageType'] === 'article') {
+			$expected['providers']['taboola'] = true;
+		}
+
 		// Check for SourcePoint URL
 		if ( $skinName === 'oasis' ) {
-			$this->assertStringMatchesFormat( $expectedSourcePointUrlFormat, $result['opts']['sourcePointUrl'] );
-			unset( $result['opts']['sourcePointUrl'] );
+			$this->assertStringMatchesFormat( $expectedSourcePointRecoveryUrlFormat, $result['opts']['sourcePointRecoveryUrl'] );
+			unset( $result['opts']['sourcePointRecoveryUrl'] );
 		}
 		$this->assertStringMatchesFormat( $expectedSourcePointDetectionUrlFormat, $result['opts']['sourcePointDetectionUrl'] );
 		unset( $result['opts']['sourcePointDetectionUrl'] );

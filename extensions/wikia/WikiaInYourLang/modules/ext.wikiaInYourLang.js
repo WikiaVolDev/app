@@ -21,22 +21,21 @@ require(
 
 		// Get user's geographic data and a country code
 		var targetLanguage = getTargetLanguage(),
-		// Per request we should unify dialects like pt and pt-br
-		// @see CE-1220
-			contentLanguage = w.wgContentLanguage.split('-')[0],
-		// Cache version
+			contentLanguage = w.wgContentLanguage,
+			// Cache version
 			cacheVersion = '1.02',
-		// LinkTitle from Cache
+			// LinkTitle from Cache
 			linkTitle = retrieveLinkTitle();
 
 		function init() {
 			var interlangExist = false;
-			if (targetLanguage !== false && targetLanguage !== contentLanguage) {
+			if (targetLanguage !== false &&
+				shouldShowWikiaInYourLang(targetLanguage, contentLanguage) &&
+				cache.get(getWIYLNotificationShownKey()) !== true
+			) {
 				// Check local browser cache to see if a request has been sent
-				// in the last month and if the notification has been shown to him.
-				// Both have to be !== true to continue.
-				if (cache.get(getWIYLRequestSentKey()) !== true &&
-					cache.get(getWIYLNotificationShownKey()) !== true) {
+				// in the last month
+				if (cache.get(getWIYLRequestSentKey()) !== true) {
 					interlangExist = getInterlangFromArticleInterlangList();
 					if (!interlangExist) {
 						getNativeWikiaInfo();
@@ -45,6 +44,22 @@ require(
 					displayNotification(cache.get(getWIYLMessageKey()));
 				}
 			}
+		}
+
+		// Per request we should unify dialects like pt and pt-br
+		// Feature is enabled only for languages in targetLanguageFilter
+		// @see CE-1220
+		// @see INT-302
+		function shouldShowWikiaInYourLang(targetLanguage, contentLanguage) {
+			var targetLanguageLangCode = targetLanguage.split('-')[0],
+				contentLanguageLangCode = contentLanguage.split('-')[0],
+				targetLanguageFilter = [ 'zh', 'ko', 'vi', 'ru', 'ja'];
+
+			if (targetLanguageFilter.indexOf(targetLanguageLangCode) === -1) {
+				return false;
+			}
+
+			return targetLanguageLangCode !== contentLanguageLangCode;
 		}
 
 		function getTargetLanguage() {
@@ -65,10 +80,7 @@ require(
 				// If neither - return false
 				targetLanguage = false;
 			}
-
-			// Per request we should unify dialects like pt and pt-br
-			// @see CE-1220
-			return targetLanguage.split('-')[0];
+			return targetLanguage;
 		}
 
 		function getInterlangFromArticleInterlangList() {
@@ -190,7 +202,7 @@ require(
 		}
 
 		function getWIYLNotificationShownKey() {
-			return 'wikiaInYourLangNotificationShown' + linkTitle + cacheVersion;
+			return 'wikiaInYourLangNotificationShown' + cacheVersion;
 		}
 
 		function getWIYLMessageKey() {

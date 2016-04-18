@@ -34,8 +34,8 @@ if ( isset( $results['images'] ) ) {
 				$file = wfLocalFile( Title::newFromText( $results['images'][$i]['title'], 6 ) );
 				$results['images'][$i]['file'] = $file;
 ?>
-				<td><a href="#" alt="<?= addslashes( $file->getName() ) ?>" title="<?= addslashes( $file->getName() ) ?>" onclick="WMU_chooseImage('<?= urlencode( $file->getName() ) ?>'); return false;"><?= $file->transform(
-				[ 'width' => 120, 'height' => 90 ] )->toHtml() ?></a></td>
+				<td><a href="#" alt="<?= addslashes( $file->getName()) ?>" title="<?= addslashes( $file->getName() ) ?>" onclick="WMU_chooseImage(0, '<?= $file->getName() ?>'); return false;"><?= $file->transform( [ 'width' => 120, 'height' => 90 ] )->toHtml() ?></a></td>
+
 <?php
 			}
 		}
@@ -46,7 +46,7 @@ if ( isset( $results['images'] ) ) {
 		for ( $i = $j * 4; $i < ( $j + 1 ) * 4; $i++ ) {
 			if ( isset( $results['images'][$i] ) ) {
 ?>
-				<td><a href="#" onclick="WMU_chooseImage('<?= urlencode( $results['images'][$i]['file']->getName() ) ?>'); return false;"><?= wfMessage( 'wmu-insert3' )->escaped() ?></a></td>
+				<td><a href="#" onclick="WMU_chooseImage(0, '<?= $results['images'][$i]['file']->getName() ?>'); return false;"><?= wfMessage('wmu-insert3')->escaped() ?></a></td>
 <?php
 			}
 		}

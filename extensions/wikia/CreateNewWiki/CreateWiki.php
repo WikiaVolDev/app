@@ -21,7 +21,7 @@ class CreateWiki {
 	/* @var $mDBw DatabaseMysql */
 	/* @var $mClusterDB string */
 	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mIP,
-		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
+		$mPHPbin, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
 		$sDbStarter, $mFounderIp,
@@ -227,6 +227,13 @@ class CreateWiki {
 		$this->mClusterDB = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mClusterDB ); // database handler, old $dbwTarget
 
+		// SUS-108: check read-only state of ACTIVE_CLUSTER before performing any DB-related actions
+		$readOnlyReason = $this->mNewWiki->dbw->getLBInfo( 'readOnlyReason' );
+		if ( $readOnlyReason !== false ) {
+			wfProfileOut( __METHOD__ );
+			throw new CreateWikiException( sprintf( '%s is in read-only mode: %s', self::ACTIVE_CLUSTER, $readOnlyReason ), self::ERROR_READONLY );
+		}
+
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
 		if( !$this->canCreateDatabase() ) {
@@ -266,15 +273,6 @@ class CreateWiki {
 		}
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Row added into city_domains table, city_id = {$this->mNewWiki->city_id}\n", true );
-
-		/**
-		 * create image folder
-		 */
-		global $wgEnableSwiftFileBackend;
-		if (empty($wgEnableSwiftFileBackend)) {
-			wfMkdirParents( "{$this->mNewWiki->images_dir}" );
-			wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
-		}
 
 		// Force initialize uploader user from correct shared db
 		$uploader = User::newFromName( 'CreateWiki script' );
@@ -326,18 +324,6 @@ class CreateWiki {
 		 * init site_stats table (add empty row)
 		 */
 		$this->mNewWiki->dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
-
-		/**
-		 * copy default logo
-		 */
-
-
-		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader );
-		if ( $res['status'] === true ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
-		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
-		}
 
 		/**
 		 * destroy connection to newly created database
@@ -443,6 +429,8 @@ class CreateWiki {
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added as {$task_id}\n", true );
 
+		wfRunHooks( "AfterWikiCreated", [ $this->mNewWiki->city_id, $this->sDbStarter ] );
+
 		$this->info( __METHOD__ . ': done', [
 			'task_id' => $task_id,
 			'took' => microtime( true ) - $then,
@@ -461,24 +449,10 @@ class CreateWiki {
 	 * @return integer status of check, 0 for success, non 0 otherwise
 	 */
 	private function checkExecutables( ) {
-		/**
-		 * set paths for external tools
-		 */
+		// php-cli is required for spawning PHP maintenance scripts
 		$this->mPHPbin = "/usr/bin/php";
 		if( !file_exists( $this->mPHPbin ) && !is_executable( $this->mPHPbin ) ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": {$this->mPHPbin} doesn't exists or is not executable\n", true );
-			return self::ERROR_BAD_EXECUTABLE_PATH;
-		}
-
-		$this->mMYSQLdump = "/usr/bin/mysqldump";
-		if( !file_exists( $this->mMYSQLdump ) && !is_executable( $this->mMYSQLdump ) ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": {$this->mMYSQLdump} doesn't exists or is not executable\n", true );
-			return self::ERROR_BAD_EXECUTABLE_PATH;
-		}
-
-		$this->mMYSQLbin = "/usr/bin/mysql";
-		if( !file_exists( $this->mMYSQLbin ) && !is_executable( $this->mMYSQLbin ) ) {
-			wfDebug( __METHOD__ . ": {$this->mMYSQLbin} doesn't exists or is not executable\n" );
 			return self::ERROR_BAD_EXECUTABLE_PATH;
 		}
 		return 0;
@@ -969,17 +943,18 @@ class CreateWiki {
 		// WF Variables containter
 		$this->mWFSettingVars = array();
 
-		$this->mWFSettingVars['wgSitename']               = $this->mNewWiki->sitename;
-		$this->mWFSettingVars['wgLogo']                   = self::DEFAULT_WIKI_LOGO;
-		$this->mWFSettingVars['wgUploadPath']             = $this->mNewWiki->images_url;
-		$this->mWFSettingVars['wgUploadDirectory']        = $this->mNewWiki->images_dir;
-		$this->mWFSettingVars['wgDBname']                 = $this->mNewWiki->dbname;
-		$this->mWFSettingVars['wgLocalInterwiki']         = $this->mNewWiki->sitename;
-		$this->mWFSettingVars['wgLanguageCode']           = $this->mNewWiki->language;
-		$this->mWFSettingVars['wgServer']                 = rtrim( $this->mNewWiki->url, "/" );
-		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
+		$this->mWFSettingVars['wgSitename'] = $this->mNewWiki->sitename;
+		$this->mWFSettingVars['wgLogo'] = self::DEFAULT_WIKI_LOGO;
+		$this->mWFSettingVars['wgUploadPath'] = $this->mNewWiki->images_url;
+		$this->mWFSettingVars['wgUploadDirectory'] = $this->mNewWiki->images_dir;
+		$this->mWFSettingVars['wgDBname'] = $this->mNewWiki->dbname;
+		$this->mWFSettingVars['wgLocalInterwiki'] = $this->mNewWiki->sitename;
+		$this->mWFSettingVars['wgLanguageCode'] = $this->mNewWiki->language;
+		$this->mWFSettingVars['wgServer'] = rtrim( $this->mNewWiki->url, "/" );
+		$this->mWFSettingVars['wgEnableSectionEdit'] = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
-		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;
+		$this->mWFSettingVars['wgOasisLoadCommonCSS'] = true;
+		$this->mWFSettingVars['wgEnablePortableInfoboxEuropaTheme'] = true;
 
 		if ( $this->getInitialNjordExtValue() ) {
 			$this->mWFSettingVars['wgEnableNjordExt'] = true;

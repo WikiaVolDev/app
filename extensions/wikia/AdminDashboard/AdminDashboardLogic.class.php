@@ -50,6 +50,8 @@ class AdminDashboardLogic {
 				'Chat',
 				'CloseWiki',
 				'Code',
+				'CommunityTasks',
+				'Community',
 				'Confirmemail',
 				'Connect',
 				'Contact',
@@ -65,13 +67,14 @@ class AdminDashboardLogic {
 				'Following',
 				'Forum',
 				'ImageReview',
+				'Images',
+				'InfoboxBuilder',
 				'Insights',
 				'Invalidateemail',
 				'LandingPageSmurfs',
 				'LayoutBuilder',
 				'LayoutBuilderForm',
 				'Leaderboard',
-				'LicensedVideoSwap',
 				'LookupContribs',
 				'LookupUser',
 				'ManageWikiaHome',
@@ -98,6 +101,7 @@ class AdminDashboardLogic {
 				'ThemeDesigner',
 				'ThemeDesignerPreview',
 				'UnusedVideos',
+				'UserActivity',
 				'Userlogin',
 				'UserManagement',
 				'UserPathPrediction',
@@ -114,7 +118,6 @@ class AdminDashboardLogic {
 				'WikiaStyleGuide',
 				'WikiFactory',
 				'WikiFactoryReporter',
-				'WikiStats',
 			];
 			return (!in_array($alias, $exclusionList));
 		}
@@ -124,30 +127,34 @@ class AdminDashboardLogic {
 	/**
 	 *  @brief hook to add toolbar item for admin dashboard
 	 */
-	static function onBeforeToolbarMenu(&$items) {
+	static function onBeforeToolbarMenu( &$items, $type ) {
 		$wg = F::app()->wg;
-		if( $wg->User->isAllowed('admindashboard') ) {
-			$item = array(
+		if( $wg->User->isAllowed( 'admindashboard' ) && $type == 'main' ) {
+			$items[] =  [
 				'type' => 'html',
-				'html' => Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') )
-			);
+				'html' => Wikia::specialPageLink(
+					'AdminDashboard',
+					'admindashboard-toolbar-link',
+					['data-tracking' => 'admindashboard/toolbar/admin']
+				)
+			];
+		}
+		return true;
+	}
 
-			if( is_array($items) ) {
-				$isMenuSubElPresent = false;
-
-				foreach($items as $el) {
-					if( isset($el['type']) && $el['type'] === 'menu' ) {
-						$isMenuSubElPresent = true;
-						break;
-					}
-				}
-
-				if( $isMenuSubElPresent ) {
-					$items[] = $item;
-				}
-			} else {
-				$items = array($item);
-			}
+	/**
+	 * For the special pages grouped in admin dashboard, update the HTML title, so it says:
+	 * "Name of the special page - Admin Dashboard - Wiki name - Wikia"
+	 *
+	 * This hook adds the "Admin Dashboard" part.
+	 *
+	 * @param Title $title
+	 * @param array $extraParts
+	 * @return bool
+	 */
+	static function onWikiaHtmlTitleExtraParts( Title $title, array &$extraParts ) {
+		if ( self::displayAdminDashboard( F::app(), $title ) && !$title->isSpecial( 'AdminDashboard' ) ) {
+			$extraParts = [ wfMessage( 'admindashboard-header' ) ];
 		}
 		return true;
 	}

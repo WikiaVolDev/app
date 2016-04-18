@@ -12,14 +12,13 @@ class CreateNewWikiController extends WikiaController {
 	const LANG_ALL_AGES_OPT = 'en';
 
 	public function index() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
+		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
 		$wgSuppressFooter = false;
-		$wgSuppressAds = true;
 		$wgSuppressToolbar = true;
 
 		// store the fact we're on CNW
@@ -211,9 +210,13 @@ class CreateNewWikiController extends WikiaController {
 
 	/**
 	 * Ajax call to Create wiki
+	 *
+	 * @throws BadRequestException
 	 */
 	public function CreateWiki() {
 		wfProfileIn(__METHOD__);
+		$this->checkWriteRequest();
+
 		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
 		$wgDevelDomains = $this->app->getGlobal('wgDevelDomains');
 		$wgUser = $this->app->getGlobal('wgUser'); /* @var $wgUser User */

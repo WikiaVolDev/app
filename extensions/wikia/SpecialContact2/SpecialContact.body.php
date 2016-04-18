@@ -76,6 +76,9 @@ class ContactForm extends SpecialPage {
 		$user = $this->getUser();
 		$request = $this->getRequest();
 
+		// Disable user JS
+		$out->disallowUserJs();
+
 		if ( $par === 'close-account' && $this->isCloseMyAccountSupported() ) {
 			$closeAccountTitle = SpecialPage::getTitleFor( 'CloseMyAccount' );
 			$out->redirect( $closeAccountTitle->getFullURL() );
@@ -98,6 +101,9 @@ class ContactForm extends SpecialPage {
 		$this->mReferral = $request->getText( 'wpReferral', ( !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null ) );
 
 		if ( $request->wasPosted() ) {
+			if ( !$user->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
+				$this->err[] = $this->msg( 'sessionfailure' )->escaped();
+			}
 
 			if( $user->isAnon() && class_exists( $wgCaptchaClass ) ) {
 				$captchaObj = new $wgCaptchaClass();
@@ -211,7 +217,8 @@ class ContactForm extends SpecialPage {
 				'captchaForm' => ($user->isAnon() && class_exists( $wgCaptchaClass )) ? (new $wgCaptchaClass())->getForm( $captchaErr ) : '',
 				'errMessages' => $this->err,
 				'errors' => $this->errInputs,
-				'referral' => $this->mReferral
+				'referral' => $this->mReferral,
+				'editToken' => $user->getEditToken(),
 			] );
 
 			$out->addHTML( $oTmpl->render( "mobile-form" ) );
@@ -555,6 +562,7 @@ class ContactForm extends SpecialPage {
 			'encProblem' => $encProblem,
 			'encProblemDesc' => $encProblemDesc,
 			'isLoggedIn' => $user->isLoggedIn(),
+			'editToken' => $user->getEditToken(),
 		);
 
 		if( $user->isLoggedIn() ) {

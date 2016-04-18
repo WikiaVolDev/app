@@ -71,11 +71,6 @@ class PageHeaderController extends WikiaController {
 			unset( $this->content_actions['edit'] );
 		}
 
-		// PvX's rate (RT #76386)
-		if ( isset( $this->content_actions['rate'] ) ) {
-			$this->action = $this->content_actions['rate'];
-			$this->actionName = 'rate';
-		}
 		// "Add topic"
 		else if ( isset( $this->content_actions['addsection'] ) ) {
 			$action = $this->content_actions['addsection'];
@@ -318,18 +313,14 @@ class PageHeaderController extends WikiaController {
 				// remove comments button (fix FB#3404 - Marooned)
 				$this->comments = false;
 
-				if ( $wgTitle->isSpecial( 'Newimages' ) ) {
-					$this->isNewFiles = true;
+				if ( $wgTitle->isSpecial( 'Images' ) ) {
+					$this->isSpecialImages = true;
 				}
 
 				if ( $wgTitle->isSpecial( 'Videos' ) ) {
 					$this->isSpecialVideos = true;
 					$mediaService = ( new MediaQueryService );
 					$this->tallyMsg = wfMessage( 'specialvideos-wiki-videos-tally', $mediaService->getTotalVideos() )->parse();
-				}
-
-				if ( $wgTitle->isSpecial( 'LicensedVideoSwap' ) ) {
-					$this->pageType = "";
 				}
 
 				break;
@@ -342,6 +333,7 @@ class PageHeaderController extends WikiaController {
 				$this->pageType = wfMsg( 'oasis-page-header-subtitle-forum' );
 				break;
 		}
+		wfRunHooks( 'PageHeaderPageTypePrepared', [ $this, $this->getContext()->getTitle() ] );
 
 		// render subpage info
 		$this->pageSubject = $skin->subPageSubtitle();
@@ -638,4 +630,5 @@ class PageHeaderController extends WikiaController {
 		$wgMemc->delete( wfMemcKey( 'mOasisRecentRevisions2', $article->getTitle()->getArticleId() ) );
 		return true;
 	}
+
 }
