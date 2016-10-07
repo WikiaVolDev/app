@@ -108,20 +108,20 @@ class TorBlock {
 
 		global $wgMemc;
 
-		$nodes = $wgMemc->get( 'mw-tor-exit-nodes' ); // No use of wfMemcKey because it should be multi-wiki.
+		$nodes = $wgMemc->get( static::getTorMemcKey( 'mw-tor-exit-nodes' ) ); // No use of wfMemcKey because it should be multi-wiki.
 
 		if (is_array($nodes)) {
 			wfDebug( "Loading Tor exit node list from memcached.\n" );
 			// Lucky.
 			return self::$mExitNodes = $nodes;
 		} else {
-			$liststatus = $wgMemc->get( 'mw-tor-list-status' );
+			$liststatus = $wgMemc->get( static::getTorMemcKey( 'mw-tor-list-status' ) );
 			if ( $liststatus == 'loading' ) {
 				// Somebody else is loading it.
 				wfDebug( "Old Tor list expired and we are still loading the new one.\n" );
 				return array();
 			} elseif ( $liststatus == 'loaded' ) {
-				$nodes = $wgMemc->get( 'mw-tor-exit-nodes' );
+				$nodes = $wgMemc->get( static::getTorMemcKey( 'mw-tor-exit-nodes' ) );
 				if (is_array($nodes)) {
 					return self::$mExitNodes = $nodes;
 				} else {
@@ -157,7 +157,7 @@ class TorBlock {
 
 		// Set loading key, to prevent DoS of server.
 
-		$wgMemc->set( 'mw-tor-list-status', 'loading', 300 );
+		$wgMemc->set( static::getTorMemcKey( 'mw-tor-list-status' ), 'loading', 300 );
 
 		$nodes = array();
 		foreach( $wgTorIPs as $ip ) {
@@ -165,8 +165,8 @@ class TorBlock {
 		}
 
 		// Save to cache.
-		$wgMemc->set( 'mw-tor-exit-nodes', $nodes, 1800 ); // Store for half an hour.
-		$wgMemc->set( 'mw-tor-list-status', 'loaded', 1800 );
+		$wgMemc->set( static::getTorMemcKey( 'mw-tor-exit-nodes' ), $nodes, 1800 ); // Store for half an hour.
+		$wgMemc->set( static::getTorMemcKey( 'mw-tor-list-status' ), 'loaded', 1800 );
 
 		wfProfileOut( __METHOD__ );
 
@@ -293,5 +293,15 @@ class TorBlock {
 			wfMsgExt( 'torblock-isexitnode', 'parseinline', $ip )
 		);
 		return true;
+	}
+
+	/**
+	 * Wikia change
+	 * SUS-1122: use shared memcache for TorBlock extension
+	 * @param string $key
+	 * @return string shared cache key
+	 */
+	private static function getTorMemcKey( string $key ): string {
+		return wfSharedMemcKey( $key );
 	}
 }
