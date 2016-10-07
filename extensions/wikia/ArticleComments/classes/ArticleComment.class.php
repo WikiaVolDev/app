@@ -464,7 +464,7 @@ class ArticleComment {
 		// we cannot check it using $title->getBaseText, as this returns main namespace title
 		// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
 		$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
-		$commentingAllowed = ArticleComment::userCanCommentOn( $articleTitle );
+		$commentingAllowed = $this->getTitle()->userCan( 'create' );
 
 		if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed ) {
 			$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg( 'article-comments-reply' ) . '</button>';
@@ -1581,9 +1581,9 @@ class ArticleComment {
 	 * @param User $user
 	 * @param string $action
 	 * @param bool $result Whether $user can perform $action on $title
-	 * @return bool Whether to continue checking hooks
+	 * @return bool False if this is an article comment to prevent hooks from overriding, true otherwise
 	 */
-	static public function userCan( Title &$title, User &$user, $action, &$result ) {
+	static public function userCan( Title $title, User $user, string $action, bool &$result ): bool {
 		$wg = F::app()->wg;
 		$commentsNS = $wg->ArticleCommentsNamespaces;
 		$ns = $title->getNamespace();
@@ -1598,14 +1598,20 @@ class ArticleComment {
 
 		$comment = ArticleComment::newFromTitle( $title );
 		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
+		if ( $isBlog ) {
+			$props = BlogArticle::getProps( $title->getArticleID() );
+			$commentingEnabled = isset( $props['commenting'] ) ? (bool)$props['commenting'] : true;
+		}
 
 		switch ( $action ) {
 			// Creating article comments requires 'commentcreate' permission
 			// For blogs, additionally check if the owner has enabled commenting+
 			case 'create':
-				// We have to check these permissions on the parent article
-				// due to the chicken-and-egg problem inherent in the design
-				$result = self::userCanCommentOn( $comment->getArticleTitle(), $user );
+				if ( $isBlog) {
+					$result = $commentingEnabled && $user->isAllowed( 'commentcreate' );
+				} else {
+					$result = $user->isAllowed( 'commentcreate' );
+				}
 				$return = false;
 				break;
 			// Article and blog comments can only be edited by their author,
@@ -1638,32 +1644,4 @@ class ArticleComment {
 		return $return;
 	}
 
-	/**
-	 * Check if user can add a comment to the current article
-	 * We must perform this check on the article
-	 * because of the chicken-and-egg problem inherent in the design
-	 *
-	 * @param Title $title Article title
-	 * @param User|null $user Current user
-	 * @return bool Whether $user can add a comment to $title
-	 */
-	static public function userCanCommentOn( Title $title, User $user = null ) {
-		$wg = F::app()->wg;
-		if ( !( $user instanceof User ) ) {
-			$user = $wg->User;
-		}
-
-		if ( wfReadOnly() ) {
-			return false;
-		}
-
-		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
-		if ( $isBlog ) {
-			$props = BlogArticle::getProps( $title->getArticleID() );
-			$commentingEnabled = isset( $props[ 'commenting' ] ) ? (bool) $props[ 'commenting' ] : true;
-			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && $commentingEnabled );
-		} else {
-			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && ArticleCommentInit::ArticleCommentCheckTitle( $title ) );
-		}
-	}
 }
