@@ -13,7 +13,6 @@ abstract class PhalanxModel extends WikiaObject {
 	public $model = null;
 	public $text = null;
 	public $block = null;
-	public $lang = null;
 	/* @var User */
 	public $user = null;
 	/* @var PhalanxService */
@@ -156,7 +155,7 @@ abstract class PhalanxModel extends WikiaObject {
 			$result = $this->service
 				->setLimit(1)
 				->setUser( ( $this->getShouldLogInStats() && $this->user instanceof User ) ? $this->user : null )
-				->match( $type, $content, $this->getLang() );
+				->match( $type, $content );
 
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
@@ -174,7 +173,7 @@ abstract class PhalanxModel extends WikiaObject {
 
 	public function check( $type ) {
 		# send request to service
-		$result = $this->service->check( $type, $this->getText(), $this->getLang() );
+		$result = $this->service->check( $type, $this->getText() );
 
 		if ( $result !== false ) {
 			# we have response from Phalanx service - 0/1

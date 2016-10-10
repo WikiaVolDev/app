@@ -3,8 +3,8 @@
 class PhalanxUserModel extends PhalanxModel {
 	const PHALANX_USER = 0;	
 
-	public function __construct( $user, $lang = '', $id = 0 ) {
-		parent::__construct( __CLASS__, array( 'user' => $user, 'lang' => $lang, 'id' => $id ) );
+	public function __construct( User $user, int $id = 0 ) {
+		parent::__construct( __CLASS__, [ 'user' => $user, 'id' => $id ] );
 	}
 
 	/**

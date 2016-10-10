@@ -102,7 +102,7 @@ class Phalanx implements arrayaccess {
 		$row = $dbr->selectRow( $this->db_table, '*', array( 'p_id' => $this->blockId ), __METHOD__ );
 
 		if ( is_object( $row ) ) {
-			$this->data = array(
+			$this->data = [
 				'id'        => $row->p_id,
 				'author_id' => $row->p_author_id,
 				'text'      => $row->p_text,
@@ -114,9 +114,8 @@ class Phalanx implements arrayaccess {
 				'case'      => $row->p_case,
 				'reason'    => $row->p_reason,
 				'comment'   => $row->p_comment,
-				'lang'      => $row->p_lang,
 				'ip_hex'    => $row->p_ip_hex
-			);
+			];
 		}
 
 		wfProfileOut( __METHOD__ );

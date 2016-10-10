@@ -1,7 +1,7 @@
 <?php
 class PhalanxTextModel extends PhalanxModel {
-	public function __construct( $text, $lang = '', $id = 0 ) {
-		parent::__construct( __CLASS__, array( 'text' => $text, 'lang' => $lang, 'id' => $id ) );
+	public function __construct( string $text, int $id = 0 ) {
+		parent::__construct( __CLASS__, [ 'text' => $text, 'id' => $id ] );
 	}
 	
 	public function match_wiki_creation() {

@@ -64,7 +64,6 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$data['regex'] = $data['regex'] ? 'Yes' : 'No';
 		$data['case']  = $data['case']  ? 'Yes' : 'No';
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
-		$data['lang'] = empty( $data['lang'] ) ? 'All' : $data['lang'];
 
 		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			/* hide email from non-privildged users */
@@ -74,17 +73,16 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 
 		/* stats table */
-		$headers = array(
-			wfMsg('phalanx-stats-table-id'),
-			wfMsg('phalanx-stats-table-user'),
-			wfMsg('phalanx-stats-table-type'),
-			wfMsg('phalanx-stats-table-create'),
-			wfMsg('phalanx-stats-table-expire'),
-			wfMsg('phalanx-stats-table-exact'),
-			wfMsg('phalanx-stats-table-regex'),
-			wfMsg('phalanx-stats-table-case'),
-			wfMsg('phalanx-stats-table-language'),
-		);
+		$headers = [
+			wfMessage( 'phalanx-stats-table-id' )->text(),
+			wfMessage( 'phalanx-stats-table-user' )->text(),
+			wfMessage( 'phalanx-stats-table-type' )->text(),
+			wfMessage( 'phalanx-stats-table-create' )->text(),
+			wfMessage( 'phalanx-stats-table-expire' )->text(),
+			wfMessage( 'phalanx-stats-table-exact' )->text(),
+			wfMessage( 'phalanx-stats-table-regex' )->text(),
+			wfMessage( 'phalanx-stats-table-case' )->text(),
+		];
 
 		$tableAttribs = array(
 			'class' => 'wikitable',
