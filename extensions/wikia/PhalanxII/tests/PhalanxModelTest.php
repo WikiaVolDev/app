@@ -115,11 +115,11 @@ class PhalanxModelTest extends WikiaBaseTest {
 	 * @slowExecutionTime 0.04619 ms
 	 * @dataProvider phalanxTitleDataProvider
 	 */
-	public function testPhalanxContentModelQuestionTitle( $title, $block, $language, $result ) {
+	public function testPhalanxContentModelQuestionTitle( $title, $block, $result ) {
 		$titleMock = $this->setUpTitle( $title );
 		$this->setUpTest( $block );
 
-		$model = new PhalanxContentModel( $titleMock, $language );
+		$model = new PhalanxContentModel( $titleMock );
 		$ret = ( int ) $model->match_question_title();
 
 		$this->assertEquals( $result, $ret );
@@ -236,11 +236,11 @@ class PhalanxModelTest extends WikiaBaseTest {
 		);
 
 		/* invalid user */
-		$invalidUser = array(
+		$invalidUser = [
 			'isAnon'    	=> true,
 			'getName'   	=> self::INVALID_USERNAME,
 			'email'			=> self::INVALID_EMAIL,
-			'block'     	=> (object) array(
+			'block'     	=> (object) [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_USERNAME,
@@ -248,12 +248,11 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'exact' => '',
 				'caseSensitive' => '',
 				'id' => 4009,
-				'language' => '',
 				'authorId' => 184532,
-			),
+			],
 			'result'    	=> 0,
 			'error'			=> wfMsg( 'phalanx-user-block-new-account' )
-		);
+		];
 
 		/* invalid user */
 		$invalidUserEmail = array(
@@ -297,9 +296,9 @@ class PhalanxModelTest extends WikiaBaseTest {
 		);
 
 		/* invalid text */
-		$invalidWiki = array(
+		$invalidWiki = [
 			'title'		=> self::INVALID_WIKIA_NAME,
-			'block'     => (object) array(
+			'block'     => (object) [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_WIKIA_NAME,
@@ -307,11 +306,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'exact' => '',
 				'caseSensitive' => '',
 				'id' => 4013,
-				'language' => 'en',
 				'authorId' => 184532,
-			),
+			],
 			'result'    => 0,
-		);
+		];
 
 		/* empty text */
 		$invalidWiki = array(
@@ -336,11 +334,11 @@ class PhalanxModelTest extends WikiaBaseTest {
 		);
 
 		/* invalid content, valid summary */
-		$invalidContent = array(
+		$invalidContent = [
 			'title'     	=> self::VALID_TITLE,
 			'textbox'		=> self::INVALID_CONTENT,
 			'summary'   	=> self::VALID_SUMMARY,
-			'block_text'	=> (object) array(
+			'block_text'	=> [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_CONTENT,
@@ -348,21 +346,20 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'exact' => '',
 				'caseSensitive' => '',
 				'id' => 4014,
-				'language' => 'en',
 				'authorId' => 184532,
-			),
+			],
 			'block_summary' => 0,
 			'result_text'   => 0,
 			'result_summary'=> 1
-		);
+		];
 
 		/* valid content, invalid summary */
-		$invalidSummary = array(
+		$invalidSummary = [
 			'title'     	=> self::VALID_TITLE,
 			'textbox'		=> self::VALID_CONTENT,
 			'summary'   	=> self::INVALID_SUMMARY,
 			'block_text'    => 0,
-			'block_summary' => (object) array(
+			'block_summary' => (object) [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_SUMMARY,
@@ -370,29 +367,27 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'exact' => '',
 				'caseSensitive' => '',
 				'id' => 4015,
-				'language' => 'en',
 				'authorId' => 184532,
-			),
+			],
 			'result_text'   => 1,
 			'result_summary'=> 0
-		);
+		];
 
 		return array( $validContent, $invalidContent, $invalidSummary );
 	}
 
 	public function phalanxTitleDataProvider() {
 		/* valid title */
-		$validTitle = array(
+		$validTitle = [
 			'title'		=> self::VALID_TITLE,
 			'block'     => 0,
-			'language'  => 'en',
 			'result'    => 1,
-		);
+		];
 
 		/* invalid title */
-		$invalidTitle = array(
+		$invalidTitle = [
 			'title'		=> self::INVALID_TITLE,
-			'block'     => (object) array(
+			'block'     => (object) [
 				'regex' => 0,
 				'expires' => '',
 				'text' => self::INVALID_TITLE,
@@ -400,12 +395,10 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'exact' => '',
 				'caseSensitive' => '',
 				'id' => 4011,
-				'language' => 'en',
 				'authorId' => 184532,
-			),
-			'language'  => 'en',
+			],
 			'result'    => 0,
-		);
+		];
 
 		return array( $validTitle, $invalidTitle );
 	}
